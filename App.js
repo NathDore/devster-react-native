@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'expo-dev-client';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LandingScreen from './src/Features/Auth/Screens/LandingScreen/LandingScreen';
+import HeaderUI from './src/UI/Header/HeaderUI';
+import AuthProvider from './src/context/AuthProvider';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthProvider>
+      <NavigationContainer initialRouteName="Home">
+        {/* Header */}
+        <HeaderUI />
+
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+
+          {/* Landing */}
+          <Stack.Screen name="Home" component={LandingScreen} />
+
+          {/* App Group */}
+          <Stack.Group>
+
+          </Stack.Group>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
+
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
