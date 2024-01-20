@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput } from 'react-native'
 import React from 'react'
 import { Icon } from 'react-native-elements';
-import { useAuthContext } from '../../../context/AuthProvider';
+import { useAuthContext } from '../../../../context/AuthProvider';
 
 const RegisterForm = () => {
     const { openRegisterForm } = useAuthContext();
@@ -16,7 +16,13 @@ const RegisterForm = () => {
                     <Icon name="close" type="fontAwesome" color={"black"} />
                 </TouchableOpacity>
 
-                <Text style={{ color: "black" }}>RegisterForm</Text>
+                <View>
+                     <Text style={{ color: "black" }}>RegisterForm</Text>
+
+                     <TextInput />
+                </View>
+
+               
             </View>
 
         </View>

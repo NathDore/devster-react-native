@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Icon } from 'react-native-elements';
-import { useAuthContext } from '../../../context/AuthProvider';
+import { useAuthContext } from '../../../../context/AuthProvider';
 
 const LoginForm = () => {
     const { openLoginForm } = useAuthContext();
