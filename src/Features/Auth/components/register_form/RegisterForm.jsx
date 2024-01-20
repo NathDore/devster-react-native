@@ -1,28 +1,124 @@
-import { View, Text, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, Pressable } from 'react-native'
 import React from 'react'
 import { Icon } from 'react-native-elements';
 import { useAuthContext } from '../../../../context/AuthProvider';
+import { useForm, Controller } from 'react-hook-form';
+import { REGISTER_FORM_STYLESHEET } from './style';
 
 const RegisterForm = () => {
     const { openRegisterForm } = useAuthContext();
+    const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
+
+    const onSubmit = (data) => {
+        console.log(data);
+    };
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ width: "70%", backgroundColor: "white", padding: "5%" }}>
+
+            {/* Modal */}
+            <View style={REGISTER_FORM_STYLESHEET.modal}>
+
+                {/*Close icon*/}
                 <TouchableOpacity
-                    style={{ borderWidth: 1, width: 25 }}
+                    style={REGISTER_FORM_STYLESHEET.closeIcon}
                     onPress={openRegisterForm}
                 >
                     <Icon name="close" type="fontAwesome" color={"black"} />
                 </TouchableOpacity>
 
-                <View>
-                     <Text style={{ color: "black" }}>RegisterForm</Text>
+                {/* Form */}
+                <View style={REGISTER_FORM_STYLESHEET.form}>
+                    {/* Title */}
+                    <Text style={REGISTER_FORM_STYLESHEET.title}>Join us now.</Text>
 
-                     <TextInput />
+                    {/* Name Field */}
+                    <Controller
+                        control={control}
+                        render={({ field, fieldState }) => (
+                            <View style={REGISTER_FORM_STYLESHEET.field}>
+                                <Text style={REGISTER_FORM_STYLESHEET.labelText}>Name:</Text>
+                                <TextInput
+                                    onChangeText={field.onChange}
+                                    onBlur={field.onBlur}
+                                    value={field.value}
+                                    style={REGISTER_FORM_STYLESHEET.userInput}
+                                />
+                                {fieldState.error && <Text style={{ color: 'red' }}>{fieldState.error.message}</Text>}
+                            </View>
+                        )}
+                        name="name"
+                        rules={{
+                            required: 'Name is required', pattern: {
+                                value: /^[A-Za-z]+$/,
+                                message: 'Invalid name format. Only letters are allowed.',
+                            },
+                        }}
+                    />
+
+
+                    {/* Email Field */}
+                    <Controller
+                        control={control}
+                        render={({ field, fieldState }) => (
+                            <View style={REGISTER_FORM_STYLESHEET.field}>
+                                <Text style={REGISTER_FORM_STYLESHEET.labelText}>Email:</Text>
+                                <TextInput
+                                    onChangeText={field.onChange}
+                                    onBlur={field.onBlur}
+                                    value={field.value}
+                                    style={REGISTER_FORM_STYLESHEET.userInput}
+                                />
+                                {fieldState.error && <Text style={{ color: 'red' }}>{fieldState.error.message}</Text>}
+                            </View>
+                        )}
+                        name="email"
+                        rules={{ required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } }}
+                    />
+
+                    {/* Password field */}
+                    <Controller
+                        control={control}
+                        render={({ field, fieldState }) => (
+                            <View style={REGISTER_FORM_STYLESHEET.field}>
+                                <Text style={REGISTER_FORM_STYLESHEET.labelText}>Password:</Text>
+                                <TextInput
+                                    onChangeText={field.onChange}
+                                    onBlur={field.onBlur}
+                                    value={field.value}
+                                    secureTextEntry
+                                    style={REGISTER_FORM_STYLESHEET.userInput}
+                                />
+                                {fieldState.error && <Text style={{ color: 'red' }}>{fieldState.error.message}</Text>}
+                            </View>
+                        )}
+                        name="password"
+                        rules={{
+                            required: 'Password is required',
+                            minLength: {
+                                value: 8,
+                                message: 'Password must be at least 8 characters long'
+                            },
+                            pattern: {
+                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                message: 'Your password must containt at least one lowercase letter, one uppercase letter, one digit and one special character among @$!%*?&',
+                            },
+                        }}
+                    />
+
+                    {/* Submit button */}
+                    {
+                        isValid ? <Pressable style={REGISTER_FORM_STYLESHEET.validButton} onPress={handleSubmit(onSubmit)}>
+                            <Text style={REGISTER_FORM_STYLESHEET.textButton}>Register</Text>
+                        </Pressable> : <View style={REGISTER_FORM_STYLESHEET.invalidButton}>
+                            <Text style={REGISTER_FORM_STYLESHEET.textButton}>Register</Text>
+                        </View>
+                    }
+
+
                 </View>
 
-               
+
             </View>
 
         </View>
