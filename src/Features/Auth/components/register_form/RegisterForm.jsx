@@ -6,11 +6,16 @@ import { useForm, Controller } from 'react-hook-form';
 import { FORM_STYLESHEET } from '../Form_Styles/style';
 
 const RegisterForm = () => {
-    const { openRegisterForm } = useAuthContext();
+    const { openRegisterForm, openLoginForm } = useAuthContext();
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
 
     const onSubmit = (data) => {
         console.log(data);
+
+        //Close the form and open the login form
+        openRegisterForm();
+        openLoginForm();
+
     };
 
     return (

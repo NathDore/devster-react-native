@@ -6,11 +6,15 @@ import { FORM_STYLESHEET } from '../Form_Styles/style';
 import { Controller, useForm } from 'react-hook-form';
 
 const LoginForm = () => {
-    const { openLoginForm } = useAuthContext();
+    const { openLoginForm, signIn } = useAuthContext();
     const { control, handleSubmit, formState: { isValid } } = useForm();
 
     const onSubmit = (data) => {
         console.log(data);
+
+        //Log the user in and close the form
+        signIn();
+        openLoginForm();
     };
 
     return (

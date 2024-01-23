@@ -9,7 +9,11 @@ const AuthProvider = ({ children }) => {
     const [isRegisterForm, setIsRegisterForm] = useState(false);
 
     const signOut = () => {
-        setIsUserLoggedIn(prevState => !prevState)
+        setIsUserLoggedIn(false);
+    }
+
+    const signIn = () => {
+        setIsUserLoggedIn(true);
     }
 
     const openLoginForm = () => {
@@ -22,7 +26,7 @@ const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ isUserLoggedIn, signOut, isLoginForm, isRegisterForm, openLoginForm, openRegisterForm }}>
+        <AuthContext.Provider value={{ isUserLoggedIn, signOut, signIn, isLoginForm, isRegisterForm, openLoginForm, openRegisterForm }}>
             {children}
         </AuthContext.Provider>
     )
