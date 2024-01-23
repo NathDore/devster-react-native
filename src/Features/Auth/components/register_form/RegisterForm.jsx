@@ -3,7 +3,7 @@ import React from 'react'
 import { Icon } from 'react-native-elements';
 import { useAuthContext } from '../../../../context/AuthProvider';
 import { useForm, Controller } from 'react-hook-form';
-import { REGISTER_FORM_STYLESHEET } from './style';
+import { FORM_STYLESHEET } from '../Form_Styles/style';
 
 const RegisterForm = () => {
     const { openRegisterForm } = useAuthContext();
@@ -17,32 +17,32 @@ const RegisterForm = () => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
             {/* Modal */}
-            <View style={REGISTER_FORM_STYLESHEET.modal}>
+            <View style={FORM_STYLESHEET.modal}>
 
                 {/*Close icon*/}
                 <TouchableOpacity
-                    style={REGISTER_FORM_STYLESHEET.closeIcon}
+                    style={FORM_STYLESHEET.closeIcon}
                     onPress={openRegisterForm}
                 >
                     <Icon name="close" type="fontAwesome" color={"black"} />
                 </TouchableOpacity>
 
                 {/* Form */}
-                <View style={REGISTER_FORM_STYLESHEET.form}>
+                <View style={FORM_STYLESHEET.form}>
                     {/* Title */}
-                    <Text style={REGISTER_FORM_STYLESHEET.title}>Join us now.</Text>
+                    <Text style={FORM_STYLESHEET.title}>Join us now.</Text>
 
                     {/* Name Field */}
                     <Controller
                         control={control}
                         render={({ field, fieldState }) => (
-                            <View style={REGISTER_FORM_STYLESHEET.field}>
-                                <Text style={REGISTER_FORM_STYLESHEET.labelText}>Name:</Text>
+                            <View style={FORM_STYLESHEET.field}>
+                                <Text style={FORM_STYLESHEET.labelText}>Name:</Text>
                                 <TextInput
                                     onChangeText={field.onChange}
                                     onBlur={field.onBlur}
                                     value={field.value}
-                                    style={REGISTER_FORM_STYLESHEET.userInput}
+                                    style={FORM_STYLESHEET.userInput}
                                 />
                                 {fieldState.error && <Text style={{ color: 'red' }}>{fieldState.error.message}</Text>}
                             </View>
@@ -61,13 +61,13 @@ const RegisterForm = () => {
                     <Controller
                         control={control}
                         render={({ field, fieldState }) => (
-                            <View style={REGISTER_FORM_STYLESHEET.field}>
-                                <Text style={REGISTER_FORM_STYLESHEET.labelText}>Email:</Text>
+                            <View style={FORM_STYLESHEET.field}>
+                                <Text style={FORM_STYLESHEET.labelText}>Email:</Text>
                                 <TextInput
                                     onChangeText={field.onChange}
                                     onBlur={field.onBlur}
                                     value={field.value}
-                                    style={REGISTER_FORM_STYLESHEET.userInput}
+                                    style={FORM_STYLESHEET.userInput}
                                 />
                                 {fieldState.error && <Text style={{ color: 'red' }}>{fieldState.error.message}</Text>}
                             </View>
@@ -80,14 +80,14 @@ const RegisterForm = () => {
                     <Controller
                         control={control}
                         render={({ field, fieldState }) => (
-                            <View style={REGISTER_FORM_STYLESHEET.field}>
-                                <Text style={REGISTER_FORM_STYLESHEET.labelText}>Password:</Text>
+                            <View style={FORM_STYLESHEET.field}>
+                                <Text style={FORM_STYLESHEET.labelText}>Password:</Text>
                                 <TextInput
                                     onChangeText={field.onChange}
                                     onBlur={field.onBlur}
                                     value={field.value}
                                     secureTextEntry
-                                    style={REGISTER_FORM_STYLESHEET.userInput}
+                                    style={FORM_STYLESHEET.userInput}
                                 />
                                 {fieldState.error && <Text style={{ color: 'red' }}>{fieldState.error.message}</Text>}
                             </View>
@@ -108,10 +108,10 @@ const RegisterForm = () => {
 
                     {/* Submit button */}
                     {
-                        isValid ? <Pressable style={REGISTER_FORM_STYLESHEET.validButton} onPress={handleSubmit(onSubmit)}>
-                            <Text style={REGISTER_FORM_STYLESHEET.textButton}>Register</Text>
-                        </Pressable> : <View style={REGISTER_FORM_STYLESHEET.invalidButton}>
-                            <Text style={REGISTER_FORM_STYLESHEET.textButton}>Register</Text>
+                        isValid ? <Pressable style={FORM_STYLESHEET.validButton} onPress={handleSubmit(onSubmit)}>
+                            <Text style={FORM_STYLESHEET.textButton}>Register</Text>
+                        </Pressable> : <View style={FORM_STYLESHEET.invalidButton}>
+                            <Text style={FORM_STYLESHEET.textButton}>Register</Text>
                         </View>
                     }
 

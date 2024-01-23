@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const REGISTER_FORM_STYLESHEET = StyleSheet.create({
+export const FORM_STYLESHEET = StyleSheet.create({
     modal: {
         width: "90%",
         backgroundColor: "white",
