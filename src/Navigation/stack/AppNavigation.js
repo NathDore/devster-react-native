@@ -4,6 +4,8 @@ import ProfileScreen from "../../Features/App/Screens/ProfileScreen";
 import ChatScreen from "../../Features/App/Screens/ChatScreen";
 import FeedScreen from "../../Features/App/Screens/FeedScreen";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +25,7 @@ export default function AppStack() {
                 options={
                     {
                         tabBarIcon: () => (
-                            <AwesomeIcon name="feed" color={"black"} size={35} />
+                            <FontAwesome5Icon name="poll-h" color={"black"} size={35} />
                         ),
                     }
                 }
