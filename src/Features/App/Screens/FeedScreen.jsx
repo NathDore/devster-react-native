@@ -1,31 +1,110 @@
-import { View, FlatList } from 'react-native'
-import React from 'react'
-import Post from '../../../UI/Feed-Post/Post'
-import { dumData } from '../../../data/dummyData'
+import { View, FlatList, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react';
+import Post from '../../../UI/Feed-Post/Post';
+import axios from 'axios'
 
 const FeedScreen = () => {
+    const [dumData, setDumData] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const getRandomUser = async () => {
+        try {
+            const response = await axios.get('https://randomuser.me/api/');
+            const randomUser = response.data.results[0];
+
+            const resPost = await axios.get('https://jsonplaceholder.typicode.com/posts');
+            const randomPost = resPost.data[Math.floor(Math.random() * resPost.data.length)];
+
+            return {
+                username: randomUser.name.first,
+                email: randomUser.email,
+                profilePicture: randomUser.picture.large,
+                post: randomPost.body,
+            };
+        } catch (err) {
+            console.error('Error fetching random user:', err);
+            return null;
+        }
+    }
+
+    const generateRandomTimestamp = () => {
+        const currentTimestamp = Date.now();
+        const randomTimestamp = currentTimestamp - Math.floor(Math.random() * 7 * 24 * 60 * 60 * 1000);
+        return randomTimestamp;
+    }
+
+    const convertTimestampToRelativeTime = (timestamp) => {
+        const secondsAgo = Math.floor((Date.now() - timestamp) / 1000);
+
+        if (secondsAgo < 60) {
+            return `${secondsAgo} ${secondsAgo === 1 ? 'second' : 'seconds'} ago`;
+        } else if (secondsAgo < 60 * 60) {
+            const minutesAgo = Math.floor(secondsAgo / 60);
+            return `${minutesAgo} ${minutesAgo === 1 ? 'minute' : 'minutes'} ago`;
+        } else if (secondsAgo < 60 * 60 * 24) {
+            const hoursAgo = Math.floor(secondsAgo / (60 * 60));
+            return `${hoursAgo} ${hoursAgo === 1 ? 'hour' : 'hours'} ago`;
+        } else {
+            const daysAgo = Math.floor(secondsAgo / (60 * 60 * 24));
+            return `${daysAgo} ${daysAgo === 1 ? 'day' : 'days'} ago`;
+        }
+    };
+
+    const loadMoreData = async () => {
+        if (loading) return;
+
+        setLoading(true);
+
+        try {
+            const newData = [];
+
+            for (let i = 0; i < 5; i++) {
+                const randomUser = await getRandomUser();
+                const randomTimestamp = generateRandomTimestamp();
+
+                if (randomUser) {
+                    newData.push({ userId: dumData.length + i + 1, timestamp: randomTimestamp, ...randomUser });
+                }
+            }
+
+            setDumData((prevData) => [...prevData, ...newData]);
+        } catch (error) {
+            console.error('Error loading more data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        loadMoreData();
+    }, [])
+
     const renderItem = ({ item }) => (
         <Post
-            profileImg={item.profileImg}
+            profileImg={item.profilePicture.toString()}
             name={item.username}
-            timestamps={item.timeStamps}
+            timestamps={convertTimestampToRelativeTime(item.timestamp)}
             post={item.post}
-            likes={item.likes}
-            comments={item.comments}
         />
     );
+
+    const renderFooter = () => {
+        return loading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
+    };
 
 
     return (
         <View style={{
             flex: 1,
             backgroundColor: "#202124",
-            alignItems: "center",
         }}>
             <FlatList
                 data={dumData}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()} // Assurez-vous d'avoir une propriété unique "id" dans vos données
+                keyExtractor={(item) => item.userId.toString()}
+                onEndReached={loadMoreData}
+                onEndReachedThreshold={0.1}
+                ListFooterComponent={renderFooter}
             />
         </View>
     )

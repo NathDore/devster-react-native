@@ -24,7 +24,7 @@ export const POST_STYLESHEET = StyleSheet.create({
         paddingHorizontal: "1%",
     },
     post_text: {
-        fontWeight: "350",
+        fontWeight: "300",
         color: "white",
     },
     reaction_container: {
