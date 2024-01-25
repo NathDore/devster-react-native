@@ -1,9 +1,15 @@
-import { View, FlatList, ActivityIndicator } from 'react-native'
+import { View, FlatList, ActivityIndicator, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react';
-import Post from '../../../UI/Feed-Post/Post';
-import axios from 'axios'
+import Post from '../../../../UI/Feed-Post/Post';
+import axios from 'axios';
+import AwesomeIcon from "react-native-vector-icons/FontAwesome"; import { useModalContext } from '../../../../context/ModalProvider';
+import CreatePost from '../../post/components/modal/CreatePost';
+import Modal from 'react-native-modal';
+import { FEED_SCREEN_STYLESHEET } from './style';
 
 const FeedScreen = () => {
+    const { setIsCreateModalOpen, isCreateModalOpen } = useModalContext();
+
     const [dumData, setDumData] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -94,10 +100,8 @@ const FeedScreen = () => {
 
 
     return (
-        <View style={{
-            flex: 1,
-            backgroundColor: "#202124",
-        }}>
+        <View style={FEED_SCREEN_STYLESHEET.container}>
+            {/* Feed */}
             <FlatList
                 data={dumData}
                 renderItem={renderItem}
@@ -106,6 +110,20 @@ const FeedScreen = () => {
                 onEndReachedThreshold={0.1}
                 ListFooterComponent={renderFooter}
             />
+
+            {/* Create post icon */}
+            <Pressable
+                onPress={() => setIsCreateModalOpen(true)}
+                style={FEED_SCREEN_STYLESHEET.create_post_icon}>
+                <AwesomeIcon name="pencil" size={25} color={"black"} />
+            </Pressable>
+
+            {/* Create Post Modal */}
+            <Modal
+                isVisible={isCreateModalOpen}
+            >
+                <CreatePost />
+            </Modal>
         </View>
     )
 }
