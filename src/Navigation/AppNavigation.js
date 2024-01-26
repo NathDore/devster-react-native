@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ChatScreen from "../../Features/App/Screens/ChatScreen";
-import FeedScreen from "../../Features/App/Feed/screens/FeedScreen";
+import ChatListScreen from "../Features/App/Chat/Screens/ChatListScreen";
+import FeedScreen from "../Features/App/Feed/screen/FeedScreen";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import ModalProvider from "../../context/ModalProvider";
+import ModalProvider from "../context/ModalProvider";
 
 const Tab = createBottomTabNavigator();
 
@@ -31,7 +31,7 @@ export default function AppStack() {
                 />
                 <Tab.Screen
                     name="Chat"
-                    component={ChatScreen}
+                    component={ChatListScreen}
                     options={
                         {
                             tabBarIcon: () => (

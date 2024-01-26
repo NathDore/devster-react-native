@@ -5,7 +5,7 @@ import AwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
 import { POST_STYLESHEET } from './style';
 
-const Post = React.memo(({ profileImg, timestamps, name, post, likes, comments }) => {
+const PostCard = React.memo(({ profileImg, timestamps, name, post, likes, comments }) => {
     const [isLike, setIslike] = useState(false);
 
     const handleLike = () => {
@@ -70,4 +70,4 @@ const Post = React.memo(({ profileImg, timestamps, name, post, likes, comments }
     );
 });
 
-export default Post;
+export default PostCard;

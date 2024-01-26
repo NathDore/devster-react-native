@@ -2,9 +2,9 @@ import { View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import { Text } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import React from 'react'
-import LoginForm from '../../components/login_form/LoginForm';
-import { useAuthContext } from '../../../../context/AuthProvider';
-import RegisterForm from '../../components/register_form/RegisterForm';
+import LoginForm from '../components/login_form/LoginForm';
+import { useAuthContext } from '../../../context/AuthProvider';
+import RegisterForm from '../components/register_form/RegisterForm';
 
 const LandingScreen = () => {
     const { isLoginForm, isRegisterForm } = useAuthContext();
@@ -27,10 +27,9 @@ const LandingScreen = () => {
             </Modal>
 
             <ScrollView>
-
                 {/* Image */}
                 <Image
-                    source={require("../../../../../assets/topImage.jpg")}
+                    source={require("../../../../assets/topImage.jpg")}
                     style={{
                         width: '100%',
                         height: 75,

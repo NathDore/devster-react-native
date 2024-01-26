@@ -1,9 +1,10 @@
 import { View, FlatList, ActivityIndicator, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react';
-import Post from '../../../../UI/Feed-Post/Post';
+import PostCard from '../components/post_card/PostCard';
 import axios from 'axios';
-import AwesomeIcon from "react-native-vector-icons/FontAwesome"; import { useModalContext } from '../../../../context/ModalProvider';
-import CreatePost from '../../post/components/modal/CreatePost';
+import AwesomeIcon from "react-native-vector-icons/FontAwesome";
+import { useModalContext } from '../../../../context/ModalProvider';
+import CreatePost from '../components/create_post/CreatePost';
 import Modal from 'react-native-modal';
 import { FEED_SCREEN_STYLESHEET } from './style';
 
@@ -86,7 +87,7 @@ const FeedScreen = () => {
     }, [])
 
     const renderItem = ({ item }) => (
-        <Post
+        <PostCard
             profileImg={item.profilePicture.toString()}
             name={item.username}
             timestamps={convertTimestampToRelativeTime(item.timestamp)}
