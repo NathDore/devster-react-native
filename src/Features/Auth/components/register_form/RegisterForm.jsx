@@ -1,22 +1,19 @@
 import { View, Text, TouchableOpacity, TextInput, Pressable } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Icon } from 'react-native-elements';
 import { useAuthContext } from '../../../../context/AuthProvider';
 import { useForm, Controller } from 'react-hook-form';
 import { FORM_STYLESHEET } from '../Form_Styles/style';
 
 const RegisterForm = () => {
-    const { openRegisterForm, openLoginForm } = useAuthContext();
+    const { openRegisterForm, signUpWithEmailAndPassword, firebaseError } = useAuthContext();
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
 
     const onSubmit = (data) => {
-        console.log(data);
-
-        //Close the form and open the login form
-        openRegisterForm();
-        openLoginForm();
-
+        signUpWithEmailAndPassword(data.email, data.password);
     };
+
+    //miaoux12Cv?
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -80,6 +77,10 @@ const RegisterForm = () => {
                         name="email"
                         rules={{ required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } }}
                     />
+
+                    {
+                        firebaseError && <View style={{ width: "100%", alignItems: "center" }}><Text style={{ color: 'red' }}>{firebaseError}</Text></View>
+                    }
 
                     {/* Password field */}
                     <Controller

@@ -7,7 +7,7 @@ import { useAuthContext } from '../../context/AuthProvider';
 
 const HeaderUI = () => {
     const navigation = useNavigation();
-    const { isUserLoggedIn, signOut, openLoginForm, openRegisterForm } = useAuthContext();
+    const { user, signOut, openLoginForm, openRegisterForm } = useAuthContext();
 
     const handleNavigationHome = () => {
         navigation.navigate("Home");
@@ -16,10 +16,6 @@ const HeaderUI = () => {
     const handleNavigationProfile = () => {
         navigation.navigate("Profile")
     }
-
-    useEffect(() => {
-        console.log("user is log in ? : " + isUserLoggedIn)
-    }, [isUserLoggedIn])
 
     return (
         <Header
@@ -30,7 +26,7 @@ const HeaderUI = () => {
             rightComponent={
                 <View style={{ flexDirection: "row", marginRight: '10%', justifyContent: 'center', alignItems: 'center' }}>
                     {
-                        isUserLoggedIn ? <>
+                        user ? <>
                             <TouchableOpacity
                                 onPress={signOut}
                                 style={{ ...HEADER_STYLESHEET.marginHorizontal, ...HEADER_STYLESHEET.buttonSignUp }}>

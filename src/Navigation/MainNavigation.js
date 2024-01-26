@@ -8,7 +8,7 @@ import { useAuthContext } from '../context/AuthProvider';
 const Stack = createNativeStackNavigator();
 
 export default function MainStack() {
-    const { isUserLoggedIn } = useAuthContext();
+    const { user } = useAuthContext();
 
     return (
         <NavigationContainer initialRouteName="Home">
@@ -18,7 +18,7 @@ export default function MainStack() {
             <Stack.Navigator screenOptions={{ headerShown: false }}>
 
                 {/* Landing */}
-                <Stack.Screen name="Home" component={isUserLoggedIn ? AppStack : LandingScreen} />
+                <Stack.Screen name="Home" component={user ? AppStack : LandingScreen} />
 
             </Stack.Navigator>
         </NavigationContainer>

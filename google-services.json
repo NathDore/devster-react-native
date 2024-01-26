@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "109586601225",
+    "project_id": "backend-b34a2",
+    "storage_bucket": "backend-b34a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109586601225:android:1f5d4880dcbccbfbd8afd8",
+        "android_client_info": {
+          "package_name": "com.example.devster"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEIQ0LHJqxicwGQRxKaMbJ3s3yOXFj_Ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109586601225:android:8b6c4f9810ff45c0d8afd8",
+        "android_client_info": {
+          "package_name": "com.nathdore.devsterreact"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEIQ0LHJqxicwGQRxKaMbJ3s3yOXFj_Ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

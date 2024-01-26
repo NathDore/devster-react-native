@@ -1,12 +1,12 @@
 import { View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import { Text } from 'react-native-elements';
 import Modal from 'react-native-modal';
-import React from 'react'
+import React, { useEffect } from 'react'
 import LoginForm from '../components/login_form/LoginForm';
 import { useAuthContext } from '../../../context/AuthProvider';
 import RegisterForm from '../components/register_form/RegisterForm';
 
-const LandingScreen = () => {
+const LandingScreen = ({ navigation }) => {
     const { isLoginForm, isRegisterForm } = useAuthContext();
 
     return (

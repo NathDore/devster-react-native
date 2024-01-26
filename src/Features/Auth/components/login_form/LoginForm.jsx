@@ -4,17 +4,14 @@ import { Icon } from 'react-native-elements';
 import { useAuthContext } from '../../../../context/AuthProvider';
 import { FORM_STYLESHEET } from '../Form_Styles/style';
 import { Controller, useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 const LoginForm = () => {
-    const { openLoginForm, signIn } = useAuthContext();
+    const { openLoginForm, signInWithEmailAndPassword, firebaseError } = useAuthContext();
     const { control, handleSubmit, formState: { isValid } } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
-
-        //Log the user in and close the form
-        signIn();
-        openLoginForm();
+    const onSubmit = async (data) => {
+        signInWithEmailAndPassword(data.email, data.password);
     };
 
     return (
@@ -50,9 +47,9 @@ const LoginForm = () => {
                                 {fieldState.error && <Text style={{ color: 'red' }}>{fieldState.error.message}</Text>}
                             </View>
                         )}
-                        name="name"
+                        name="email"
                         rules={{
-                            required: 'Name is required'
+                            required: 'email is required'
                         }}
                     />
 
@@ -77,6 +74,10 @@ const LoginForm = () => {
                             required: 'Password is required',
                         }}
                     />
+
+                    {
+                        firebaseError && <View style={{ width: "100%", alignItems: "center", marginVertical: "1%" }}><Text style={{ color: 'red' }}>{firebaseError}</Text></View>
+                    }
 
                     {/* Submit button */}
                     {
