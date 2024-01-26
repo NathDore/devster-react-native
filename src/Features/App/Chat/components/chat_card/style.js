@@ -24,7 +24,7 @@ export const CHAT_CARD_STYLESHEET = StyleSheet.create({
         fontWeight: "bold",
     },
     messageContainer: {
-        width: "100%",
+        width: "80%",
         display: "flex",
         flexDirection: "row",
     },
