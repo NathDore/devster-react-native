@@ -5,6 +5,7 @@ import ProfileScreen from "../Features/App/Profile/screen/profile_screen/Profile
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import ModalProvider from "../context/ModalProvider";
+import ModifyScreen from "../Features/App/Profile/screen/modify_screen/ModifyScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -44,6 +45,12 @@ export default function AppStack() {
                 <Tab.Screen
                     name="Profile"
                     component={ProfileScreen}
+                    options={{ tabBarButton: () => null }}
+                />
+
+                <Tab.Screen
+                    name="Modify"
+                    component={ModifyScreen}
                     options={{ tabBarButton: () => null }}
                 />
             </Tab.Navigator>

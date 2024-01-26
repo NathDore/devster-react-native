@@ -6,8 +6,9 @@ import { getRandomUser } from '../../../../../data/randomDataGeneration';
 import { generateRandomTimestamp } from '../../../../../data/randomDataGeneration';
 import { convertTimestampToRelativeTime } from '../../../../../data/randomDataGeneration';
 import PostCard from '../../../Feed/components/post_card/PostCard';
+import { PROFILE_SCREEN_STYLESHEET } from './style';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
     const [dumData, setDumData] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -54,26 +55,29 @@ const ProfileScreen = () => {
         return loading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
     };
 
+    const handleNavigationBack = () => {
+        navigation.goBack();
+    }
+
+    const handleNavigationModifyScreen = () => {
+        navigation.navigate("Modify");
+    }
 
     return (
-        <View style={{
-            flex: 1,
-            backgroundColor: "#202124",
-        }}>
+        <View style={PROFILE_SCREEN_STYLESHEET.container}>
             <ImageBackground
                 source={require('../../../../../../assets/profile-image.jpg')}
-                style={{}}
                 blurRadius={15}
             >
                 {/* Icon */}
-                <TouchableOpacity>
-                    <AwesomeIcon name="angle-left" size={30} color="white" style={{ marginVertical: "2%", marginHorizontal: "5%" }} />
+                <TouchableOpacity onPress={handleNavigationBack}>
+                    <AwesomeIcon name="angle-left" size={30} color="white" style={PROFILE_SCREEN_STYLESHEET.backIcon} />
                 </TouchableOpacity>
 
                 <View style={{ alignItems: "center" }}>
-                    <View style={{ justifyContent: "flex-start", width: "30%", alignItems: "center" }}>
+                    <View style={PROFILE_SCREEN_STYLESHEET.topSection}>
                         {/* Profile picture */}
-                        <View style={{ marginTop: "5%", marginBottom: "2%" }}>
+                        <View style={PROFILE_SCREEN_STYLESHEET.profile_picture}>
                             <Avatar
                                 size={100}
                                 rounded
@@ -82,21 +86,21 @@ const ProfileScreen = () => {
                         </View>
 
                         {/* Modify button */}
-                        <TouchableOpacity style={{ borderWidth: 1, elevation: 1, backgroundColor: "black", width: 90, borderColor: "white", borderRadius: 20, justifyContent: "center", alignItems: "center", padding: "5%", marginTop: "5%" }}>
-                            <Text style={{ color: "white" }}>Modifiy</Text>
+                        <TouchableOpacity onPress={handleNavigationModifyScreen} style={PROFILE_SCREEN_STYLESHEET.modify_button}>
+                            <Text style={PROFILE_SCREEN_STYLESHEET.button_text}>Modifiy</Text>
                         </TouchableOpacity>
 
                         {/* Username */}
-                        <Text style={{ marginVertical: "5%", fontSize: 25, fontWeight: "bold", color: "white" }}>Mickey05</Text>
+                        <Text style={PROFILE_SCREEN_STYLESHEET.username}>Mickey05</Text>
                     </View>
                 </View>
             </ImageBackground>
 
-            <View style={{ flex: 1, backgroundColor: "#00000080", borderTopWidth: 0.5, borderColor: "lightgrey" }}>
+            <View style={PROFILE_SCREEN_STYLESHEET.bottom_section}>
                 {/* Publications sections */}
-                <View style={{ width: "100%", display: "flex", flexDirection: "row", alignItems: "center", height: 40, backgroundColor: "rgba(8, 8, 8, 0.91)", paddingStart: "5%" }}>
-                    <View style={{ borderBottomWidth: 1, borderColor: "lightblue" }}>
-                        <Text style={{ color: "white", fontSize: 20, fontWeight: "400" }}>Publications</Text>
+                <View style={PROFILE_SCREEN_STYLESHEET.bottom_header}>
+                    <View style={PROFILE_SCREEN_STYLESHEET.publication_title_header_underline}>
+                        <Text style={PROFILE_SCREEN_STYLESHEET.publication_title_header_text}>Publications</Text>
                     </View>
                 </View>
 
