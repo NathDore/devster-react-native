@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ChatListScreen from "../Features/App/Chat/Screens/ChatListScreen";
 import FeedScreen from "../Features/App/Feed/screen/FeedScreen";
+import ProfileScreen from "../Features/App/Profile/screen/profile_screen/ProfileScreen";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import ModalProvider from "../context/ModalProvider";
@@ -39,6 +40,11 @@ export default function AppStack() {
                             ),
                         }
                     }
+                />
+                <Tab.Screen
+                    name="Profile"
+                    component={ProfileScreen}
+                    options={{ tabBarButton: () => null }}
                 />
             </Tab.Navigator>
         </ModalProvider>

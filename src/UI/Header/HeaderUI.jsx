@@ -13,6 +13,10 @@ const HeaderUI = () => {
         navigation.navigate("Home");
     }
 
+    const handleNavigationProfile = () => {
+        navigation.navigate("Profile")
+    }
+
     useEffect(() => {
         console.log("user is log in ? : " + isUserLoggedIn)
     }, [isUserLoggedIn])
@@ -33,11 +37,14 @@ const HeaderUI = () => {
                                 <Text style={HEADER_STYLESHEET.text}>Sign out</Text>
                             </TouchableOpacity>
 
-                            <Avatar
-                                size={32}
-                                rounded
-                                source={require("../../../assets/profile-image.jpg")}
-                            />
+                            <TouchableOpacity onPress={handleNavigationProfile}>
+                                <Avatar
+                                    size={32}
+                                    rounded
+                                    source={require("../../../assets/profile-image.jpg")}
+                                />
+                            </TouchableOpacity>
+
                         </> : <>
                             <TouchableOpacity
                                 onPress={openLoginForm}
