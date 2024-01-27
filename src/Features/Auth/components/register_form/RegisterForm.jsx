@@ -6,14 +6,13 @@ import { useForm, Controller } from 'react-hook-form';
 import { FORM_STYLESHEET } from '../Form_Styles/style';
 
 const RegisterForm = () => {
-    const { openRegisterForm, signUpWithEmailAndPassword, firebaseError } = useAuthContext();
+    const { openRegisterForm, signUpWithEmailAndPassword, firebaseError, setRegisterFormData } = useAuthContext();
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
 
     const onSubmit = (data) => {
-        signUpWithEmailAndPassword(data.email, data.password);
+        console.log(data)
+        signUpWithEmailAndPassword(data.email, data.password, data.name);
     };
-
-    //miaoux12Cv?
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
