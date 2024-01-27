@@ -58,6 +58,7 @@ const AuthProvider = ({ children }) => {
             .set({
                 email: email,
                 name: username,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             })
             .then(() => {
                 console.log('user doc created.');
