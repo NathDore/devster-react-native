@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 import auth from '@react-native-firebase/auth';
 import firestore from "@react-native-firebase/firestore";
 
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -58,7 +59,7 @@ const AuthProvider = ({ children }) => {
             .set({
                 email: email,
                 name: username,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                createdAt: new Date().getTime(),
             })
             .then(() => {
                 console.log('user doc created.');
