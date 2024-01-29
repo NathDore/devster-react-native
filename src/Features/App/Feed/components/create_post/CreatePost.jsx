@@ -1,13 +1,18 @@
-import { View, Text, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useModalContext } from '../../../../../context/ModalProvider'
 import { Icon } from 'react-native-elements';
 import { CREATE_POST_STYLESHEET } from './style';
+import firestore from "@react-native-firebase/firestore";
+import { useAuthContext } from '../../../../../context/AuthProvider';
 
 const CreatePost = () => {
     const { setIsCreateModalOpen } = useModalContext();
     const [userInput, setUserInput] = useState("");
     const [isValid, setIsValid] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { user, } = useAuthContext()
 
     const handleCloseCreatePostModal = () => {
         setIsCreateModalOpen(false);
@@ -15,6 +20,27 @@ const CreatePost = () => {
 
     const handleSubmit = () => {
         console.log(userInput);
+        createPublication();
+    }
+
+    const createPublication = () => {
+        setIsLoading(true);
+
+        firestore()
+            .collection("posts")
+            .doc()
+            .set({
+                comments: [],
+                likes: 0,
+                content: userInput,
+                userId: user?.uid,
+                timestamp: new Date().getTime(),
+            })
+            .then(() => {
+                console.log("publication created.")
+                handleCloseCreatePostModal();
+                setIsLoading(false);
+            })
     }
 
     useEffect(() => {
@@ -42,31 +68,35 @@ const CreatePost = () => {
         <View style={CREATE_POST_STYLESHEET.container}>
             {/* Modal */}
             <View style={CREATE_POST_STYLESHEET.flex1}>
+                {
+                    isLoading ? <ActivityIndicator size={"large"} color={"blue"} /> :
+                        <>
+                            <View style={CREATE_POST_STYLESHEET.buttonSection}>
+                                <TouchableOpacity onPress={handleCloseCreatePostModal}>
+                                    <Icon name="close" type="fontAwesome" color={"black"} size={40} />
+                                </TouchableOpacity>
+                                {
+                                    renderValidButton()
+                                }
+                            </View>
 
-                {/* Close and Publish button*/}
-                <View style={CREATE_POST_STYLESHEET.buttonSection}>
-                    <TouchableOpacity onPress={handleCloseCreatePostModal}>
-                        <Icon name="close" type="fontAwesome" color={"black"} size={40} />
-                    </TouchableOpacity>
-                    {
-                        renderValidButton()
-                    }
-                </View>
 
-                {/* Text input */}
-                <View style={CREATE_POST_STYLESHEET.flex1}>
-                    <TextInput
-                        multiline
-                        placeholder='Enter text here'
-                        placeholderTextColor={"black"}
-                        onChangeText={(text) => setUserInput(text)}
-                        value={userInput}
-                        style={CREATE_POST_STYLESHEET.textInput}
-                    />
-                </View>
+                            <View style={CREATE_POST_STYLESHEET.flex1}>
+                                <TextInput
+                                    multiline
+                                    placeholder='Enter text here'
+                                    placeholderTextColor={"black"}
+                                    onChangeText={(text) => setUserInput(text)}
+                                    value={userInput}
+                                    style={CREATE_POST_STYLESHEET.textInput}
+                                />
+                            </View>
+
+                        </>
+
+
+                }
             </View>
-
-
         </View>
     )
 }

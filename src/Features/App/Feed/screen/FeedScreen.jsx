@@ -62,6 +62,24 @@ const FeedScreen = () => {
         getPublications();
     }, [])
 
+    useEffect(() => {
+        const unsubscribe = firestore()
+            .collection("posts")
+            .onSnapshot((snapshot) => {
+                const postData = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setPosts(postData);
+            });
+
+        return () => {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        };
+    }, []);
+
     const renderItem = ({ item }) => (
         <PostCard
             postId={item.id}
