@@ -7,7 +7,11 @@ import { useAuthContext } from '../../../context/AuthProvider';
 import RegisterForm from '../components/register_form/RegisterForm';
 
 const LandingScreen = ({ navigation }) => {
-    const { isLoginForm, isRegisterForm } = useAuthContext();
+    const { isLoginForm, isRegisterForm, openRegisterForm } = useAuthContext();
+
+    const handleSeePublications = () => {
+        openRegisterForm();
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: "#202124" }}>
@@ -49,7 +53,7 @@ const LandingScreen = ({ navigation }) => {
                     </View>
 
                     <View style={{ marginVertical: "2.5%" }}>
-                        <TouchableOpacity style={{ justifyContent: "center", alignItems: "center", backgroundColor: "#000", width: 150, paddingHorizontal: "6%", paddingVertical: "3%", borderRadius: 30 }}>
+                        <TouchableOpacity onPress={handleSeePublications} style={{ justifyContent: "center", alignItems: "center", backgroundColor: "#000", width: 150, paddingHorizontal: "6%", paddingVertical: "3%", borderRadius: 30 }}>
                             <Text numberOfLines={1} style={{ color: "white" }}>See publications</Text>
                         </TouchableOpacity>
                     </View>

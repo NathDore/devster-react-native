@@ -37,7 +37,7 @@ const HeaderUI = () => {
                                 <Avatar
                                     size={32}
                                     rounded
-                                    source={require("../../../assets/profile-image.jpg")}
+                                    source={require("../../../assets/anonyme_profile.jpg")}
                                 />
                             </TouchableOpacity>
 

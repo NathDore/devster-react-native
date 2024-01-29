@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import auth from '@react-native-firebase/auth';
 import firestore from "@react-native-firebase/firestore";
 
@@ -8,21 +8,19 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [firebaseError, setFirebaseError] = useState();
+    const [username, setUsername] = useState("");
 
     const [isLoginForm, setIsLoginForm] = useState(false);
     const [isRegisterForm, setIsRegisterForm] = useState(false);
 
-    useEffect(() => {
-        const subscriber = auth().onAuthStateChanged((newUser) => {
-            setUser(newUser);
-        });
-        return subscriber;
-    }, []);
+    auth().onAuthStateChanged((newUser) => {
+        setUser(newUser);
+    });
 
     const signOut = async () => {
         try {
             await auth().signOut();
-            console.log('User signed out!')
+            console.log('User signed out!');
         } catch (error) {
             switch (error.code) {
                 case 'auth/no-current-user':
@@ -37,57 +35,90 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-    //abc123?Nm
+    const checkIfUserDocExists = (uid) => {
+        return new Promise((resolve, reject) => {
+            firestore()
+                .collection("users")
+                .doc(uid)
+                .get()
+                .then((doc) => {
+                    resolve(doc.exists);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    };
 
-    const checkIfUserIdExists = (email, username) => {
-        firestore()
-            .collection("users")
-            .doc(user?.uid)
-            .get()
-            .then((doc) => {
-                if (!doc.exists) createUserDoc(email, username);
+    const createUserDoc = (uid, email) => {
+        return new Promise((resolve, reject) => {
+            firestore()
+                .collection("users")
+                .doc(uid)
+                .set({
+                    email: email,
+                    name: username,
+                    profilePicture: "",
+                    createdAt: new Date().getTime(),
+                })
+                .then(() => {
+                    console.log('User doc created.');
+                    setFirebaseError("");
+                    openRegisterForm();
+                    resolve(null);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    reject(error);
+                });
+        });
+    }
+
+    const signUpWithEmailAndPassword = (email, password, username) => {
+        return new Promise((resolve, reject) => {
+            auth()
+                .createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log("Account created.");
+                    setUsername(username);
+                    resolve(userCredential.user);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    }
+
+    const handleSignUp = (email, password, username) => {
+        let uid = "";
+
+        signUpWithEmailAndPassword(email, password, username)
+            .then((user) => {
+                if (user) {
+                    uid = user.uid;
+                    // L'utilisateur est maintenant créé, vérifier si le document existe
+                    return checkIfUserDocExists(user.uid);
+                }
+            })
+            .then((docExists) => {
+                if (!docExists) {
+                    // Le document n'existe pas, créer le document de l'utilisateur
+                    return createUserDoc(uid, email);
+                }
             })
             .catch((error) => {
                 console.error(error);
-            })
-    };
-
-    const createUserDoc = (email, username) => {
-        firestore()
-            .collection("users")
-            .doc(user?.uid)
-            .set({
-                email: email,
-                name: username,
-                createdAt: new Date().getTime(),
-            })
-            .then(() => {
-                console.log('user doc created.');
-                setFirebaseError("");
-            }).catch((error) => {
-                console.error(error);
-            })
-    }
-
-    // Sign up the user with email and password
-    const signUpWithEmailAndPassword = (email, password, username) => {
-        auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(() => {
-                checkIfUserIdExists(email, username);
-            })
-            .catch(error => {
+                // Gérer les erreurs ici
                 if (error.code === 'auth/email-already-in-use') {
                     setFirebaseError('That email address is already in use!')
                 }
                 if (error.code === 'auth/invalid-email') {
                     setFirebaseError('That email address is invalid!')
                 }
-                console.error(error);
-            })
-    }
+            });
+    };
 
-    // Sign in the user with email and password
+
     const signInWithEmailAndPassword = (email, password) => {
         auth()
             .signInWithEmailAndPassword(email, password)
@@ -128,12 +159,10 @@ const AuthProvider = ({ children }) => {
             })
     }
 
-    // Open or close the login form
     const openLoginForm = () => {
         setIsLoginForm(prevState => !prevState)
     }
 
-    // Open or close the register form
     const openRegisterForm = () => {
         setIsRegisterForm(prevState => !prevState)
     }
@@ -148,7 +177,7 @@ const AuthProvider = ({ children }) => {
                 openLoginForm,
                 openRegisterForm,
                 signInWithEmailAndPassword,
-                signUpWithEmailAndPassword,
+                handleSignUp,
                 firebaseError,
                 setFirebaseError,
             }}>

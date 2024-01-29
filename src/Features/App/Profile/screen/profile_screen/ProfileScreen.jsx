@@ -66,7 +66,7 @@ const ProfileScreen = ({ navigation }) => {
     return (
         <View style={PROFILE_SCREEN_STYLESHEET.container}>
             <ImageBackground
-                source={require('../../../../../../assets/profile-image.jpg')}
+                source={require('../../../../../../assets/anonyme_profile.jpg')}
                 blurRadius={15}
             >
                 {/* Icon */}
@@ -81,7 +81,7 @@ const ProfileScreen = ({ navigation }) => {
                             <Avatar
                                 size={100}
                                 rounded
-                                source={require("../../../../../../assets/profile-image.jpg")}
+                                source={require("../../../../../../assets/anonyme_profile.jpg")}
                             />
                         </View>
 
