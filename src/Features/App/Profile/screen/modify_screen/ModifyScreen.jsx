@@ -9,7 +9,6 @@ import { useAuthContext } from '../../../../../context/AuthProvider';
 
 const ModifyScreen = () => {
     const [usernameInput, setUsernameInput] = useState("");
-    const [selectedImage, setSelectedImage] = useState(null);
     const [userData, setUserData] = useState({});
 
     const { user } = useAuthContext();
@@ -25,8 +24,7 @@ const ModifyScreen = () => {
         });
 
         if (!result.canceled) {
-            setSelectedImage(result.assets[0].uri);
-            uploadProfilePictureToStorage(selectedImage, user?.uid);
+            uploadProfilePictureToStorage(result.assets[0].uri, user?.uid);
         } else {
             alert('You did not select any image.');
         }
@@ -44,6 +42,8 @@ const ModifyScreen = () => {
             const downloadURL = await reference.getDownloadURL();
             console.log('Image uploaded to the bucket!');
             console.log('Download URL:', downloadURL);
+
+            sendDownloadURLToFirestore(downloadURL, userId);
         })
     };
 
@@ -64,22 +64,23 @@ const ModifyScreen = () => {
     }
 
     const sendDownloadURLToFirestore = (downloadURL, userId) => {
-        /*     try {
-                await firestore().collection('users').doc(userId).update({
-                    profilePicture: pictureUrl,
-                });
-                console.log('Profile picture URL updated successfully!');
-            } catch (error) {
-                console.error('Error updating profile picture URL:', error);
-            } */
-
+        firestore()
+            .collection("users")
+            .doc(userId)
+            .set({
+                ...userData,
+                profile_picture: downloadURL,
+            })
+            .then(() => {
+                console.log("image upload to firestore");
+            })
     }
 
     return (
         <View style={MODIFY_SCREEN_STYLESHEET.container}>
             {/* Image background Header */}
             <ImageBackground
-                source={selectedImage ? { uri: selectedImage } : require('../../../../../../assets/anonyme_profile.jpg')}
+                source={userData?.profile_picture ? { uri: userData?.profile_picture } : require('../../../../../../assets/anonyme_profile.jpg')}
                 blurRadius={15}
                 style={MODIFY_SCREEN_STYLESHEET.image_background}
             >
@@ -89,7 +90,7 @@ const ModifyScreen = () => {
                     <Avatar
                         size={90}
                         rounded
-                        source={selectedImage ? { uri: selectedImage } : require('../../../../../../assets/anonyme_profile.jpg')}
+                        source={userData?.profile_picture ? { uri: userData?.profile_picture } : require('../../../../../../assets/anonyme_profile.jpg')}
                     />
 
                     {/* Modify button */}
