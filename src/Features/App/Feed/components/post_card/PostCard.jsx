@@ -1,12 +1,14 @@
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import AwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { POST_STYLESHEET } from './style';
+import firestore from "@react-native-firebase/firestore";
 
-const PostCard = React.memo(({ profileImg, timestamps, name, post, likes, comments }) => {
+const PostCard = React.memo(({ postId, uid, timestamps, content, likes, comments }) => {
     const [isLike, setIslike] = useState(false);
+    const [userDoc, setUserDoc] = useState({});
 
     const handleLike = () => {
         setIslike((prev) => !prev);
@@ -28,8 +30,22 @@ const PostCard = React.memo(({ profileImg, timestamps, name, post, likes, commen
         }
     };
 
+    const getUserDoc = () => {
+        firestore()
+            .collection('users')
+            .doc(uid)
+            .get()
+            .then((doc) => {
+                if (doc.exists) setUserDoc(doc.data());
+            })
+    }
+
+    useEffect(() => {
+        getUserDoc();
+    }, [])
+
     return (
-        <View
+        <TouchableOpacity
             style={{
                 borderTopWidth: 0.5,
                 borderBottomWidth: 0.5,
@@ -41,10 +57,10 @@ const PostCard = React.memo(({ profileImg, timestamps, name, post, likes, commen
             {/* Info Container */}
             <View style={POST_STYLESHEET.info_container}>
                 {/* Profile picture */}
-                <Avatar size={20} rounded source={{ uri: profileImg }} />
+                <Avatar size={20} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../../../assets/anonyme_profile.jpg")} />
 
                 {/* UserName */}
-                <Text style={POST_STYLESHEET.username}>{name}</Text>
+                <Text style={POST_STYLESHEET.username}>{userDoc.name}</Text>
 
                 {/* Timestamp */}
                 <Text style={POST_STYLESHEET.timestamp}>{timestamps}</Text>
@@ -53,20 +69,27 @@ const PostCard = React.memo(({ profileImg, timestamps, name, post, likes, commen
             {/* Post Container */}
             <View style={POST_STYLESHEET.post_container}>
                 {/* Post text */}
-                <Text style={POST_STYLESHEET.post_text}>{post}</Text>
+                <Text style={POST_STYLESHEET.post_text}>{content}</Text>
             </View>
 
             {/* Reaction Section */}
             <View style={POST_STYLESHEET.reaction_container}>
                 {/* Like button */}
-                {renderLikeButton()}
+                <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                    <Text style={{ color: "white", marginHorizontal: "5%" }}>{likes}</Text>
+                    {renderLikeButton()}
+                </View>
 
                 {/* Comment button */}
-                <Pressable>
-                    <AwesomeIcon5 name="comment" color={'lightgrey'} size={15} solid={false} />
-                </Pressable>
+                <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                    <Text style={{ color: "white", marginHorizontal: "5%" }}>{comments}</Text>
+                    <Pressable>
+                        <AwesomeIcon5 name="comment" color={'lightgrey'} size={15} solid={false} />
+                    </Pressable>
+                </View>
+
             </View>
-        </View>
+        </TouchableOpacity>
     );
 });
 

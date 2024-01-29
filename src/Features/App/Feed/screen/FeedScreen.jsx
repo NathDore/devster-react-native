@@ -6,15 +6,34 @@ import { useModalContext } from '../../../../context/ModalProvider';
 import CreatePost from '../components/create_post/CreatePost';
 import Modal from 'react-native-modal';
 import { FEED_SCREEN_STYLESHEET } from './style';
-import { getRandomUser } from '../../../../data/randomDataGeneration';
-import { generateRandomTimestamp } from '../../../../data/randomDataGeneration';
 import { convertTimestampToRelativeTime } from '../../../../data/randomDataGeneration';
+import firestore from "@react-native-firebase/firestore";
 
 const FeedScreen = () => {
     const { setIsCreateModalOpen, isCreateModalOpen } = useModalContext();
 
+
     const [dumData, setDumData] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const [posts, setPosts] = useState([]);
+
+    const getPublications = () => {
+        firestore()
+            .collection("posts")
+            .get()
+            .then((docs) => {
+                const postData = docs.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setPosts(postData);
+                console.log(posts);
+            })
+            .catch(error => {
+                console.error('Error getting publications:', error);
+            });
+    }
 
     const loadMoreData = async () => {
         if (loading) return;
@@ -25,15 +44,13 @@ const FeedScreen = () => {
             const newData = [];
 
             for (let i = 0; i < 5; i++) {
-                const randomUser = await getRandomUser();
-                const randomTimestamp = generateRandomTimestamp();
 
-                if (randomUser) {
-                    newData.push({ userId: dumData.length + i + 1, timestamp: randomTimestamp, ...randomUser });
+                if (posts[i]) {
+                    newData.push(posts[i]);
                 }
             }
 
-            setDumData((prevData) => [...prevData, ...newData]);
+            setPosts((prevData) => [...prevData, ...newData]);
         } catch (error) {
             console.error('Error loading more data:', error);
         } finally {
@@ -42,15 +59,17 @@ const FeedScreen = () => {
     };
 
     useEffect(() => {
-        loadMoreData();
+        getPublications();
     }, [])
 
     const renderItem = ({ item }) => (
         <PostCard
-            profileImg={item.profilePicture.toString()}
-            name={item.username}
+            postId={item.id}
+            uid={item.userId}
             timestamps={convertTimestampToRelativeTime(item.timestamp)}
-            post={item.post}
+            content={item.content}
+            likes={item.likes}
+            comments={item.comments.length}
         />
     );
 
@@ -63,11 +82,11 @@ const FeedScreen = () => {
         <View style={FEED_SCREEN_STYLESHEET.container}>
             {/* Feed */}
             <FlatList
-                data={dumData}
+                data={posts}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.userId.toString()}
-                onEndReached={loadMoreData}
-                onEndReachedThreshold={0.1}
+                keyExtractor={(item) => item.id}
+                //onEndReached={loadMoreData}
+                //onEndReachedThreshold={0.1}
                 ListFooterComponent={renderFooter}
             />
 
