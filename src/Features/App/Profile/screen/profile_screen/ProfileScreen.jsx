@@ -7,10 +7,13 @@ import { generateRandomTimestamp } from '../../../../../data/randomDataGeneratio
 import { convertTimestampToRelativeTime } from '../../../../../data/randomDataGeneration';
 import PostCard from '../../../Feed/components/post_card/PostCard';
 import { PROFILE_SCREEN_STYLESHEET } from './style';
+import { useAuthContext } from '../../../../../context/AuthProvider';
 
 const ProfileScreen = ({ navigation }) => {
     const [dumData, setDumData] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const { userData } = useAuthContext();
 
     const loadMoreData = async () => {
         if (loading) return;
@@ -45,7 +48,7 @@ const ProfileScreen = ({ navigation }) => {
     const renderItem = ({ item }) => (
         <PostCard
             profileImg={item.profilePicture.toString()}
-            name={item.username}
+            name={userData.name}
             timestamps={convertTimestampToRelativeTime(item.timestamp)}
             post={item.post}
         />
@@ -66,7 +69,7 @@ const ProfileScreen = ({ navigation }) => {
     return (
         <View style={PROFILE_SCREEN_STYLESHEET.container}>
             <ImageBackground
-                source={require('../../../../../../assets/anonyme_profile.jpg')}
+                source={userData.profile_picture ? { uri: userData.profile_picture } : require('../../../../../../assets/anonyme_profile.jpg')}
                 blurRadius={15}
             >
                 {/* Icon */}
@@ -81,7 +84,7 @@ const ProfileScreen = ({ navigation }) => {
                             <Avatar
                                 size={100}
                                 rounded
-                                source={require("../../../../../../assets/anonyme_profile.jpg")}
+                                source={userData.profile_picture ? { uri: userData.profile_picture } : require('../../../../../../assets/anonyme_profile.jpg')}
                             />
                         </View>
 
@@ -91,7 +94,7 @@ const ProfileScreen = ({ navigation }) => {
                         </TouchableOpacity>
 
                         {/* Username */}
-                        <Text style={PROFILE_SCREEN_STYLESHEET.username}>Mickey05</Text>
+                        <Text style={PROFILE_SCREEN_STYLESHEET.username}>{userData.name}</Text>
                     </View>
                 </View>
             </ImageBackground>

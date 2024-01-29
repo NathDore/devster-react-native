@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState, useEffect } from 'react'
 import auth from '@react-native-firebase/auth';
 import firestore from "@react-native-firebase/firestore";
 
@@ -8,14 +8,34 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [firebaseError, setFirebaseError] = useState();
-    const [username, setUsername] = useState("");
+    const [userData, setUserData] = useState({});
 
     const [isLoginForm, setIsLoginForm] = useState(false);
     const [isRegisterForm, setIsRegisterForm] = useState(false);
+    const [isProfileLoading, setIsProfileLoading] = useState(false);
 
     auth().onAuthStateChanged((newUser) => {
         setUser(newUser);
     });
+
+    useEffect(() => {
+        const unsubscribe = firestore()
+            .collection("users")
+            .doc(user?.uid)
+            .onSnapshot((doc) => {
+                if (doc.exists) {
+                    const userDoc = doc.data();
+                    setUserData(userDoc);
+                }
+            });
+
+        return () => {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        };
+    }, [user]);
+
 
     const signOut = async () => {
         try {
@@ -50,15 +70,22 @@ const AuthProvider = ({ children }) => {
         });
     };
 
+    const generateRandomUsername = () => {
+        const prefix = "user";
+        const randomNumber = Math.floor(Math.random() * 10000); // Vous pouvez ajuster la plage de nombres si nécessaire
+        return `${prefix}${randomNumber}`;
+    };
+
     const createUserDoc = (uid, email) => {
+        const randomUsername = generateRandomUsername();
+
         return new Promise((resolve, reject) => {
             firestore()
                 .collection("users")
                 .doc(uid)
                 .set({
                     email: email,
-                    name: username,
-                    profilePicture: "",
+                    name: randomUsername,
                     createdAt: new Date().getTime(),
                 })
                 .then(() => {
@@ -80,7 +107,6 @@ const AuthProvider = ({ children }) => {
                 .createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     console.log("Account created.");
-                    setUsername(username);
                     resolve(userCredential.user);
                 })
                 .catch((error) => {
@@ -89,10 +115,10 @@ const AuthProvider = ({ children }) => {
         });
     }
 
-    const handleSignUp = (email, password, username) => {
+    const handleSignUp = (email, password) => {
         let uid = "";
 
-        signUpWithEmailAndPassword(email, password, username)
+        signUpWithEmailAndPassword(email, password)
             .then((user) => {
                 if (user) {
                     uid = user.uid;
@@ -171,6 +197,7 @@ const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 user,
+                userData,
                 signOut,
                 isLoginForm,
                 isRegisterForm,
@@ -180,6 +207,8 @@ const AuthProvider = ({ children }) => {
                 handleSignUp,
                 firebaseError,
                 setFirebaseError,
+                isProfileLoading,
+                setIsProfileLoading
             }}>
             {children}
         </AuthContext.Provider>

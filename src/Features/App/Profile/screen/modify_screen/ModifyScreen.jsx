@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, ImageBackground, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Avatar } from 'react-native-elements';
 import { MODIFY_SCREEN_STYLESHEET } from './style';
@@ -9,13 +9,8 @@ import { useAuthContext } from '../../../../../context/AuthProvider';
 
 const ModifyScreen = () => {
     const [usernameInput, setUsernameInput] = useState("");
-    const [userData, setUserData] = useState({});
-
-    const { user } = useAuthContext();
-
-    useEffect(() => {
-        getUserDoc(user?.uid);
-    }, [])
+    const { user, userData, isProfileLoading,
+        setIsProfileLoading } = useAuthContext();
 
     const pickImageAsync = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -36,6 +31,7 @@ const ModifyScreen = () => {
 
         task.on('state_changed', snapshot => {
             console.log(`${snapshot.bytesTransferred} transferred out of ${snapshot.totalBytes}`);
+            setIsProfileLoading(true);
         });
 
         task.then(async () => {
@@ -47,23 +43,12 @@ const ModifyScreen = () => {
         })
     };
 
-
-    const getUserDoc = (userId) => {
-        firestore()
-            .collection("users")
-            .doc(userId)
-            .get()
-            .then((doc) => {
-                if (doc.exists) {
-                    setUserData(doc.data());
-                };
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
-
     const sendDownloadURLToFirestore = (downloadURL, userId) => {
+        if (!userData) {
+            console.error("userData is undefined");
+            return;
+        }
+
         firestore()
             .collection("users")
             .doc(userId)
@@ -73,7 +58,29 @@ const ModifyScreen = () => {
             })
             .then(() => {
                 console.log("image upload to firestore");
+                setIsProfileLoading(false);
             })
+    }
+
+    const updateNameFirestore = (uid, userData, usernameInput) => {
+        firestore()
+            .collection("users")
+            .doc(uid)
+            .set({
+                ...userData,
+                name: usernameInput,
+            })
+            .then(() => {
+                console.log("Name updated.");
+                setUsernameInput("");
+            })
+            .catch((error) => {
+                console.log("error while updating the name.")
+            })
+    }
+
+    const handleUpdateName = () => {
+        updateNameFirestore(user?.uid, userData, usernameInput);
     }
 
     return (
@@ -87,11 +94,14 @@ const ModifyScreen = () => {
                 <View style={MODIFY_SCREEN_STYLESHEET.profile_picture}>
 
                     {/* Profile picture */}
-                    <Avatar
-                        size={90}
-                        rounded
-                        source={userData?.profile_picture ? { uri: userData?.profile_picture } : require('../../../../../../assets/anonyme_profile.jpg')}
-                    />
+
+                    {
+                        isProfileLoading ? <ActivityIndicator size={'small'} color={"blue"} /> : <Avatar
+                            size={90}
+                            rounded
+                            source={userData?.profile_picture ? { uri: userData?.profile_picture } : require('../../../../../../assets/anonyme_profile.jpg')}
+                        />
+                    }
 
                     {/* Modify button */}
                     <TouchableOpacity style={MODIFY_SCREEN_STYLESHEET.modify_button} onPress={pickImageAsync}>
@@ -102,10 +112,18 @@ const ModifyScreen = () => {
 
             <View style={MODIFY_SCREEN_STYLESHEET.bottom_section}>
 
+                <View style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "center", marginVertical: "5%" }}>
+                    <Text style={{ color: "white", fontWeight: "bold", fontSize: 25 }}>{userData?.name}</Text>
+                </View>
+
                 {/* Modifify username section */}
                 <View style={MODIFY_SCREEN_STYLESHEET.username_section}>
-                    <TextInput style={MODIFY_SCREEN_STYLESHEET.username_text_input} placeholder='Modify your username here.' />
+                    <TextInput style={MODIFY_SCREEN_STYLESHEET.username_text_input} placeholder='Modify your username here.' onChangeText={(text) => setUsernameInput(text)} value={usernameInput} />
                 </View>
+
+                {
+                    usernameInput ? <TouchableOpacity style={{ marginVertical: "5%" }} onPress={handleUpdateName}><Text style={{ color: "white", fontSize: 20 }}>OK</Text></TouchableOpacity> : null
+                }
             </View>
         </View>
     )

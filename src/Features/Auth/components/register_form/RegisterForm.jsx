@@ -10,7 +10,7 @@ const RegisterForm = () => {
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
 
     const onSubmit = (data) => {
-        handleSignUp(data.email, data.password, data.name);
+        handleSignUp(data.email, data.password);
     };
 
     return (
@@ -31,31 +31,6 @@ const RegisterForm = () => {
                 <View style={FORM_STYLESHEET.form}>
                     {/* Title */}
                     <Text style={FORM_STYLESHEET.title}>Join us now.</Text>
-
-                    {/* Name Field */}
-                    <Controller
-                        control={control}
-                        render={({ field, fieldState }) => (
-                            <View style={FORM_STYLESHEET.field}>
-                                <Text style={FORM_STYLESHEET.labelText}>Name:</Text>
-                                <TextInput
-                                    onChangeText={field.onChange}
-                                    onBlur={field.onBlur}
-                                    value={field.value}
-                                    style={FORM_STYLESHEET.userInput}
-                                />
-                                {fieldState.error && <Text style={{ color: 'red' }}>{fieldState.error.message}</Text>}
-                            </View>
-                        )}
-                        name="name"
-                        rules={{
-                            required: 'Name is required', pattern: {
-                                value: /^[A-Za-z]+$/,
-                                message: 'Invalid name format. Only letters are allowed.',
-                            },
-                        }}
-                    />
-
 
                     {/* Email Field */}
                     <Controller
