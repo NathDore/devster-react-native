@@ -8,31 +8,16 @@ import Modal from 'react-native-modal';
 import { FEED_SCREEN_STYLESHEET } from './style';
 import { convertTimestampToRelativeTime } from '../../../../data/randomDataGeneration';
 import firestore from "@react-native-firebase/firestore";
+import { getPosts } from '../../firebase/firebase.functions';
 
 const FeedScreen = () => {
     const { setIsCreateModalOpen, isCreateModalOpen } = useModalContext();
 
-
-    const [dumData, setDumData] = useState([]);
     const [loading, setLoading] = useState(false);
-
     const [posts, setPosts] = useState([]);
 
     const getPublications = () => {
-        firestore()
-            .collection("posts")
-            .get()
-            .then((docs) => {
-                const postData = docs.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-                setPosts(postData);
-                console.log(posts);
-            })
-            .catch(error => {
-                console.error('Error getting publications:', error);
-            });
+        setPosts(getPosts());
     }
 
     const loadMoreData = async () => {

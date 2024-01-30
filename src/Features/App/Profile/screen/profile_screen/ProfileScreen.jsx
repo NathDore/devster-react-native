@@ -8,52 +8,52 @@ import { convertTimestampToRelativeTime } from '../../../../../data/randomDataGe
 import PostCard from '../../../Feed/components/post_card/PostCard';
 import { PROFILE_SCREEN_STYLESHEET } from './style';
 import { useAuthContext } from '../../../../../context/AuthProvider';
+import firestore from "@react-native-firebase/firestore";
+import { getUserPost, getUserPosts } from '../../../firebase/firebase.functions';
 
 const ProfileScreen = ({ navigation }) => {
-    const [dumData, setDumData] = useState([]);
+    const [userPosts, setUserPosts] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const { userData } = useAuthContext();
+    const { userData, user } = useAuthContext();
 
-    const loadMoreData = async () => {
-        if (loading) return;
-        if (dumData.length > 4) return;
-
-        setLoading(true);
-
-        try {
-            const newData = [];
-
-            for (let i = 0; i < 5; i++) {
-                const randomUser = await getRandomUser();
-                const randomTimestamp = generateRandomTimestamp();
-
-                if (randomUser) {
-                    newData.push({ userId: dumData.length + i + 1, timestamp: randomTimestamp, ...randomUser });
-                }
-            }
-
-            setDumData((prevData) => [...prevData, ...newData]);
-        } catch (error) {
-            console.error('Error loading more data:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const getPublications = () => {
+        setUserPosts(getUserPosts(user.uid));
+    }
 
     useEffect(() => {
-        loadMoreData();
+        getPublications();
     }, [])
+
+    useEffect(() => {
+        const unsubscribe = firestore()
+            .collection("posts")
+            .where('userId', '==', user.uid)
+            .onSnapshot((snapshot) => {
+                const postData = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setUserPosts(postData);
+            });
+
+        return () => {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        };
+    }, []);
 
     const renderItem = ({ item }) => (
         <PostCard
-            profileImg={item.profilePicture.toString()}
-            name={userData.name}
+            postId={item.id}
+            uid={item.userId}
             timestamps={convertTimestampToRelativeTime(item.timestamp)}
-            post={item.post}
+            content={item.content}
+            likes={item.likes}
+            comments={item.comments.length}
         />
     );
-
     const renderFooter = () => {
         return loading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
     };
@@ -110,11 +110,11 @@ const ProfileScreen = ({ navigation }) => {
                 {/* Publications feed */}
                 <View>
                     <FlatList
-                        data={dumData}
+                        data={userPosts}
                         renderItem={renderItem}
-                        keyExtractor={(item) => item.userId.toString()}
-                        onEndReached={loadMoreData}
-                        onEndReachedThreshold={0.1}
+                        keyExtractor={(item) => item.id}
+                        //onEndReached={loadMoreData}
+                        //onEndReachedThreshold={0.1}
                         ListFooterComponent={renderFooter}
                     />
                 </View>
