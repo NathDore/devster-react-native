@@ -55,16 +55,6 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
             .catch(error => console.log("error while removing the like."))
     }
 
-    const getUserWhoDidThePost = () => {
-        firestore()
-            .collection('users')
-            .doc(postUid)
-            .get()
-            .then((doc) => {
-                if (doc.exists) setUserDoc(doc.data());
-            })
-    }
-
     const onLikesSnapshot = (snapshot) => {
         const likesData = snapshot.docs.map((doc) => ({
             id: doc.id,
@@ -103,17 +93,41 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
         return unsubscribe;
     }
 
-    useEffect(() => {
-        getUserWhoDidThePost();
+    const onUserWhoDidThePostSnapshot = (snapshot) => {
+        if (snapshot.exists) {
+            setUserDoc({
+                id: snapshot.id,
+                ...snapshot.data(),
+            });
+        } else {
+            console.error("Document does not exist");
+        }
+    };
 
+
+    const subscribeToUserWhoDidThePost = () => {
+        const unsubscribe = firestore()
+            .collection('users')
+            .doc(postUid)
+            .onSnapshot(onUserWhoDidThePostSnapshot);
+
+        return unsubscribe;
+    }
+
+    useEffect(() => {
         const unsubscribeLikes = subscribeToLikes();
         const unsubscribeComments = subscribeToComments();
+        const unsubscribeToUserWhoDidThePost = subscribeToUserWhoDidThePost();
+
+        console.log(user.uid);
+        console.log(postUid);
 
         return () => {
             unsubscribeLikes();
             unsubscribeComments();
+            unsubscribeToUserWhoDidThePost();
         };
-    }, []);
+    }, [postUid]);
 
 
     const renderLikeButton = () => {

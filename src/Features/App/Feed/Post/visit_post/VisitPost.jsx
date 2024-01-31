@@ -1,11 +1,11 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import firestore from "@react-native-firebase/firestore";
 import MyPost from './my_post/MyPost';
 import YourPost from './your_post/YourPost';
 import CommentList from '../../Comments/comments_section/CommentList';
-import { getPostComments } from '../../../../../firebase/commun.functions';
 import AddComment from '../../Comments/add_comment/AddComment';
+import { useFocusEffect } from '@react-navigation/native';
 
 const VisitPost = ({ route }) => {
     const {
@@ -23,11 +23,10 @@ const VisitPost = ({ route }) => {
         firestore()
             .collection("posts")
             .where('userId', '==', uid)
+            .where('postId', '==', postId)
             .get()
             .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    setIsYourPost(true);
-                });
+                setIsYourPost(!querySnapshot.empty);
             })
             .catch((error) => {
                 console.error("Error getting documents: ", error);
@@ -40,7 +39,20 @@ const VisitPost = ({ route }) => {
             id: doc.id,
             ...doc.data(),
         }));
-        setComments(commentsData);
+
+        const sortedComments = [...commentsData].sort((a, b) => {
+            const timestampA = parseInt(a.timestamp);
+            const timestampB = parseInt(b.timestamp);
+
+            if (!isNaN(timestampA) && !isNaN(timestampB)) {
+                return timestampA - timestampB;
+            }
+
+            console.error("Échec de la conversion en nombre pour certains commentaires.");
+            return 0;
+        });
+
+        setComments(sortedComments);
     };
 
     const subscribeToComments = () => {
@@ -53,28 +65,21 @@ const VisitPost = ({ route }) => {
     }
 
 
-    useEffect(() => {
-        const unsubscribeComments = subscribeToComments();
-        checkIfThisIsYourPost();
+    useFocusEffect(
+        React.useCallback(() => {
 
-        const sortedComments = [...comments].sort((a, b) => {
-            const timestampA = parseInt(a.timestamp);
-            const timestampB = parseInt(b.timestamp);
+            console.log(isYourPost);
+            console.log(uid);
+            console.log(postUid);
 
-            if (!isNaN(timestampA) && !isNaN(timestampB)) {
-                return timestampA - timestampB;
-            }
+            const unsubscribeComments = subscribeToComments();
+            checkIfThisIsYourPost();
 
-            // Gérez le cas où la conversion a échoué
-            console.error("Échec de la conversion en nombre pour certains commentaires.");
-            return 0;
-        })
-        setComments(sortedComments);
-
-        return () => {
-            unsubscribeComments();
-        };
-    }, [])
+            return () => {
+                unsubscribeComments();
+            };
+        }, [uid, postId])
+    )
 
     return (
         <View style={{
