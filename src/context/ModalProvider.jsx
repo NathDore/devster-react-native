@@ -15,7 +15,7 @@ const ModalProvider = ({ children }) => {
 export const useModalContext = () => {
     const context = useContext(ModalContext);
     if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider');
+        throw new Error('useModalContext must be used within an ModalProvider');
     }
     return context;
 }

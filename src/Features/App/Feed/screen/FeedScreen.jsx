@@ -1,14 +1,14 @@
 import { View, FlatList, ActivityIndicator, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react';
-import PostCard from '../components/post_card/PostCard';
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useModalContext } from '../../../../context/ModalProvider';
-import CreatePost from '../components/create_post/CreatePost';
 import Modal from 'react-native-modal';
 import { FEED_SCREEN_STYLESHEET } from './style';
 import { convertTimestampToRelativeTime } from '../../../../data/randomDataGeneration';
 import firestore from "@react-native-firebase/firestore";
 import { getPosts } from '../../firebase/firebase.functions';
+import PostCard from "../Post/post_card/PostCard";
+import CreatePost from '../Post/create_post/CreatePost';
 
 const FeedScreen = () => {
     const { setIsCreateModalOpen, isCreateModalOpen } = useModalContext();
