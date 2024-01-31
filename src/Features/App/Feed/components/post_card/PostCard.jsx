@@ -5,14 +5,93 @@ import AwesomeIcon5 from 'react-native-vector-icons/FontAwesome5';
 import React, { useState, useEffect } from 'react';
 import { POST_STYLESHEET } from './style';
 import firestore from "@react-native-firebase/firestore";
+import { useAuthContext } from '../../../../../context/AuthProvider';
 
-const PostCard = React.memo(({ postId, uid, timestamps, content, likes, comments }) => {
-    const [isLike, setIslike] = useState(false);
+const PostCard = React.memo(({ postId, uid, timestamps, content, comments }) => {
+    const [isLike, setIsLike] = useState(false);
+    const [likes, setLikes] = useState([]);
     const [userDoc, setUserDoc] = useState({});
 
+    const { user } = useAuthContext();
+
     const handleLike = () => {
-        setIslike((prev) => !prev);
+        setIsLike(prev => !prev);
+        sendLikeToFirestore();
     };
+
+    const sendLikeToFirestore = () => {
+        const likedDoc = likes.find((like) => like.userId === user.uid);
+
+        if (likedDoc) {
+            removeLike(likedDoc.id);
+        } else {
+            addLike();
+        }
+    };
+
+    const addLike = () => {
+        firestore()
+            .collection("likes")
+            .add({
+                postId: postId,
+                userId: user.uid,
+            })
+            .then(() => console.log("like added."))
+            .catch(error => console.log("error while adding the like."))
+    };
+
+    const removeLike = (likeId) => {
+        firestore()
+            .collection("likes")
+            .doc(likeId)
+            .delete()
+            .then(() => {
+                console.log("Like removed");
+            })
+            .catch(error => console.log("error while removing the like."))
+    }
+
+    const getUserWhoDidThePost = () => {
+        firestore()
+            .collection('users')
+            .doc(uid)
+            .get()
+            .then((doc) => {
+                if (doc.exists) setUserDoc(doc.data());
+            })
+    }
+
+    const onLikesSnapshot = (snapshot) => {
+        const likesData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        setLikes(likesData);
+
+        const userLiked = likesData.some((like) => like.userId === user.uid);
+        setIsLike(userLiked);
+    };
+
+
+    const subscribeToLikes = () => {
+        const unsubscribe = firestore()
+            .collection('likes')
+            .where('postId', '==', postId)
+            .onSnapshot(onLikesSnapshot);
+
+        return unsubscribe;
+    };
+
+    useEffect(() => {
+        getUserWhoDidThePost();
+
+        const unsubscribe = subscribeToLikes();
+
+        return () => {
+            unsubscribe();
+        };
+    }, []);
+
 
     const renderLikeButton = () => {
         if (isLike) {
@@ -29,20 +108,6 @@ const PostCard = React.memo(({ postId, uid, timestamps, content, likes, comments
             );
         }
     };
-
-    const getUserDoc = () => {
-        firestore()
-            .collection('users')
-            .doc(uid)
-            .get()
-            .then((doc) => {
-                if (doc.exists) setUserDoc(doc.data());
-            })
-    }
-
-    useEffect(() => {
-        getUserDoc();
-    }, [])
 
     return (
         <TouchableOpacity
@@ -76,7 +141,7 @@ const PostCard = React.memo(({ postId, uid, timestamps, content, likes, comments
             <View style={POST_STYLESHEET.reaction_container}>
                 {/* Like button */}
                 <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                    <Text style={{ color: "white", marginHorizontal: "5%" }}>{likes}</Text>
+                    <Text style={{ color: "white", marginHorizontal: "5%" }}>{likes.length}</Text>
                     {renderLikeButton()}
                 </View>
 

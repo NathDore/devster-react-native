@@ -32,3 +32,13 @@ export const getUserPosts = (uid) => {
             console.error('Error getting publications:', error);
         });
 }
+
+export const getUserDoc = (uid) => {
+    firestore()
+        .collection('users')
+        .doc(uid)
+        .get()
+        .then((doc) => {
+            if (doc.exists) return doc.data();
+        })
+}

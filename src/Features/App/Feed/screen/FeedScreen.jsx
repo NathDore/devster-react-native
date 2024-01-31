@@ -71,8 +71,6 @@ const FeedScreen = () => {
             uid={item.userId}
             timestamps={convertTimestampToRelativeTime(item.timestamp)}
             content={item.content}
-            likes={item.likes}
-            comments={item.comments.length}
         />
     );
 
