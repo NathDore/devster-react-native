@@ -2,14 +2,12 @@ import { View, Text, TouchableOpacity, ImageBackground, ActivityIndicator, FlatL
 import React, { useState, useEffect } from 'react'
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { Avatar } from 'react-native-elements';
-import { getRandomUser } from '../../../../../data/randomDataGeneration';
-import { generateRandomTimestamp } from '../../../../../data/randomDataGeneration';
 import { convertTimestampToRelativeTime } from '../../../../../data/randomDataGeneration';
-import PostCard from '../../../Feed/components/post_card/PostCard';
+import PostCard from '../../../Feed/Post/post_card/PostCard';
 import { PROFILE_SCREEN_STYLESHEET } from './style';
 import { useAuthContext } from '../../../../../context/AuthProvider';
 import firestore from "@react-native-firebase/firestore";
-import { getUserPost, getUserPosts } from '../../../firebase/firebase.functions';
+import { getUserPosts } from '../../../../../firebase/commun.functions';
 
 const ProfileScreen = ({ navigation }) => {
     const [userPosts, setUserPosts] = useState([]);
@@ -18,7 +16,7 @@ const ProfileScreen = ({ navigation }) => {
     const { userData, user } = useAuthContext();
 
     const getPublications = () => {
-        setUserPosts(getUserPosts(user.uid));
+        setUserPosts(getUserPosts(user?.uid));
     }
 
     useEffect(() => {
@@ -47,11 +45,10 @@ const ProfileScreen = ({ navigation }) => {
     const renderItem = ({ item }) => (
         <PostCard
             postId={item.id}
-            uid={item.userId}
+            postUid={item.userId}
             timestamps={convertTimestampToRelativeTime(item.timestamp)}
             content={item.content}
-            likes={item.likes}
-            comments={item.comments.length}
+            isTouchable={true}
         />
     );
     const renderFooter = () => {

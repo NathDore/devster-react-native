@@ -6,13 +6,17 @@ import React, { useState, useEffect } from 'react';
 import { POST_STYLESHEET } from './style';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../../../context/AuthProvider';
+import { useNavigation } from '@react-navigation/core';
+import { getPostComments } from '../../../../../firebase/commun.functions';
 
-const PostCard = React.memo(({ postId, uid, timestamps, content, comments }) => {
+const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable }) => {
     const [isLike, setIsLike] = useState(false);
     const [likes, setLikes] = useState([]);
+    const [comments, setComments] = useState([]);
     const [userDoc, setUserDoc] = useState({});
 
     const { user } = useAuthContext();
+    const navigation = useNavigation();
 
     const handleLike = () => {
         setIsLike(prev => !prev);
@@ -54,7 +58,7 @@ const PostCard = React.memo(({ postId, uid, timestamps, content, comments }) => 
     const getUserWhoDidThePost = () => {
         firestore()
             .collection('users')
-            .doc(uid)
+            .doc(postUid)
             .get()
             .then((doc) => {
                 if (doc.exists) setUserDoc(doc.data());
@@ -72,6 +76,14 @@ const PostCard = React.memo(({ postId, uid, timestamps, content, comments }) => 
         setIsLike(userLiked);
     };
 
+    const onCommentsSnapshot = (snapshot) => {
+        const commentsData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        setComments(commentsData);
+    };
+
 
     const subscribeToLikes = () => {
         const unsubscribe = firestore()
@@ -82,13 +94,24 @@ const PostCard = React.memo(({ postId, uid, timestamps, content, comments }) => 
         return unsubscribe;
     };
 
+    const subscribeToComments = () => {
+        const unsubscribe = firestore()
+            .collection('comments')
+            .where('postId', '==', postId)
+            .onSnapshot(onCommentsSnapshot);
+
+        return unsubscribe;
+    }
+
     useEffect(() => {
         getUserWhoDidThePost();
 
-        const unsubscribe = subscribeToLikes();
+        const unsubscribeLikes = subscribeToLikes();
+        const unsubscribeComments = subscribeToComments();
 
         return () => {
-            unsubscribe();
+            unsubscribeLikes();
+            unsubscribeComments();
         };
     }, []);
 
@@ -109,8 +132,23 @@ const PostCard = React.memo(({ postId, uid, timestamps, content, comments }) => 
         }
     };
 
+    const handleNavigation = () => {
+        const { uid } = user;
+
+        navigation.navigate("VisitPost", {
+            postId,
+            postUid,
+            timestamps,
+            content,
+            userDoc,
+            uid
+        });
+    }
+
+    const TouchableView = isTouchable ? TouchableOpacity : View;
+
     return (
-        <TouchableOpacity
+        <TouchableView
             style={{
                 borderTopWidth: 0.5,
                 borderBottomWidth: 0.5,
@@ -118,7 +156,10 @@ const PostCard = React.memo(({ postId, uid, timestamps, content, comments }) => 
                 width: '100%',
                 paddingHorizontal: '2%',
                 paddingVertical: '1%',
-            }}>
+                backgroundColor: "#202124",
+            }}
+            onPress={handleNavigation}
+        >
             {/* Info Container */}
             <View style={POST_STYLESHEET.info_container}>
                 {/* Profile picture */}
@@ -147,14 +188,14 @@ const PostCard = React.memo(({ postId, uid, timestamps, content, comments }) => 
 
                 {/* Comment button */}
                 <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                    <Text style={{ color: "white", marginHorizontal: "5%" }}>{comments}</Text>
-                    <Pressable>
+                    <Text style={{ color: "white", marginHorizontal: "5%" }}>{comments.length}</Text>
+                    <View>
                         <AwesomeIcon5 name="comment" color={'lightgrey'} size={15} solid={false} />
-                    </Pressable>
+                    </View>
                 </View>
 
             </View>
-        </TouchableOpacity>
+        </TouchableView>
     );
 });
 

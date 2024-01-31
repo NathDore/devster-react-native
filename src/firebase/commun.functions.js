@@ -1,5 +1,8 @@
 import firestore from "@react-native-firebase/firestore";
 
+//This Functions are not listening in real-time !
+
+// Get every posts from firestore
 export const getPosts = () => {
     firestore()
         .collection("posts")
@@ -16,6 +19,7 @@ export const getPosts = () => {
         });
 }
 
+// Get every posts of the current user
 export const getUserPosts = (uid) => {
     firestore()
         .collection("posts")
@@ -33,12 +37,17 @@ export const getUserPosts = (uid) => {
         });
 }
 
-export const getUserDoc = (uid) => {
+export const getPostComments = (postId) => {
     firestore()
-        .collection('users')
-        .doc(uid)
+        .collection('comments')
+        .where('postId', '==', postId)
         .get()
-        .then((doc) => {
-            if (doc.exists) return doc.data();
+        .then((querySnapshot) => {
+            const commentsData = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+
+            return commentsData;
         })
 }

@@ -6,7 +6,6 @@ import Modal from 'react-native-modal';
 import { FEED_SCREEN_STYLESHEET } from './style';
 import { convertTimestampToRelativeTime } from '../../../../data/randomDataGeneration';
 import firestore from "@react-native-firebase/firestore";
-import { getPosts } from '../../firebase/firebase.functions';
 import PostCard from "../Post/post_card/PostCard";
 import CreatePost from '../Post/create_post/CreatePost';
 
@@ -15,10 +14,6 @@ const FeedScreen = () => {
 
     const [loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
-
-    const getPublications = () => {
-        setPosts(getPosts());
-    }
 
     const loadMoreData = async () => {
         if (loading) return;
@@ -44,10 +39,20 @@ const FeedScreen = () => {
     };
 
     useEffect(() => {
-        getPublications();
-    }, [])
+        const sortedPosts = [...posts].sort((a, b) => {
+            const timestampA = parseInt(a.timestamp);
+            const timestampB = parseInt(b.timestamp);
 
-    useEffect(() => {
+            if (!isNaN(timestampA) && !isNaN(timestampB)) {
+                return timestampA - timestampB;
+            }
+
+            console.error("Échec de la conversion en nombre pour certains commentaires.");
+            return 0;
+        })
+
+        setPosts(sortedPosts);
+
         const unsubscribe = firestore()
             .collection("posts")
             .onSnapshot((snapshot) => {
@@ -68,9 +73,10 @@ const FeedScreen = () => {
     const renderItem = ({ item }) => (
         <PostCard
             postId={item.id}
-            uid={item.userId}
+            postUid={item.userId}
             timestamps={convertTimestampToRelativeTime(item.timestamp)}
             content={item.content}
+            isTouchable={true}
         />
     );
 

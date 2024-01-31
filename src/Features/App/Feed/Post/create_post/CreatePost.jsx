@@ -19,7 +19,6 @@ const CreatePost = () => {
     }
 
     const handleSubmit = () => {
-        console.log(userInput);
         createPublication();
     }
 
