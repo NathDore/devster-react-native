@@ -20,17 +20,22 @@ const VisitPost = ({ route }) => {
     const [comments, setComments] = useState([]);
 
     const checkIfThisIsYourPost = () => {
+
         firestore()
             .collection("posts")
-            .where('userId', '==', uid)
-            .where('postId', '==', postId)
+            .doc(postId)  // Use the doc method with postId as the document ID
             .get()
-            .then((querySnapshot) => {
-                setIsYourPost(!querySnapshot.empty);
+            .then((docSnapshot) => {
+                if (docSnapshot.data().userId == uid) {
+                    setIsYourPost(true);
+                } else {
+                    setIsYourPost(false);
+                }
             })
             .catch((error) => {
-                console.error("Error getting documents: ", error);
+                console.error("Error getting document: ", error);
             });
+
     };
 
 
@@ -67,11 +72,6 @@ const VisitPost = ({ route }) => {
 
     useFocusEffect(
         React.useCallback(() => {
-
-            console.log(isYourPost);
-            console.log(uid);
-            console.log(postUid);
-
             const unsubscribeComments = subscribeToComments();
             checkIfThisIsYourPost();
 
