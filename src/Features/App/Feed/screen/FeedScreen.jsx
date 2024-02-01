@@ -1,4 +1,4 @@
-import { View, FlatList, ActivityIndicator, Pressable } from 'react-native'
+import { View, FlatList, ActivityIndicator, Pressable, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react';
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useModalContext } from '../../../../context/ModalProvider';
@@ -15,6 +15,7 @@ const FeedScreen = () => {
     const [loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
     const [lastVisible, setLastVisible] = useState();
+    const [refreshing, setRefreshing] = useState(false);
 
     const loadInitialData = () => {
         setLoading(true);
@@ -37,7 +38,7 @@ const FeedScreen = () => {
             .finally(() => setLoading(false));
     }
 
-    const loadMoreData = async () => {
+    const loadMoreData = () => {
         if (loading || !lastVisible) return;
 
         setLoading(true);
@@ -61,6 +62,26 @@ const FeedScreen = () => {
             .finally(() => setLoading(false));
     };
 
+    const onRefresh = () => {
+        setRefreshing(true);
+
+        firestore()
+            .collection('posts')
+            .orderBy("timestamp", "desc")
+            .limit(8)
+            .get()
+            .then((querySnapshot) => {
+                const postData = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+
+                setPosts(postData);
+                setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
+            })
+            .catch((error) => console.error('Error refreshing data:', error))
+            .finally(() => setRefreshing(false));
+    }
 
     useEffect(() => {
         const unsubscribe = loadInitialData();
@@ -96,6 +117,12 @@ const FeedScreen = () => {
                 keyExtractor={(item) => item.id}
                 onEndReached={loadMoreData}
                 onEndReachedThreshold={0.1}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
                 ListFooterComponent={renderFooter}
             />
 
