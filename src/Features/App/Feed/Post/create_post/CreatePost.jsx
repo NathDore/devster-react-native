@@ -29,8 +29,6 @@ const CreatePost = () => {
             .collection("posts")
             .doc()
             .set({
-                comments: [],
-                likes: 0,
                 content: userInput,
                 userId: user?.uid,
                 timestamp: new Date().getTime(),

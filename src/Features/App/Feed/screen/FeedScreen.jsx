@@ -23,7 +23,7 @@ const FeedScreen = () => {
         try {
             const newData = [];
 
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 10; i++) {
 
                 if (posts[i]) {
                     newData.push(posts[i]);
@@ -39,22 +39,9 @@ const FeedScreen = () => {
     };
 
     useEffect(() => {
-        const sortedPosts = [...posts].sort((a, b) => {
-            const timestampA = parseInt(a.timestamp);
-            const timestampB = parseInt(b.timestamp);
-
-            if (!isNaN(timestampA) && !isNaN(timestampB)) {
-                return timestampA - timestampB;
-            }
-
-            console.error("Échec de la conversion en nombre pour certains commentaires.");
-            return 0;
-        })
-
-        setPosts(sortedPosts);
-
         const unsubscribe = firestore()
             .collection("posts")
+            .orderBy("timestamp", "desc")
             .onSnapshot((snapshot) => {
                 const postData = snapshot.docs.map(doc => ({
                     id: doc.id,

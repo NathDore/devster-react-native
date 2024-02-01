@@ -119,9 +119,6 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
         const unsubscribeComments = subscribeToComments();
         const unsubscribeToUserWhoDidThePost = subscribeToUserWhoDidThePost();
 
-        console.log(user.uid);
-        console.log(postUid);
-
         return () => {
             unsubscribeLikes();
             unsubscribeComments();
