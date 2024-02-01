@@ -12,67 +12,67 @@ const Tab = createBottomTabNavigator();
 
 export default function AppStack() {
     return (
-        <ModalProvider>
-            <Tab.Navigator screenOptions={{
-                headerShown: false,
-                tabBarShowLabel: false,
-                tabBarActiveBackgroundColor: "lightgray",
-                tabBarStyle: {
-                    height: 55,
-                }
-            }}>
-                {/* Main Screens with icon */}
-                <Tab.Group>
-                    <Tab.Screen
-                        name="Feed"
-                        component={FeedScreen}
-                        options={
-                            {
-                                tabBarIcon: () => (
-                                    <FontAwesome5Icon name="poll-h" color={"black"} size={35} />
-                                ),
-                            }
+        <Tab.Navigator screenOptions={{
+            headerShown: false,
+            tabBarShowLabel: false,
+            tabBarActiveBackgroundColor: "lightgray",
+            tabBarStyle: {
+                height: 55,
+            }
+        }}>
+            {/* Main Screens with icon */}
+            <Tab.Group>
+                <Tab.Screen
+                    name="Feed"
+                    options={{
+                        tabBarIcon: () => (
+                            <FontAwesome5Icon name="poll-h" color={"black"} size={35} />
+                        ),
+                    }}
+                >
+                    {() => (
+                        <ModalProvider>
+                            <FeedScreen />
+                        </ModalProvider>
+                    )}
+                </Tab.Screen>
+                <Tab.Screen
+                    name="Chat"
+                    component={ChatListScreen}
+                    options={
+                        {
+                            tabBarIcon: () => (
+                                <AwesomeIcon name="comment" color={"black"} size={35} />
+                            ),
                         }
-                    />
-                    <Tab.Screen
-                        name="Chat"
-                        component={ChatListScreen}
-                        options={
-                            {
-                                tabBarIcon: () => (
-                                    <AwesomeIcon name="comment" color={"black"} size={35} />
-                                ),
-                            }
-                        }
-                    />
-                </Tab.Group>
+                    }
+                />
+            </Tab.Group>
 
-                {/* Profile Screens without icon */}
-                <Tab.Group>
-                    <Tab.Screen
-                        name="Profile"
-                        component={ProfileScreen}
-                        options={{ tabBarButton: () => null }}
-                    />
+            {/* Profile Screens without icon */}
+            <Tab.Group>
+                <Tab.Screen
+                    name="Profile"
+                    component={ProfileScreen}
+                    options={{ tabBarButton: () => null }}
+                />
 
-                    <Tab.Screen
-                        name="Modify"
-                        component={ModifyScreen}
-                        options={{ tabBarButton: () => null }}
-                    />
-                </Tab.Group>
+                <Tab.Screen
+                    name="Modify"
+                    component={ModifyScreen}
+                    options={{ tabBarButton: () => null }}
+                />
+            </Tab.Group>
 
-                {/* Visit Post Screens without icon */}
-                <Tab.Group>
-                    <Tab.Screen
-                        name="VisitPost"
-                        component={VisitPost}
-                        options={{ tabBarButton: () => null }}
-                    />
-                </Tab.Group>
+            {/* Visit Post Screens without icon */}
+            <Tab.Group>
+                <Tab.Screen
+                    name="VisitPost"
+                    component={VisitPost}
+                    options={{ tabBarButton: () => null }}
+                />
+            </Tab.Group>
 
-            </Tab.Navigator>
-        </ModalProvider>
-
+        </Tab.Navigator>
     );
 }

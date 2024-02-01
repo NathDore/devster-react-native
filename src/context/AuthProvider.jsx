@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import auth from '@react-native-firebase/auth';
 import firestore from "@react-native-firebase/firestore";
 
@@ -193,23 +193,28 @@ const AuthProvider = ({ children }) => {
         setIsRegisterForm(prevState => !prevState)
     }
 
+    const contextValue = useMemo(() => {
+        return {
+            user,
+            userData,
+            signOut,
+            isLoginForm,
+            isRegisterForm,
+            openLoginForm,
+            openRegisterForm,
+            signInWithEmailAndPassword,
+            handleSignUp,
+            firebaseError,
+            setFirebaseError,
+            isProfileLoading,
+            setIsProfileLoading
+        };
+    }, [user, userData, isLoginForm, isRegisterForm, firebaseError, isProfileLoading]);
+
+
     return (
         <AuthContext.Provider
-            value={{
-                user,
-                userData,
-                signOut,
-                isLoginForm,
-                isRegisterForm,
-                openLoginForm,
-                openRegisterForm,
-                signInWithEmailAndPassword,
-                handleSignUp,
-                firebaseError,
-                setFirebaseError,
-                isProfileLoading,
-                setIsProfileLoading
-            }}>
+            value={contextValue}>
             {children}
         </AuthContext.Provider>
     )

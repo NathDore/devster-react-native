@@ -38,7 +38,6 @@ const VisitPost = ({ route }) => {
 
     };
 
-
     const onCommentsSnapshot = (snapshot) => {
         const commentsData = snapshot.docs.map((doc) => ({
             id: doc.id,
@@ -68,7 +67,6 @@ const VisitPost = ({ route }) => {
 
         return unsubscribe;
     }
-
 
     useFocusEffect(
         React.useCallback(() => {
