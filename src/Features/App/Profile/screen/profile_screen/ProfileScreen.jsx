@@ -12,35 +12,66 @@ import { getUserPosts } from '../../../../../firebase/commun.functions';
 const ProfileScreen = ({ navigation }) => {
     const [userPosts, setUserPosts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [lastVisible, setLastVisible] = useState(null);
 
     const { userData, user } = useAuthContext();
 
-    const getPublications = () => {
-        setUserPosts(getUserPosts(user?.uid));
+    const loadInitialData = () => {
+        setLoading(true);
+
+        firestore()
+            .collection('posts')
+            .where('userId', '==', user?.uid)
+            .orderBy('timestamp', 'desc')
+            .limit(5)
+            .get()
+            .then((querySnapshot) => {
+                const postData = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }))
+
+                setUserPosts(postData);
+                setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
+            })
+            .catch((error) => console.error('Error loading initial data:', error))
+            .finally(() => setLoading(false));
+    }
+
+    const loadMoreData = () => {
+        if (loading || !lastVisible) return;
+
+        setLoading(true);
+
+        firestore()
+            .collection('posts')
+            .where('userId', '==', user?.uid)
+            .orderBy('timestamp', 'desc')
+            .limit(5)
+            .startAfter(lastVisible)
+            .get()
+            .then((querySnapshot) => {
+                const newData = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }))
+
+                setUserPosts((prev) => [...prev, ...newData])
+                setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1])
+            })
+            .catch((error) => console.error('Error loading data:', error))
+            .finally(() => setLoading(false));
     }
 
     useEffect(() => {
-        getPublications();
-    }, [])
-
-    useEffect(() => {
-        const unsubscribe = firestore()
-            .collection("posts")
-            .where('userId', '==', user.uid)
-            .onSnapshot((snapshot) => {
-                const postData = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-                setUserPosts(postData);
-            });
+        const unsubscribe = loadInitialData();
 
         return () => {
             if (unsubscribe) {
                 unsubscribe();
             }
-        };
-    }, []);
+        }
+    }, [])
 
     const renderItem = ({ item }) => (
         <PostCard
@@ -105,13 +136,13 @@ const ProfileScreen = ({ navigation }) => {
                 </View>
 
                 {/* Publications feed */}
-                <View>
+                <View style={{ paddingBottom: "10%" }}>
                     <FlatList
                         data={userPosts}
                         renderItem={renderItem}
                         keyExtractor={(item) => item.id}
-                        //onEndReached={loadMoreData}
-                        //onEndReachedThreshold={0.1}
+                        onEndReached={loadMoreData}
+                        onEndReachedThreshold={0.1}
                         ListFooterComponent={renderFooter}
                     />
                 </View>

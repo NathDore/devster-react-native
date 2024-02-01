@@ -14,41 +14,56 @@ const FeedScreen = () => {
 
     const [loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
+    const [lastVisible, setLastVisible] = useState();
+
+    const loadInitialData = () => {
+        setLoading(true);
+
+        firestore()
+            .collection('posts')
+            .orderBy("timestamp", "desc")
+            .limit(8)
+            .get()
+            .then((querySnapshot) => {
+                const postData = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }))
+
+                setPosts(postData);
+                setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
+            })
+            .catch((error) => console.error('Error loading initial data:', error))
+            .finally(() => setLoading(false));
+    }
 
     const loadMoreData = async () => {
-        if (loading) return;
+        if (loading || !lastVisible) return;
 
         setLoading(true);
 
-        try {
-            const newData = [];
-
-            for (let i = 0; i < 10; i++) {
-
-                if (posts[i]) {
-                    newData.push(posts[i]);
-                }
-            }
-
-            setPosts((prevData) => [...prevData, ...newData]);
-        } catch (error) {
-            console.error('Error loading more data:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        const unsubscribe = firestore()
-            .collection("posts")
-            .orderBy("timestamp", "desc")
-            .onSnapshot((snapshot) => {
-                const postData = snapshot.docs.map(doc => ({
+        firestore()
+            .collection('posts')
+            .orderBy('timestamp', 'desc')
+            .startAfter(lastVisible)
+            .limit(8)
+            .get()
+            .then((querySnapshot) => {
+                const newData = querySnapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data()
                 }));
-                setPosts(postData);
-            });
+
+                setPosts(prevData => [...prevData, ...newData]);
+                setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
+            })
+            .catch((error) => console.error('Error loading more data:', error))
+            .finally(() => setLoading(false));
+    };
+
+
+    useEffect(() => {
+        const unsubscribe = loadInitialData();
 
         return () => {
             if (unsubscribe) {
@@ -79,8 +94,8 @@ const FeedScreen = () => {
                 data={posts}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
-                //onEndReached={loadMoreData}
-                //onEndReachedThreshold={0.1}
+                onEndReached={loadMoreData}
+                onEndReachedThreshold={0.1}
                 ListFooterComponent={renderFooter}
             />
 
