@@ -143,7 +143,7 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
         }
     };
 
-    const handleNavigation = () => {
+    const handleNavigationVisitPost = () => {
         const { uid } = user;
 
         navigation.navigate("VisitPost", {
@@ -154,6 +154,12 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
             userDoc,
             uid
         });
+    }
+
+    const handleNavigationVisitProfile = () => {
+        navigation.navigate("VisitProfile", {
+            userDoc,
+        })
     }
 
     const TouchableView = isTouchable ? TouchableOpacity : View;
@@ -169,12 +175,15 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
                 paddingVertical: '1%',
                 backgroundColor: "#202124",
             }}
-            onPress={handleNavigation}
+            onPress={handleNavigationVisitPost}
         >
             {/* Info Container */}
             <View style={POST_STYLESHEET.info_container}>
                 {/* Profile picture */}
-                <Avatar size={20} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../../../assets/anonyme_profile.jpg")} />
+                <TouchableOpacity onPress={handleNavigationVisitProfile}>
+                    <Avatar size={20} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../../../assets/anonyme_profile.jpg")} />
+                </TouchableOpacity>
+
 
                 {/* UserName */}
                 <Text style={POST_STYLESHEET.username}>{userDoc.name}</Text>

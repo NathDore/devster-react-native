@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput, Pressable } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, Pressable, KeyboardAvoidingView } from 'react-native'
 import React from 'react'
 import { Icon } from 'react-native-elements';
 import { useAuthContext } from '../../../../context/AuthProvider';
@@ -15,7 +15,7 @@ const LoginForm = () => {
     };
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <KeyboardAvoidingView behavior='padding' style={FORM_STYLESHEET.container}>
 
             {/* Modal */}
             <View style={FORM_STYLESHEET.modal}>
@@ -92,7 +92,7 @@ const LoginForm = () => {
 
             </View>
 
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 

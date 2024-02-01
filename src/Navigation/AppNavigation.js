@@ -7,6 +7,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import ModalProvider from "../context/ModalProvider";
 import ModifyScreen from "../Features/App/Profile/screen/modify_screen/ModifyScreen";
 import VisitPost from "../Features/App/Feed/Post/visit_post/VisitPost";
+import VisitProfile from "../Features/App/Profile/screen/visit_profile/VisitProfile";
 
 const Tab = createBottomTabNavigator();
 
@@ -60,6 +61,11 @@ export default function AppStack() {
                 <Tab.Screen
                     name="Modify"
                     component={ModifyScreen}
+                    options={{ tabBarButton: () => null }}
+                />
+                <Tab.Screen
+                    name="VisitProfile"
+                    component={VisitProfile}
                     options={{ tabBarButton: () => null }}
                 />
             </Tab.Group>

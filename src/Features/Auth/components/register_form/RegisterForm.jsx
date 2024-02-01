@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput, Pressable } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, Pressable, KeyboardAvoidingView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Icon } from 'react-native-elements';
 import { useAuthContext } from '../../../../context/AuthProvider';
@@ -14,7 +14,7 @@ const RegisterForm = () => {
     };
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <KeyboardAvoidingView behavior='padding' style={FORM_STYLESHEET.container}>
 
             {/* Modal */}
             <View style={FORM_STYLESHEET.modal}>
@@ -100,7 +100,7 @@ const RegisterForm = () => {
 
             </View>
 
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
