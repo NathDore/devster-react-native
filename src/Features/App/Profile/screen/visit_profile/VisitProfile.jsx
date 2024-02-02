@@ -12,8 +12,7 @@ import { convertTimestampToRelativeTime } from '../../../../../data/randomDataGe
 
 const VisitProfile = ({ route, navigation }) => {
     const { userDoc } = route.params;
-    const { name, profile_picture, createdAt } = userDoc;
-
+    const { name, profile_picture } = userDoc;
     const { user } = useAuthContext();
 
     const [posts, setPosts] = useState();
