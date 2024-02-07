@@ -12,7 +12,7 @@ const CreatePost = () => {
     const [isValid, setIsValid] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { user, } = useAuthContext()
+    const { user } = useAuthContext()
 
     const handleCloseCreatePostModal = () => {
         setIsCreateModalOpen(false);
