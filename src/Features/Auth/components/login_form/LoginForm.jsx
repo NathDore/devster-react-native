@@ -1,8 +1,6 @@
 import { View, Text, TouchableOpacity, TextInput, Pressable, KeyboardAvoidingView } from 'react-native'
 import React from 'react'
 import { Icon } from 'react-native-elements';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'; // You can use other icon sets like MaterialIcons, Ionicons, etc.
-
 import { useAuthContext } from '../../../../context/AuthProvider';
 import { FORM_STYLESHEET } from '../Form_Styles/style';
 import { Controller, useForm } from 'react-hook-form';
@@ -32,29 +30,18 @@ const LoginForm = () => {
                 {/* Form */}
                 <View style={FORM_STYLESHEET.form}>
                     {/* Title */}
-                    <Text style={FORM_STYLESHEET.title}>Log in.</Text>
+                    <Text style={FORM_STYLESHEET.title}>Login in.</Text>
 
                     {/* Email Field */}
                     <Controller
                         control={control}
                         render={({ field, fieldState }) => (
                             <View style={FORM_STYLESHEET.field}>
-
-                                <View style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                }}>
-                                    <Text style={FORM_STYLESHEET.labelText}>Email</Text>
-                                    <FontAwesomeIcon name="envelope" size={20} color="#000" />
-                                </View>
-
-
+                                <Text style={FORM_STYLESHEET.labelText}>Email:</Text>
                                 <TextInput
                                     onChangeText={field.onChange}
                                     onBlur={field.onBlur}
                                     value={field.value}
-                                    placeholder='Enter your email.'
                                     style={FORM_STYLESHEET.userInput}
                                 />
                                 {fieldState.error && <Text style={{ color: 'red' }}>{fieldState.error.message}</Text>}
@@ -71,21 +58,11 @@ const LoginForm = () => {
                         control={control}
                         render={({ field, fieldState }) => (
                             <View style={FORM_STYLESHEET.field}>
-
-                                <View style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                }}>
-                                    <Text style={FORM_STYLESHEET.labelText}>Password</Text>
-                                    <FontAwesomeIcon name="lock" size={20} color="#000" />
-                                </View>
-
+                                <Text style={FORM_STYLESHEET.labelText}>Password:</Text>
                                 <TextInput
                                     onChangeText={field.onChange}
                                     onBlur={field.onBlur}
                                     value={field.value}
-                                    placeholder='*********'
                                     secureTextEntry
                                     style={FORM_STYLESHEET.userInput}
                                 />

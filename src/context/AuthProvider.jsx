@@ -87,6 +87,7 @@ const AuthProvider = ({ children }) => {
                     email: email,
                     name: randomUsername,
                     createdAt: new Date().getTime(),
+                    id: uid,
                 })
                 .then(() => {
                     console.log('User doc created.');

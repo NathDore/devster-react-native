@@ -28,7 +28,9 @@ const VisitProfile = ({ route, navigation }) => {
     }
 
     const sendMessage = () => {
-
+        navigation.navigate("ChatScreen", {
+            userDoc
+        })
     }
 
     const loadInitialData = () => {
@@ -147,7 +149,7 @@ const VisitProfile = ({ route, navigation }) => {
                     </TouchableOpacity>
 
                     {/* Send message button */}
-                    <TouchableOpacity style={VISIT_PROFILE_STYLESHEET.send_message_button}>
+                    <TouchableOpacity onPress={sendMessage} style={VISIT_PROFILE_STYLESHEET.send_message_button}>
                         <Text style={VISIT_PROFILE_STYLESHEET.send_message_button_text}>Send Message</Text>
                     </TouchableOpacity>
                 </View>

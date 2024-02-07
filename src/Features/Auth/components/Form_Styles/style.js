@@ -3,9 +3,11 @@ import { StyleSheet } from "react-native";
 export const FORM_STYLESHEET = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     modal: {
-        flex: 1,
+        width: "90%",
         backgroundColor: "white",
         padding: "5%",
         display: "flex",
@@ -26,7 +28,7 @@ export const FORM_STYLESHEET = StyleSheet.create({
         fontSize: 25,
         fontWeight: "400",
         letterSpacing: 0.5,
-        marginVertical: "15%"
+        marginVertical: "5%"
     },
     field: {
         marginHorizontal: "2%",
@@ -55,7 +57,7 @@ export const FORM_STYLESHEET = StyleSheet.create({
         marginVertical: "2%",
     },
     textButton: { color: "white", fontSize: 20, fontWeight: "600" },
-    labelText: { fontSize: 25, marginBottom: "1%", marginEnd: "2%" },
+    labelText: { fontSize: 25, marginBottom: "1%" },
     userInput: {
         fontSize: 20,
         height: 40,

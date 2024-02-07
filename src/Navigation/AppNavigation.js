@@ -8,6 +8,7 @@ import ModalProvider from "../context/ModalProvider";
 import ModifyScreen from "../Features/App/Profile/screen/modify_screen/ModifyScreen";
 import VisitPost from "../Features/App/Feed/Post/visit_post/VisitPost";
 import VisitProfile from "../Features/App/Profile/screen/visit_profile/VisitProfile";
+import ChatScreen from "../Features/App/Chat/Screens/ChatScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -47,6 +48,15 @@ export default function AppStack() {
                             ),
                         }
                     }
+                />
+            </Tab.Group>
+
+            {/* Chat Screens without icon */}
+            <Tab.Group>
+                <Tab.Screen
+                    name="ChatScreen"
+                    component={ChatScreen}
+                    options={{ tabBarButton: () => null }}
                 />
             </Tab.Group>
 
