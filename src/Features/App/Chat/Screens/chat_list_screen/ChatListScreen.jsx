@@ -85,10 +85,6 @@ const ChatListScreen = ({ navigation }) => {
         }, [user, navigation])
     );
 
-    useEffect(() => {
-        console.log(conversations);
-    }, [conversations])
-
     const renderFooter = () => {
         return loading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
     };

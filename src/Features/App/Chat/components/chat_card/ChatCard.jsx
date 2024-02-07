@@ -38,10 +38,6 @@ const ChatCard = ({ participants, lastMessage, timestamp }) => {
         unsubscribe();
     }, [])
 
-    useEffect(() => {
-        console.log(userDoc);
-    }, [userDoc])
-
     const handleNavigationToChatScreen = () => {
         navigation.navigate("ChatScreen", { userDoc });
     }
