@@ -32,6 +32,7 @@ const RegisterForm = () => {
                     {/* Title */}
                     <Text style={FORM_STYLESHEET.title}>Join us now.</Text>
 
+                    <View style={{ height: 100 }} />
 
                     <View>
                         {/* Email Field */}

@@ -32,6 +32,8 @@ const LoginForm = () => {
                     {/* Title */}
                     <Text style={FORM_STYLESHEET.title}>Login in.</Text>
 
+                    <View style={{ height: 100 }} />
+
                     <View>
                         {/* Email Field */}
                         <Controller
