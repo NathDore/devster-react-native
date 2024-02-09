@@ -9,6 +9,7 @@ import ModifyScreen from "../Features/App/Profile/screen/modify_screen/ModifyScr
 import VisitPost from "../Features/App/Feed/Post/visit_post/VisitPost";
 import VisitProfile from "../Features/App/Profile/screen/visit_profile/VisitProfile";
 import ChatScreen from "../Features/App/Chat/Screens/chat_screen/ChatScreen";
+import { color } from "react-native-elements/dist/helpers";
 
 const Tab = createBottomTabNavigator();
 

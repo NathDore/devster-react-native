@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { blackTheme } from "../../../../../../assets/color/color";
 
 export const CHAT_CARD_STYLESHEET = StyleSheet.create({
     container: {
@@ -9,6 +10,7 @@ export const CHAT_CARD_STYLESHEET = StyleSheet.create({
         alignItems: "center",
         borderBottomWidth: 0.5,
         borderColor: "#d1d0d059",
+        backgroundColor: blackTheme,
         padding: "1%",
     },
     titleMessageContainer: {

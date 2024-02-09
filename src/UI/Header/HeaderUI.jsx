@@ -20,8 +20,12 @@ const HeaderUI = () => {
     return (
         <Header
             backgroundColor='#000'
+            containerStyle={{ height: 80, paddingTop: "10%" }}
             leftComponent={
-                <Text style={HEADER_STYLESHEET.title}>DevSter</Text>
+                <View style={{ maxWidth: 200, }}>
+                    <Text style={HEADER_STYLESHEET.title}>DevSter</Text>
+                </View>
+
             }
             rightComponent={
                 <View style={{ flexDirection: "row", marginRight: '10%', justifyContent: 'center', alignItems: 'center' }}>

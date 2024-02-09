@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { blackThemeSecondary } from "../../../../../assets/color/color";
 
 export const FEED_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "black",
+        backgroundColor: blackThemeSecondary,
     },
     create_post_icon: {
         position: "absolute",

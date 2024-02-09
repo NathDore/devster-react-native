@@ -2,10 +2,11 @@ import { StyleSheet } from "react-native";
 
 export const HEADER_STYLESHEET = StyleSheet.create({
     title: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
         marginHorizontal: '2%',
-        color: "white"
+        color: "white",
+        alignSelf: "center",
     },
     text: {
         fontSize: 13,
