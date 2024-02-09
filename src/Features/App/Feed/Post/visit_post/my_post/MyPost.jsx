@@ -12,9 +12,8 @@ const MyPost = ({
 }) => {
 
     const handleDelete = () => {
-
+        // Delete logic here
     };
-
 
     return (
         <>
@@ -26,9 +25,9 @@ const MyPost = ({
                 comments={comments}
                 isTouchable={false}
             />
-            <TouchableOpacity onPress={handleDelete} style={{ position: 'absolute', alignSelf: "flex-end", margin: "2%" }}>
+            {/*  <TouchableOpacity onPress={handleDelete} style={{ position: 'absolute', alignSelf: "flex-end", margin: "2%" }}>
                 <FontAwesome name="times-circle" size={20} color="red" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </>
     )
 }
