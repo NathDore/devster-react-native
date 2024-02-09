@@ -1,11 +1,21 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import BackgroundVideo from '../../Features/Auth/components/background_video/BackgroundVideo'
+import BackgroundVideo from '../background/BackgroundVideo';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { LANDING_STYLESHEET } from './style';
 
-const Landing = () => {
+const Landing = ({ navigation }) => {
+
+    const handleNavigationLoginScreen = () => {
+        navigation.navigate("Login");
+    }
+
+    const handleNavigationRegisterScreen = () => {
+        navigation.navigate("Register");
+    }
+
+
     return (
         <View style={{
             flex: 1,
@@ -58,11 +68,11 @@ const Landing = () => {
                     </Text>
                 </View>
 
-                <TouchableOpacity style={LANDING_STYLESHEET.create_account_button}>
+                <TouchableOpacity onPress={handleNavigationRegisterScreen} style={LANDING_STYLESHEET.create_account_button}>
                     <Text style={LANDING_STYLESHEET.create_account_button_text}>Create Account</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={LANDING_STYLESHEET.sign_in_button}>
+                <TouchableOpacity onPress={handleNavigationLoginScreen} style={LANDING_STYLESHEET.sign_in_button}>
                     <Text style={LANDING_STYLESHEET.sign_in_button_text}>Sign in.</Text>
                 </TouchableOpacity>
 

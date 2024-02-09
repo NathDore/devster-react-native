@@ -1,14 +1,15 @@
 import React from 'react';
 import { Video } from 'expo-av';
-import { StyleSheet, View } from 'react-native';
-import source from "../../../../../assets/video_background.mp4";
+import { View } from 'react-native';
+import source from "../../../assets/video/video_background.mp4";
+import { BACKGROUND_VIDEO_STYLESHEET } from './style';
 
 const BackgroundVideo = () => {
     return (
-        <View style={styles.container}>
+        <View style={BACKGROUND_VIDEO_STYLESHEET.container}>
             <Video
                 source={source}
-                style={styles.video}
+                style={BACKGROUND_VIDEO_STYLESHEET.video}
                 resizeMode="cover"
                 isLooping={true}
                 shouldPlay
@@ -17,15 +18,5 @@ const BackgroundVideo = () => {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        ...StyleSheet.absoluteFillObject,
-        zIndex: -1,
-    },
-    video: {
-        ...StyleSheet.absoluteFillObject,
-    },
-});
 
 export default BackgroundVideo

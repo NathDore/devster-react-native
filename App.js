@@ -1,14 +1,17 @@
 import 'expo-dev-client';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthProvider from './src/context/AuthProvider';
 import MainStack from './src/Navigation/MainNavigation';
 import Landing from './src/UI/landing/Landing';
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
   return (
-    /*     <AuthProvider>
-          <MainStack />
-        </AuthProvider> */
-    <Landing />
+    <>
+      <StatusBar hidden={true} />
+      <AuthProvider>
+        <MainStack />
+      </AuthProvider>
+    </>
+
   );
 }
