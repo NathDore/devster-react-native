@@ -5,6 +5,7 @@ import { useAuthContext } from '../context/AuthProvider';
 import Landing from '../UI/landing/Landing';
 import LoginScreen from '../UI/login/LoginScreen';
 import RegisterScreen from "../UI/register/RegisterScreen";
+import HeaderUI from '../UI/Header/HeaderUI';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,9 @@ export default function MainStack() {
     return (
         <NavigationContainer initialRouteName="Home">
             {/* Header */}
+            {
+                user && <HeaderUI />
+            }
 
             <Stack.Navigator screenOptions={{ headerShown: false }}>
 

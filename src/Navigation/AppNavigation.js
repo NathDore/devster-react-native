@@ -23,8 +23,6 @@ export default function AppStack() {
                 height: 55,
             }
         }}>
-            <HeaderUI />
-
             {/* Main Screens with icon */}
             <Tab.Group>
                 <Tab.Screen

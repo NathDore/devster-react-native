@@ -3,13 +3,15 @@ import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useForm, Controller } from 'react-hook-form';
 import { LOGIN_STYLESHEET } from './style';
+import { useAuthContext } from '../../context/AuthProvider';
 
 const LoginScreen = ({ navigation }) => {
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
     const [showPassword, setShowPassword] = useState(false);
+    const { signInWithEmailAndPassword } = useAuthContext();
 
     const onSubmit = (data) => {
-        console.log(data.email, data.password);
+        signInWithEmailAndPassword(data.email, data.password);
     };
 
     const handleGoBack = () => {
@@ -35,6 +37,7 @@ const LoginScreen = ({ navigation }) => {
     const handleShowPassword = () => {
         setShowPassword(prev => !prev);
     }
+
 
     return (
         <KeyboardAvoidingView style={LOGIN_STYLESHEET.keyboardAvoidingView}>
@@ -87,7 +90,7 @@ const LoginScreen = ({ navigation }) => {
                                     onChangeText={field.onChange}
                                     onBlur={field.onBlur}
                                     value={field.value}
-                                    secureTextEntry={showPassword}
+                                    secureTextEntry={!showPassword}
                                     style={LOGIN_STYLESHEET.textInput}
                                     placeholderTextColor="lightgrey"
                                     placeholder='Password' />

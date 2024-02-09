@@ -76,7 +76,7 @@ const AuthProvider = ({ children }) => {
         return `${prefix}${randomNumber}`;
     };
 
-    const createUserDoc = (uid, email) => {
+    const createUserDoc = (uid, email, username) => {
         const randomUsername = generateRandomUsername();
 
         return new Promise((resolve, reject) => {
@@ -85,7 +85,7 @@ const AuthProvider = ({ children }) => {
                 .doc(uid)
                 .set({
                     email: email,
-                    name: randomUsername,
+                    name: username,
                     createdAt: new Date().getTime(),
                     id: uid,
                 })
@@ -116,7 +116,7 @@ const AuthProvider = ({ children }) => {
         });
     }
 
-    const handleSignUp = (email, password) => {
+    const handleSignUp = (email, password, username) => {
         let uid = "";
 
         signUpWithEmailAndPassword(email, password)
@@ -130,7 +130,7 @@ const AuthProvider = ({ children }) => {
             .then((docExists) => {
                 if (!docExists) {
                     // Le document n'existe pas, créer le document de l'utilisateur
-                    return createUserDoc(uid, email);
+                    return createUserDoc(uid, email, username);
                 }
             })
             .catch((error) => {

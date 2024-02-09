@@ -3,12 +3,15 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useForm, Controller } from 'react-hook-form';
 import { REGISTER_STYLESHEET } from './style';
+import { useAuthContext } from '../../context/AuthProvider';
 
 const RegisterScreen = ({ navigation }) => {
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
+    const { handleSignUp } = useAuthContext();
 
     const onSubmit = (data) => {
-        console.log(data.email, data.password);
+        handleSignUp(data.email, data.password, data.username);
+        navigation.navigate("Home");
     };
 
     const handleGoBack = () => {
