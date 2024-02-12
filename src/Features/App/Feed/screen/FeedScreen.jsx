@@ -1,5 +1,5 @@
 import { View, FlatList, ActivityIndicator, Pressable, RefreshControl, TouchableOpacity, Text } from 'react-native'
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useModalContext } from '../../../../context/ModalProvider';
 import Modal from 'react-native-modal';
@@ -9,9 +9,12 @@ import firestore from "@react-native-firebase/firestore";
 import PostCard from "../Post/post_card/PostCard";
 import CreatePost from '../Post/create_post/CreatePost';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { useAuthContext } from '../../../../context/AuthProvider';
+import { useFocusEffect } from '@react-navigation/native';
 
-const FeedScreen = () => {
+const FeedScreen = ({ navigation }) => {
     const { setIsCreateModalOpen, isCreateModalOpen } = useModalContext();
+    const { setIsHeaderShowing } = useAuthContext();
 
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -20,9 +23,10 @@ const FeedScreen = () => {
     const [newPostsCount, setNewPostsCount] = useState(0);
     const [lastTimestamp, setLastTimestamp] = useState(null);
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         loadInitialData();
-    }, [])
+        setIsHeaderShowing(true);
+    }, [navigation]))
 
     const loadInitialData = async () => {
         try {

@@ -68,12 +68,6 @@ export default function AppStack() {
             {/* Profile Screens without icon */}
             <Tab.Group>
                 <Tab.Screen
-                    name="Profile"
-                    component={ProfileScreen}
-                    options={{ tabBarButton: () => null }}
-                />
-
-                <Tab.Screen
                     name="Modify"
                     component={ModifyScreen}
                     options={{ tabBarButton: () => null }}

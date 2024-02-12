@@ -52,5 +52,7 @@ export const CREATE_POST_STYLESHEET = StyleSheet.create({
         fontWeight: "bold",
         marginVertical: "5%",
         marginHorizontal: "2%",
+        flex: 1,
+        textAlignVertical: "top",
     }
 })

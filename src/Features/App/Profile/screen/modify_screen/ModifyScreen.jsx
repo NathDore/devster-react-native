@@ -1,16 +1,22 @@
 import { View, Text, ImageBackground, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Avatar } from 'react-native-elements';
 import { MODIFY_SCREEN_STYLESHEET } from './style';
 import * as ImagePicker from 'expo-image-picker';
 import storage from '@react-native-firebase/storage';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../../../context/AuthProvider';
+import { useFocusEffect } from '@react-navigation/native';
 
-const ModifyScreen = () => {
+const ModifyScreen = ({ navigation }) => {
     const [usernameInput, setUsernameInput] = useState("");
-    const { user, userData, isProfileLoading,
-        setIsProfileLoading } = useAuthContext();
+    const {
+        user,
+        userData,
+        isProfileLoading,
+        setIsProfileLoading,
+        setIsHeaderShowing
+    } = useAuthContext();
 
     const pickImageAsync = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -82,6 +88,10 @@ const ModifyScreen = () => {
     const handleUpdateName = () => {
         updateNameFirestore(user?.uid, userData, usernameInput);
     }
+
+    useFocusEffect(useCallback(() => {
+        setIsHeaderShowing(false);
+    }, [navigation]))
 
     return (
         <View style={MODIFY_SCREEN_STYLESHEET.container}>

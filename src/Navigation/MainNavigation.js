@@ -7,6 +7,7 @@ import LoginScreen from '../UI/login/LoginScreen';
 import RegisterScreen from "../UI/register/RegisterScreen";
 import HeaderUI from '../UI/Header/HeaderUI';
 import ChatScreen from '../Features/App/Chat/Screens/chat_screen/ChatScreen';
+import ProfileScreen from '../Features/App/Profile/screen/profile_screen/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ export default function MainStack() {
                 {/* Chat Screen */}
                 <Stack.Group>
                     <Stack.Screen name="ChatScreen" component={ChatScreen} />
+                    <Stack.Screen name="Profile" component={ProfileScreen} />
                 </Stack.Group>
 
             </Stack.Navigator>

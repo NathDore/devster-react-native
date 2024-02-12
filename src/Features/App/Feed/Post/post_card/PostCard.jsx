@@ -173,7 +173,7 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
             <View style={POST_STYLESHEET.info_container}>
                 {/* Profile picture */}
                 <TouchableOpacity onPress={handleNavigationVisitProfile}>
-                    <Avatar size={25} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../../../assets/anonyme_profile.jpg")} />
+                    <Avatar size={30} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../../../assets/anonyme_profile.jpg")} />
                 </TouchableOpacity>
 
 

@@ -147,7 +147,7 @@ const ChatScreen = ({ route, navigation }) => {
     };
 
     const renderIcon = () => {
-        return userInput ? <TouchableOpacity onPress={handleSendMessage}>
+        return userInput ? <TouchableOpacity style={{ padding: "2%" }} onPress={handleSendMessage}>
             <FontAwesome name="paper-plane" size={24} color="lightblue" />
         </TouchableOpacity> : <TouchableOpacity>
             <FontAwesome name="thumbs-up" size={24} color="lightblue" />

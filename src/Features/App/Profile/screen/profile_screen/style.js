@@ -29,6 +29,7 @@ export const PROFILE_SCREEN_STYLESHEET = StyleSheet.create({
         alignItems: "center",
         padding: "5%",
         marginTop: "5%",
+        marginBottom: "10%",
     },
     button_text: {
         color: "white",

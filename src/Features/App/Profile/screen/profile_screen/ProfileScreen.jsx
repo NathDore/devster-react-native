@@ -14,7 +14,7 @@ const ProfileScreen = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
     const [lastVisible, setLastVisible] = useState(null);
 
-    const { userData, user } = useAuthContext();
+    const { userData, user, setIsHeaderShowing } = useAuthContext();
 
     const loadInitialData = () => {
         setLoading(true);
@@ -64,6 +64,8 @@ const ProfileScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
+        setIsHeaderShowing(false);
+
         const unsubscribe = loadInitialData();
 
         return () => {
@@ -87,10 +89,12 @@ const ProfileScreen = ({ navigation }) => {
     };
 
     const handleNavigationBack = () => {
+        setIsHeaderShowing(true);
         navigation.goBack();
     }
 
     const handleNavigationModifyScreen = () => {
+        setIsHeaderShowing(true);
         navigation.navigate("Modify");
     }
 
@@ -116,13 +120,14 @@ const ProfileScreen = ({ navigation }) => {
                             />
                         </View>
 
+                        {/* Username */}
+                        <Text style={PROFILE_SCREEN_STYLESHEET.username}>{userData.name}</Text>
+
                         {/* Modify button */}
                         <TouchableOpacity onPress={handleNavigationModifyScreen} style={PROFILE_SCREEN_STYLESHEET.modify_button}>
                             <Text style={PROFILE_SCREEN_STYLESHEET.button_text}>Modifiy</Text>
                         </TouchableOpacity>
 
-                        {/* Username */}
-                        <Text style={PROFILE_SCREEN_STYLESHEET.username}>{userData.name}</Text>
                     </View>
                 </View>
             </ImageBackground>
