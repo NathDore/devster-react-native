@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
+import { View, Text, ImageBackground, TouchableOpacity, TextInput, ActivityIndicator, Pressable, Keyboard } from 'react-native'
 import React, { useState, useEffect, useCallback } from 'react'
 import { Avatar } from 'react-native-elements';
 import { MODIFY_SCREEN_STYLESHEET } from './style';
@@ -7,14 +7,14 @@ import storage from '@react-native-firebase/storage';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../../../context/AuthProvider';
 import { useFocusEffect } from '@react-navigation/native';
+import { FontAwesome } from '@expo/vector-icons';
 
 const ModifyScreen = ({ navigation }) => {
     const [usernameInput, setUsernameInput] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const {
         user,
         userData,
-        isProfileLoading,
-        setIsProfileLoading,
         setIsHeaderShowing
     } = useAuthContext();
 
@@ -37,7 +37,7 @@ const ModifyScreen = ({ navigation }) => {
 
         task.on('state_changed', snapshot => {
             console.log(`${snapshot.bytesTransferred} transferred out of ${snapshot.totalBytes}`);
-            setIsProfileLoading(true);
+            setIsLoading(true);
         });
 
         task.then(async () => {
@@ -64,7 +64,7 @@ const ModifyScreen = ({ navigation }) => {
             })
             .then(() => {
                 console.log("image upload to firestore");
-                setIsProfileLoading(false);
+                setIsLoading(false);
             })
     }
 
@@ -87,6 +87,23 @@ const ModifyScreen = ({ navigation }) => {
 
     const handleUpdateName = () => {
         updateNameFirestore(user?.uid, userData, usernameInput);
+        setUsernameInput("");
+    }
+
+    const handleGoBack = () => {
+        navigation.goBack();
+    }
+
+    const handleCloseKeyboard = () => {
+        Keyboard.dismiss();
+
+        console.log(usernameInput);
+        if (!usernameInput) return;
+        handleUpdateName();
+    }
+
+    const handleUserNameInput = (text) => {
+        setUsernameInput(text);
     }
 
     useFocusEffect(useCallback(() => {
@@ -94,48 +111,43 @@ const ModifyScreen = ({ navigation }) => {
     }, [navigation]))
 
     return (
-        <View style={MODIFY_SCREEN_STYLESHEET.container}>
+        <Pressable onPress={handleCloseKeyboard} style={MODIFY_SCREEN_STYLESHEET.container}>
             {/* Image background Header */}
             <ImageBackground
                 source={userData?.profile_picture ? { uri: userData?.profile_picture } : require('../../../../../../assets/anonyme_profile.jpg')}
                 blurRadius={15}
                 style={MODIFY_SCREEN_STYLESHEET.image_background}
             >
+                {/* Go back icon */}
+                <TouchableOpacity onPress={handleGoBack} style={MODIFY_SCREEN_STYLESHEET.go_back_icon}>
+                    <FontAwesome name="chevron-left" size={25} color="lightgrey" />
+                </TouchableOpacity>
+
                 <View style={MODIFY_SCREEN_STYLESHEET.profile_picture}>
 
                     {/* Profile picture */}
-
-                    {
-                        isProfileLoading ? <ActivityIndicator size={'small'} color={"blue"} /> : <Avatar
-                            size={90}
+                    <TouchableOpacity onPress={pickImageAsync} style={MODIFY_SCREEN_STYLESHEET.profile_picture_container}>
+                        {isLoading ? <ActivityIndicator size={30} color={"lightgrey"} /> : <Avatar
+                            size={100}
                             rounded
                             source={userData?.profile_picture ? { uri: userData?.profile_picture } : require('../../../../../../assets/anonyme_profile.jpg')}
-                        />
-                    }
-
-                    {/* Modify button */}
-                    <TouchableOpacity style={MODIFY_SCREEN_STYLESHEET.modify_button} onPress={pickImageAsync}>
-                        <Text style={MODIFY_SCREEN_STYLESHEET.modify_button_text}>Modifiy picture</Text>
+                        />}
+                        <View style={{ position: "absolute" }}>
+                            <FontAwesome name="image" size={30} color="lightgrey" />
+                        </View>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
 
             <View style={MODIFY_SCREEN_STYLESHEET.bottom_section}>
 
-                <View style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "center", marginVertical: "5%" }}>
-                    <Text style={{ color: "white", fontWeight: "bold", fontSize: 25 }}>{userData?.name}</Text>
+                <View style={MODIFY_SCREEN_STYLESHEET.label_name}>
+                    <Text style={MODIFY_SCREEN_STYLESHEET.text_label}>Username</Text>
+                    <Text style={MODIFY_SCREEN_STYLESHEET.text_label}> : </Text>
+                    <TextInput value={usernameInput} onChangeText={handleUserNameInput} multiline={false} style={MODIFY_SCREEN_STYLESHEET.text_input} placeholderTextColor={"lightgrey"} placeholder={userData.name} />
                 </View>
-
-                {/* Modifify username section */}
-                <View style={MODIFY_SCREEN_STYLESHEET.username_section}>
-                    <TextInput style={MODIFY_SCREEN_STYLESHEET.username_text_input} placeholder='Modify your username here.' onChangeText={(text) => setUsernameInput(text)} value={usernameInput} />
-                </View>
-
-                {
-                    usernameInput ? <TouchableOpacity style={{ marginVertical: "5%" }} onPress={handleUpdateName}><Text style={{ color: "white", fontSize: 20 }}>OK</Text></TouchableOpacity> : null
-                }
             </View>
-        </View>
+        </Pressable>
     )
 }
 
