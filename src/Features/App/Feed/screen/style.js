@@ -20,5 +20,20 @@ export const FEED_SCREEN_STYLESHEET = StyleSheet.create({
         elevation: 1,
         borderWidth: 1,
         borderColor: "white",
-    }
+    },
+    notification_bell: {
+        width: 50,
+        height: 50,
+        borderRadius: 150,
+        alignSelf: "center",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        padding: "3%",
+        position: "absolute",
+        backgroundColor: blackThemeSecondary,
+        borderWidth: 0.5,
+        borderColor: "lightgrey",
+        marginTop: "2%",
+    },
 })

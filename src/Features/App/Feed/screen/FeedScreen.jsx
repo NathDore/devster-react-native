@@ -168,15 +168,8 @@ const FeedScreen = () => {
             </Pressable>
 
             {
-
-                newPostsCount != 0 && <TouchableOpacity style={{
-                    width: "100%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexDirection: "row",
-                    padding: "3%",
-                    position: "absolute",
-                }} onPress={handleNotification}>
+                /* Icon notification */
+                newPostsCount != 0 && <TouchableOpacity style={FEED_SCREEN_STYLESHEET.notification_bell} onPress={handleNotification}>
                     <FontAwesomeIcon name="bell" size={24} color="white" />
                 </TouchableOpacity>
 
