@@ -10,7 +10,7 @@ import { CHAT_SCREEN_STYLESHEET } from './style';
 
 const ChatScreen = ({ route, navigation }) => {
     const { userDoc } = route.params;
-    const { user, userData } = useAuthContext();
+    const { user, userData, setIsHeaderShowing } = useAuthContext();
 
     const [conversationId, setConversationId] = useState("");
     const [messages, setMessages] = useState([]);
@@ -94,6 +94,10 @@ const ChatScreen = ({ route, navigation }) => {
     }
 
     useEffect(() => {
+        setIsHeaderShowing(false);
+    }, [])
+
+    useEffect(() => {
         if (flatListRef.current && messages && messages.length > 0) {
             flatListRef.current.scrollToEnd({ animated: true });
         }
@@ -111,6 +115,8 @@ const ChatScreen = ({ route, navigation }) => {
                     console.error(error);
                 }
             }
+
+
 
             unsubscribe();
         }, [user, userDoc, navigation])
@@ -192,6 +198,10 @@ const ChatScreen = ({ route, navigation }) => {
         }
     };
 
+    const handleGoBack = () => {
+        setIsHeaderShowing(true);
+        navigation.goBack();
+    }
 
     return (
         /* Container */
@@ -201,7 +211,7 @@ const ChatScreen = ({ route, navigation }) => {
             <View style={CHAT_SCREEN_STYLESHEET.header}>
 
                 {/* Back Icon */}
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleGoBack} style={{ padding: "3%", }}>
                     <FontAwesome name="chevron-left" size={20} color={"white"} />
                 </TouchableOpacity>
 

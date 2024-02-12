@@ -65,15 +65,6 @@ export default function AppStack() {
                 />
             </Tab.Group>
 
-            {/* Chat Screens without icon */}
-            <Tab.Group>
-                <Tab.Screen
-                    name="ChatScreen"
-                    component={ChatScreen}
-                    options={{ tabBarButton: () => null }}
-                />
-            </Tab.Group>
-
             {/* Profile Screens without icon */}
             <Tab.Group>
                 <Tab.Screen

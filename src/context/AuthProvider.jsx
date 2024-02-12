@@ -13,6 +13,7 @@ const AuthProvider = ({ children }) => {
     const [isLoginForm, setIsLoginForm] = useState(false);
     const [isRegisterForm, setIsRegisterForm] = useState(false);
     const [isProfileLoading, setIsProfileLoading] = useState(false);
+    const [isHeaderShowing, setIsHeaderShowing] = useState(true);
 
     auth().onAuthStateChanged((newUser) => {
         setUser(newUser);
@@ -208,9 +209,11 @@ const AuthProvider = ({ children }) => {
             firebaseError,
             setFirebaseError,
             isProfileLoading,
-            setIsProfileLoading
+            setIsProfileLoading,
+            isHeaderShowing,
+            setIsHeaderShowing
         };
-    }, [user, userData, isLoginForm, isRegisterForm, firebaseError, isProfileLoading]);
+    }, [user, userData, isLoginForm, isRegisterForm, firebaseError, isProfileLoading, isHeaderShowing]);
 
 
     return (

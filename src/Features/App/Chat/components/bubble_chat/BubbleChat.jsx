@@ -8,8 +8,6 @@ const BubbleChat = ({ item, userDoc, userData }) => {
         item.receiverId == userDoc.id ?
             /* Receiver Container */
             <View style={BUBBLE_CHAT_STYLESHEET.receiver_container}>
-                {/* Receiver Profile picture */}
-                <Avatar size={40} rounded source={userData.profile_picture ? { uri: userData.profile_picture } : require("../../../../../../assets/anonyme_profile.jpg")} />
                 {/* Receiver Message section */}
                 <View style={BUBBLE_CHAT_STYLESHEET.receiver_message_section}>
                     {/* Receiver Message content */}
@@ -19,14 +17,16 @@ const BubbleChat = ({ item, userDoc, userData }) => {
             </View> :
             /* Sender Container */
             <View style={BUBBLE_CHAT_STYLESHEET.sender_container}>
+                {/* Sender Profile picture */}
+                <Avatar size={40} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../../../assets/anonyme_profile.jpg")} />
+
                 {/* Sender Message section */}
                 <View style={BUBBLE_CHAT_STYLESHEET.sender_message_section}>
                     {/* Sender Message content */}
                     <Text style={BUBBLE_CHAT_STYLESHEET.sender_message_content}>{item.messageContent}</Text>
                 </View>
 
-                {/* Sender Profile picture */}
-                <Avatar size={40} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../../../assets/anonyme_profile.jpg")} />
+
             </View>
     )
 }

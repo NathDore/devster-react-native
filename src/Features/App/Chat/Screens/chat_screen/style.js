@@ -5,7 +5,8 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
         display: "flex",
         flex: 1,
-        flexDirection: "column"
+        flexDirection: "column",
+        backgroundColor: "black",
     },
     header: {
         width: "100%",
@@ -17,6 +18,7 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
         paddingHorizontal: "3%",
         paddingBottom: "3%",
         paddingTop: "1%",
+        marginBottom: "3%",
     },
     profile_photo_name_row: {
         flexDirection: "row",
@@ -26,17 +28,16 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
         color: "white",
         fontSize: 25,
         fontWeight: "bold",
-        marginHorizontal: "3%",
+        marginHorizontal: "5%",
     },
     conversation_feed: {
         flex: 1,
         display: "flex",
-        backgroundColor: blackThemeSecondary,
     },
     send_message_section_focus: {
         backgroundColor: "black",
         width: "100%",
-        height: "15%",
+        height: 60,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
@@ -46,11 +47,12 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
     send_message_section_not_focus: {
         backgroundColor: "black",
         width: "100%",
-        height: "10%",
+        height: 80,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         paddingHorizontal: "3%",
+        paddingVertical: "3%",
         justifyContent: "space-evenly",
     },
     textInput_container: {

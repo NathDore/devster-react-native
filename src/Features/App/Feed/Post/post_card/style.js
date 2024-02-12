@@ -17,7 +17,7 @@ export const POST_STYLESHEET = StyleSheet.create({
         alignItems: "center",
     },
     username: {
-        marginLeft: "1%",
+        marginLeft: "3%",
         fontSize: 18,
         fontWeight: "400",
         color: "white",
