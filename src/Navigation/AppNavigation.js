@@ -17,11 +17,13 @@ export default function AppStack() {
     return (
         <Tab.Navigator screenOptions={{
             headerShown: false,
-            tabBarShowLabel: false,
-            tabBarActiveBackgroundColor: "lightgray",
             tabBarStyle: {
                 height: 50,
-            }
+                backgroundColor: "black",
+                borderTopWidth: 0.2,
+                borderTopColor: "lightgrey",
+            },
+            tabBarActiveTintColor: "lightblue"
         }}>
             {/* Main Screens with icon */}
             <Tab.Group>
@@ -29,7 +31,7 @@ export default function AppStack() {
                     name="Feed"
                     options={{
                         tabBarIcon: () => (
-                            <FontAwesome5Icon name="poll-h" color={"black"} size={25} />
+                            <FontAwesome5Icon name="poll-h" color={"lightgrey"} size={25} />
                         ),
                     }}
                 >
@@ -45,7 +47,7 @@ export default function AppStack() {
                     component={ContactScreen}
                     options={{
                         tabBarIcon: () => (
-                            <FontAwesome5Icon name="user-friends" size={25} color="black" />
+                            <FontAwesome5Icon name="user-friends" size={25} color={"lightgrey"} />
                         ),
                     }}
                 />
@@ -56,7 +58,7 @@ export default function AppStack() {
                     options={
                         {
                             tabBarIcon: () => (
-                                <AwesomeIcon name="comment" color={"black"} size={25} />
+                                <AwesomeIcon name="comment" color={"lightgrey"} size={25} />
                             ),
                         }
                     }
