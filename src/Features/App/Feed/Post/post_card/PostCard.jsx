@@ -131,13 +131,13 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
         if (isLike) {
             return (
                 <Pressable onPress={handleLike}>
-                    <AwesomeIcon name="heart" color={'red'} size={15} style={POST_STYLESHEET.like_icon} />
+                    <AwesomeIcon name="heart" color={'red'} size={18} style={POST_STYLESHEET.like_icon} />
                 </Pressable>
             );
         } else {
             return (
                 <Pressable onPress={handleLike}>
-                    <AwesomeIcon5 name="heart" color={'lightgrey'} size={15} solid={false} style={POST_STYLESHEET.like_icon} />
+                    <AwesomeIcon5 name="heart" color={'lightgrey'} size={18} solid={false} style={POST_STYLESHEET.like_icon} />
                 </Pressable>
             );
         }
@@ -166,22 +166,14 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
 
     return (
         <TouchableView
-            style={{
-                borderTopWidth: 0.5,
-                borderBottomWidth: 0.5,
-                borderColor: '#d1d0d059',
-                width: '100%',
-                paddingHorizontal: '2%',
-                paddingVertical: '1%',
-                backgroundColor: "#202124",
-            }}
+            style={POST_STYLESHEET.card_container}
             onPress={handleNavigationVisitPost}
         >
             {/* Info Container */}
             <View style={POST_STYLESHEET.info_container}>
                 {/* Profile picture */}
                 <TouchableOpacity onPress={handleNavigationVisitProfile}>
-                    <Avatar size={20} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../../../assets/anonyme_profile.jpg")} />
+                    <Avatar size={25} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../../../assets/anonyme_profile.jpg")} />
                 </TouchableOpacity>
 
 
@@ -201,16 +193,16 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
             {/* Reaction Section */}
             <View style={POST_STYLESHEET.reaction_container}>
                 {/* Like button */}
-                <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                    <Text style={{ color: "white", marginHorizontal: "5%" }}>{likes.length}</Text>
+                <View style={POST_STYLESHEET.like_button_container}>
+                    <Text style={POST_STYLESHEET.like_button_text}>{likes.length}</Text>
                     {renderLikeButton()}
                 </View>
 
                 {/* Comment button */}
-                <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                    <Text style={{ color: "white", marginHorizontal: "5%" }}>{comments.length}</Text>
+                <View style={POST_STYLESHEET.comment_button_container}>
+                    <Text style={POST_STYLESHEET.comment_button_text}>{comments.length}</Text>
                     <View>
-                        <AwesomeIcon5 name="comment" color={'lightgrey'} size={15} solid={false} />
+                        <AwesomeIcon5 name="comment" color={'lightgrey'} size={18} solid={false} />
                     </View>
                 </View>
 

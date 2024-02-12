@@ -9,7 +9,7 @@ import ModifyScreen from "../Features/App/Profile/screen/modify_screen/ModifyScr
 import VisitPost from "../Features/App/Feed/Post/visit_post/VisitPost";
 import VisitProfile from "../Features/App/Profile/screen/visit_profile/VisitProfile";
 import ChatScreen from "../Features/App/Chat/Screens/chat_screen/ChatScreen";
-import { color } from "react-native-elements/dist/helpers";
+import ContactScreen from "../Features/App/contact/screen/ContactScreen.jsx";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +20,7 @@ export default function AppStack() {
             tabBarShowLabel: false,
             tabBarActiveBackgroundColor: "lightgray",
             tabBarStyle: {
-                height: 55,
+                height: 50,
             }
         }}>
             {/* Main Screens with icon */}
@@ -29,7 +29,7 @@ export default function AppStack() {
                     name="Feed"
                     options={{
                         tabBarIcon: () => (
-                            <FontAwesome5Icon name="poll-h" color={"black"} size={35} />
+                            <FontAwesome5Icon name="poll-h" color={"black"} size={25} />
                         ),
                     }}
                 >
@@ -39,13 +39,24 @@ export default function AppStack() {
                         </ModalProvider>
                     )}
                 </Tab.Screen>
+
+                <Tab.Screen
+                    name="Contact"
+                    component={ContactScreen}
+                    options={{
+                        tabBarIcon: () => (
+                            <FontAwesome5Icon name="user-friends" size={25} color="black" />
+                        ),
+                    }}
+                />
+
                 <Tab.Screen
                     name="Chat"
                     component={ChatListScreen}
                     options={
                         {
                             tabBarIcon: () => (
-                                <AwesomeIcon name="comment" color={"black"} size={35} />
+                                <AwesomeIcon name="comment" color={"black"} size={25} />
                             ),
                         }
                     }

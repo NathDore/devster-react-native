@@ -12,6 +12,7 @@ const LoginScreen = ({ navigation }) => {
 
     const onSubmit = (data) => {
         signInWithEmailAndPassword(data.email, data.password);
+        navigation.navigate("Home");
     };
 
     const handleGoBack = () => {
