@@ -13,7 +13,7 @@ const ChatListScreen = ({ navigation }) => {
     const [dumData, setDumData] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const { user } = useAuthContext();
+    const { user, setIsHeaderShowing } = useAuthContext();
 
     const [conversations, setConversations] = useState([]);
     const [lastVisible, setLastVisible] = useState();
@@ -70,6 +70,7 @@ const ChatListScreen = ({ navigation }) => {
 
     useFocusEffect(
         useCallback(() => {
+            setIsHeaderShowing(false);
 
             const unsubscribe = async () => {
                 try {
