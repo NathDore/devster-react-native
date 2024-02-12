@@ -47,7 +47,7 @@ const ChatCard = ({ participants, lastMessage, timestamp }) => {
 
             {/* Profile picture */}
             <Avatar
-                size={50}
+                size={55}
                 rounded
                 source={userDoc?.profile_picture ? { uri: userDoc?.profile_picture } : require("../../../../../../assets/anonyme_profile.jpg")}
             />
@@ -61,17 +61,17 @@ const ChatCard = ({ participants, lastMessage, timestamp }) => {
                     <View style={{ maxWidth: "80%", flexDirection: "row", alignItems: "center" }}>
 
                         {
-                            lastMessage.senderId == user.uid && <Text style={{ color: "grey", marginEnd: "1%" }}>You: </Text>
+                            lastMessage.senderId == user.uid && <Text style={CHAT_CARD_STYLESHEET.last_message_you}>You: </Text>
                         }
                         <Text
                             numberOfLines={1}
                             ellipsizeMode="tail"
-                            style={CHAT_CARD_STYLESHEET.messageText}
+                            style={lastMessage.senderId == user.uid ? { ...CHAT_CARD_STYLESHEET.messageText, color: "grey" } : CHAT_CARD_STYLESHEET.messageText}
                         >{lastMessage.content}</Text>
                     </View>
 
                     {/* Timestamp */}
-                    <Text style={CHAT_CARD_STYLESHEET.timestamp}>{timestamp}</Text>
+                    <Text style={lastMessage.senderId == user.uid ? { ...CHAT_CARD_STYLESHEET.timestamp, color: "grey" } : CHAT_CARD_STYLESHEET.timestamp}>{timestamp}</Text>
                 </View>
             </View>
         </TouchableOpacity>

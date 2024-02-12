@@ -12,30 +12,42 @@ export const CHAT_CARD_STYLESHEET = StyleSheet.create({
         borderColor: "#d1d0d059",
         backgroundColor: blackTheme,
         padding: "1%",
+        paddingVertical: "2%",
     },
     titleMessageContainer: {
         width: "100%",
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        marginHorizontal: "2%",
+        marginHorizontal: "5%",
         paddingVertical: "2%",
     },
     userName: {
         color: "white",
         fontWeight: "bold",
+        fontSize: 20,
     },
     messageContainer: {
         width: "80%",
         display: "flex",
         flexDirection: "row",
+        alignItems: "center",
     },
     messageText: {
         marginRight: "3%",
-        color: "white"
+        color: "white",
+        fontSize: 18,
+        fontWeight: "300"
     },
     timestamp: {
         fontWeight: "bold",
-        color: "white"
-    }
+        color: "white",
+        fontSize: 15,
+        marginLeft: "5%",
+    },
+    last_message_you: {
+        color: "grey",
+        marginEnd: "1%",
+        fontSize: 18,
+    },
 })
