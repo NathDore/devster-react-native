@@ -1,14 +1,18 @@
 import { StyleSheet } from "react-native";
+import { blackThemeSecondary, blackTheme } from "../../../../../../assets/color/color";
 
 export const CREATE_POST_STYLESHEET = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white",
-        padding: "2%",
+        backgroundColor: blackTheme,
+        padding: "5%",
         justifyContent: "space-between",
+        borderRadius: 20,
+        borderWidth: 0.5,
+        borderColor: "lightgrey"
     },
     flex1: {
-        flex: 1
+        flex: 1,
     },
     buttonSection: {
         width: "100%",
@@ -22,6 +26,9 @@ export const CREATE_POST_STYLESHEET = StyleSheet.create({
         width: 100,
         height: 30,
         borderRadius: 40,
+        borderWidth: 0.5,
+        borderColor: "lightgrey",
+        backgroundColor: blackThemeSecondary,
         justifyContent: "center",
         alignItems: "center",
         elevation: 1,
@@ -39,11 +46,11 @@ export const CREATE_POST_STYLESHEET = StyleSheet.create({
         elevation: 1,
     },
     textInput: {
-        color: "black",
+        color: "lightgrey",
         justifyContent: "flex-start",
         fontSize: 20,
         fontWeight: "bold",
-        marginVertical: "3%",
+        marginVertical: "5%",
         marginHorizontal: "2%",
     }
 })

@@ -164,7 +164,7 @@ const FeedScreen = () => {
             <Pressable
                 onPress={() => setIsCreateModalOpen(true)}
                 style={FEED_SCREEN_STYLESHEET.create_post_icon}>
-                <AwesomeIcon name="pencil" size={25} color={"black"} />
+                <AwesomeIcon name="pencil" size={25} color={"white"} />
             </Pressable>
 
             {

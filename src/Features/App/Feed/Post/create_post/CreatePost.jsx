@@ -66,11 +66,11 @@ const CreatePost = () => {
             {/* Modal */}
             <View style={CREATE_POST_STYLESHEET.flex1}>
                 {
-                    isLoading ? <ActivityIndicator size={"large"} color={"blue"} /> :
+                    isLoading ? <ActivityIndicator size={"large"} color={"lightgrey"} style={{ alignSelf: "center" }} /> :
                         <>
                             <View style={CREATE_POST_STYLESHEET.buttonSection}>
                                 <TouchableOpacity onPress={handleCloseCreatePostModal}>
-                                    <Icon name="close" type="fontAwesome" color={"black"} size={40} />
+                                    <Icon name="close" type="fontAwesome" color={"lightgrey"} size={40} />
                                 </TouchableOpacity>
                                 {
                                     renderValidButton()
@@ -82,7 +82,7 @@ const CreatePost = () => {
                                 <TextInput
                                     multiline
                                     placeholder='Enter text here'
-                                    placeholderTextColor={"black"}
+                                    placeholderTextColor={"lightgrey"}
                                     onChangeText={(text) => setUserInput(text)}
                                     value={userInput}
                                     style={CREATE_POST_STYLESHEET.textInput}

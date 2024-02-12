@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { blackThemeSecondary } from "../../../../../assets/color/color";
+import { blackThemeSecondary, blackTheme } from "../../../../../assets/color/color";
 
 export const FEED_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
@@ -14,9 +14,11 @@ export const FEED_SCREEN_STYLESHEET = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 150,
-        backgroundColor: "white",
+        backgroundColor: blackTheme,
         justifyContent: "center",
         alignItems: "center",
         elevation: 1,
+        borderWidth: 1,
+        borderColor: "white",
     }
 })
