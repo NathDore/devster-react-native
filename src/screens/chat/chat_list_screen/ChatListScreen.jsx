@@ -10,7 +10,7 @@ import { useFocusEffect } from '@react-navigation/core'
 const ChatListScreen = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
 
-    const { user, setIsHeaderShowing } = useAuthContext();
+    const { user } = useAuthContext();
 
     const [conversations, setConversations] = useState([]);
     const [lastVisible, setLastVisible] = useState();
@@ -40,7 +40,6 @@ const ChatListScreen = ({ navigation }) => {
 
     useFocusEffect(
         useCallback(() => {
-            setIsHeaderShowing(false);
 
             const unsubscribe = async () => {
                 try {

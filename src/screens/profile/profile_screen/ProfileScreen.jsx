@@ -14,7 +14,7 @@ const ProfileScreen = () => {
     const [loading, setLoading] = useState(false);
     const [lastVisible, setLastVisible] = useState(null);
 
-    const { userData, user, setIsHeaderShowing } = useAuthContext();
+    const { userData, user } = useAuthContext();
     const navigation = useNavigation();
 
     const loadInitialData = () => {
@@ -65,8 +65,6 @@ const ProfileScreen = () => {
     }
 
     useFocusEffect(useCallback(() => {
-        setIsHeaderShowing(false);
-
         const unsubscribe = loadInitialData();
 
         return () => {

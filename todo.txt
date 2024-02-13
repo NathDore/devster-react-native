@@ -1,0 +1,2 @@
+-Ajouter State "etat" de l'application qui permet d'afficher le titre de mon header de facon conditionnel.
+-trouver un moyen d'enlever modalProvider pour n'avoir qu'un seul provider.

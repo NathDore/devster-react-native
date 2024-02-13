@@ -10,7 +10,7 @@ import { CHAT_SCREEN_STYLESHEET } from './style';
 
 const ChatScreen = ({ route, navigation }) => {
     const { userDoc } = route.params;
-    const { user, userData, setIsHeaderShowing } = useAuthContext();
+    const { user, userData } = useAuthContext();
 
     const [conversationId, setConversationId] = useState("");
     const [messages, setMessages] = useState([]);
@@ -92,10 +92,6 @@ const ChatScreen = ({ route, navigation }) => {
             setScreenLoading(false);
         }
     }
-
-    useEffect(() => {
-        setIsHeaderShowing(false);
-    }, [])
 
     useEffect(() => {
         if (flatListRef.current && messages && messages.length > 0) {
@@ -199,7 +195,6 @@ const ChatScreen = ({ route, navigation }) => {
     };
 
     const handleGoBack = () => {
-        setIsHeaderShowing(true);
         navigation.goBack();
     }
 

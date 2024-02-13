@@ -15,7 +15,6 @@ const ModifyScreen = ({ navigation }) => {
     const {
         user,
         userData,
-        setIsHeaderShowing
     } = useAuthContext();
 
     const pickImageAsync = async () => {
@@ -105,10 +104,6 @@ const ModifyScreen = ({ navigation }) => {
     const handleUserNameInput = (text) => {
         setUsernameInput(text);
     }
-
-    useFocusEffect(useCallback(() => {
-        setIsHeaderShowing(false);
-    }, [navigation]))
 
     return (
         <Pressable onPress={handleCloseKeyboard} style={MODIFY_SCREEN_STYLESHEET.container}>

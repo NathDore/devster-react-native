@@ -15,7 +15,6 @@ import Header from "../../../UI/header/Header";
 
 const FeedScreen = ({ navigation }) => {
     const { setIsCreateModalOpen, isCreateModalOpen } = useModalContext();
-    const { setIsHeaderShowing } = useAuthContext();
 
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
@@ -26,7 +25,6 @@ const FeedScreen = ({ navigation }) => {
 
     useFocusEffect(useCallback(() => {
         loadInitialData();
-        setIsHeaderShowing(true);
     }, [navigation]))
 
     const loadInitialData = async () => {
