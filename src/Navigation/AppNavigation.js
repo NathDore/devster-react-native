@@ -1,13 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ChatListScreen from "../Features/App/Chat/Screens/chat_list_screen/ChatListScreen";
-import FeedScreen from "../Features/App/Feed/screen/FeedScreen";
+import ChatListScreen from "../screens/chat/chat_list_screen/ChatListScreen.jsx";
+import FeedScreen from "../screens/feed/feed_screen/FeedScreen.jsx";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import ModalProvider from "../context/ModalProvider";
-import ModifyScreen from "../Features/App/Profile/screen/modify_screen/ModifyScreen";
-import VisitPost from "../Features/App/Feed/Post/visit_post/VisitPost";
-import VisitProfile from "../Features/App/Profile/screen/visit_profile/VisitProfile";
-import ContactScreen from "../Features/App/contact/screen/ContactScreen.jsx";
+import ModalProvider from "../context/ModalProvider.jsx";
+import VisitPost from "../components/post/visit_post/VisitPost.jsx";
+import VisitProfile from "../screens/profile/visit_profile_screen/VisitProfile.jsx";
+import ContactScreen from "../screens/contact/contact_screen/ContactScreen.jsx";
 
 const Tab = createBottomTabNavigator();
 
