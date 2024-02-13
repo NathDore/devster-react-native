@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ImageBackground, ActivityIndicator, FlatList } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { Avatar } from 'react-native-elements';
 import { convertTimestampToRelativeTime } from '../../../util/util-function';
@@ -7,13 +7,15 @@ import PostCard from '../../../components/post/post_card/PostCard';
 import { PROFILE_SCREEN_STYLESHEET } from './style';
 import { useAuthContext } from '../../../context/AuthProvider';
 import firestore from "@react-native-firebase/firestore";
+import { useFocusEffect, useNavigation } from '@react-navigation/core';
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = () => {
     const [userPosts, setUserPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [lastVisible, setLastVisible] = useState(null);
 
     const { userData, user, setIsHeaderShowing } = useAuthContext();
+    const navigation = useNavigation();
 
     const loadInitialData = () => {
         setLoading(true);
@@ -62,7 +64,7 @@ const ProfileScreen = ({ navigation }) => {
             .finally(() => setLoading(false));
     }
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         setIsHeaderShowing(false);
 
         const unsubscribe = loadInitialData();
@@ -72,7 +74,7 @@ const ProfileScreen = ({ navigation }) => {
                 unsubscribe();
             }
         }
-    }, [])
+    }, [navigation]))
 
     const renderItem = ({ item }) => (
         <PostCard

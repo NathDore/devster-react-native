@@ -4,6 +4,8 @@ export const PROFILE_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#202124",
+        display: "flex",
+        flexDirection: "column",
     },
     backIcon: {
         marginVertical: "2%",
