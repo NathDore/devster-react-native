@@ -18,6 +18,7 @@ const VisitProfile = ({ route, navigation }) => {
     const [posts, setPosts] = useState();
     const [lastVisible, setLastVisible] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isPageLoading, setIsPageLoading] = useState(true);
 
     const handleGoBackNavigation = () => {
         navigation.goBack();
@@ -76,7 +77,7 @@ const VisitProfile = ({ route, navigation }) => {
             })
             .catch(error => console.error("Error while loading more data", error))
             .finally(() => setIsLoading(false));
-    }
+    };
 
     useFocusEffect(
         React.useCallback(() => {
@@ -114,7 +115,6 @@ const VisitProfile = ({ route, navigation }) => {
                 source={profile_picture ? { uri: profile_picture } : require('../../../../assets/anonyme_profile.jpg')}
                 blurRadius={30}
             >
-
                 {/* Navigation Banner */}
                 <View style={VISIT_PROFILE_STYLESHEET.navigation_banner}>
 

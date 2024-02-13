@@ -88,12 +88,10 @@ const ProfileScreen = ({ navigation }) => {
     };
 
     const handleNavigationBack = () => {
-        setIsHeaderShowing(true);
-        navigation.goBack();
+        navigation.navigate("Feed");
     }
 
     const handleNavigationModifyScreen = () => {
-        setIsHeaderShowing(true);
         navigation.navigate("Modify");
     }
 
@@ -105,7 +103,7 @@ const ProfileScreen = ({ navigation }) => {
             >
                 {/* Icon */}
                 <TouchableOpacity onPress={handleNavigationBack}>
-                    <AwesomeIcon name="angle-left" size={30} color="white" style={PROFILE_SCREEN_STYLESHEET.backIcon} />
+                    <AwesomeIcon name="angle-left" size={40} color="white" style={PROFILE_SCREEN_STYLESHEET.backIcon} />
                 </TouchableOpacity>
 
                 <View style={{ alignItems: "center" }}>
