@@ -1,4 +1,4 @@
-import { View, FlatList, ActivityIndicator, Pressable, RefreshControl, TouchableOpacity, Text } from 'react-native'
+import { View, FlatList, ActivityIndicator, Pressable, RefreshControl, TouchableOpacity } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react';
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useModalContext } from '../../../context/ModalProvider';
@@ -11,6 +11,7 @@ import CreatePost from '../../../components/post/create_post/CreatePost';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useAuthContext } from '../../../context/AuthProvider';
 import { useFocusEffect } from '@react-navigation/native';
+import Header from "../../../UI/header/Header";
 
 const FeedScreen = ({ navigation }) => {
     const { setIsCreateModalOpen, isCreateModalOpen } = useModalContext();
@@ -148,6 +149,8 @@ const FeedScreen = ({ navigation }) => {
 
     return (
         <View style={FEED_SCREEN_STYLESHEET.container}>
+            <Header screenTitle="Publications" />
+
             {/* Feed */}
             <FlatList
                 data={posts}

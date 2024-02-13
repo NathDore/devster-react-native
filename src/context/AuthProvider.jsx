@@ -7,13 +7,11 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState();
-    const [firebaseError, setFirebaseError] = useState();
     const [userData, setUserData] = useState({});
 
-    const [isLoginForm, setIsLoginForm] = useState(false);
-    const [isRegisterForm, setIsRegisterForm] = useState(false);
-    const [isProfileLoading, setIsProfileLoading] = useState(false);
-    const [isHeaderShowing, setIsHeaderShowing] = useState(true);
+    const [firebaseError, setFirebaseError] = useState();
+
+
 
     auth().onAuthStateChanged((newUser) => {
         setUser(newUser);
@@ -71,15 +69,7 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    const generateRandomUsername = () => {
-        const prefix = "user";
-        const randomNumber = Math.floor(Math.random() * 10000); // Vous pouvez ajuster la plage de nombres si nécessaire
-        return `${prefix}${randomNumber}`;
-    };
-
     const createUserDoc = (uid, email, username) => {
-        const randomUsername = generateRandomUsername();
-
         return new Promise((resolve, reject) => {
             firestore()
                 .collection("users")
@@ -103,7 +93,7 @@ const AuthProvider = ({ children }) => {
         });
     }
 
-    const signUpWithEmailAndPassword = (email, password, username) => {
+    const signUpWithEmailAndPassword = (email, password) => {
         return new Promise((resolve, reject) => {
             auth()
                 .createUserWithEmailAndPassword(email, password)
@@ -187,33 +177,16 @@ const AuthProvider = ({ children }) => {
             })
     }
 
-    const openLoginForm = () => {
-        setIsLoginForm(prevState => !prevState)
-    }
-
-    const openRegisterForm = () => {
-        setIsRegisterForm(prevState => !prevState)
-    }
-
     const contextValue = useMemo(() => {
         return {
             user,
             userData,
             signOut,
-            isLoginForm,
-            isRegisterForm,
-            openLoginForm,
-            openRegisterForm,
             signInWithEmailAndPassword,
             handleSignUp,
             firebaseError,
-            setFirebaseError,
-            isProfileLoading,
-            setIsProfileLoading,
-            isHeaderShowing,
-            setIsHeaderShowing
         };
-    }, [user, userData, isLoginForm, isRegisterForm, firebaseError, isProfileLoading, isHeaderShowing]);
+    }, [user, userData, firebaseError]);
 
 
     return (

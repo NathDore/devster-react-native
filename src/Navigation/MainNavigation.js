@@ -5,21 +5,23 @@ import { useAuthContext } from '../context/AuthProvider';
 import LandingScreen from '../screens/home/landing_screen/LandingScreen';
 import LoginScreen from '../screens/home/login_screen/LoginScreen';
 import RegisterScreen from '../screens/home/register_screen/RegisterScreen';
-import HeaderUI from '../UI/Header/HeaderUI';
+import HeaderAuth from '../UI/Header_auth/HeaderAuth';
 import ChatScreen from '../screens/chat/chat_screen/ChatScreen';
 import ProfileScreen from '../screens/profile/profile_screen/ProfileScreen';
 import ModifyScreen from '../screens/profile/modify_screen/ModifyScreen';
+import Header from '../UI/header/Header';
 
 const Stack = createNativeStackNavigator();
 
 export default function MainStack() {
-    const { user, isHeaderShowing } = useAuthContext();
+    const { user } = useAuthContext();
 
     return (
         <NavigationContainer initialRouteName="Home">
+
             {/* Header */}
             {
-                user && isHeaderShowing && <HeaderUI />
+                //user && <Header screenTitle="Publications" />
             }
 
             <Stack.Navigator screenOptions={{ headerShown: false }}>

@@ -1,13 +1,13 @@
 import { View, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Header, Icon, Avatar } from 'react-native-elements';
 import { HEADER_STYLESHEET } from './Style';
 import { useNavigation } from '@react-navigation/native';
 import { useAuthContext } from '../../context/AuthProvider';
 
-const HeaderUI = () => {
+const HeaderAuth = () => {
     const navigation = useNavigation();
-    const { user, userData, signOut, openLoginForm, openRegisterForm, isProfileLoading } = useAuthContext();
+    const { user, userData, signOut, openLoginForm, openRegisterForm } = useAuthContext();
 
     const handleNavigationHome = () => {
         navigation.navigate("Home");
@@ -37,17 +37,14 @@ const HeaderUI = () => {
                                 <Text style={HEADER_STYLESHEET.text}>Sign out</Text>
                             </TouchableOpacity>
 
+                            <TouchableOpacity onPress={handleNavigationProfile}>
+                                <Avatar
+                                    size={32}
+                                    rounded
+                                    source={userData?.profile_picture ? { uri: userData?.profile_picture } : require("../../../assets/anonyme_profile.jpg")}
+                                />
+                            </TouchableOpacity>
 
-                            {
-                                isProfileLoading ? <ActivityIndicator size={'small'} color={'blue'} /> : <TouchableOpacity onPress={handleNavigationProfile}>
-                                    <Avatar
-                                        size={32}
-                                        rounded
-                                        source={userData?.profile_picture ? { uri: userData?.profile_picture } : require("../../../assets/anonyme_profile.jpg")}
-                                    />
-                                </TouchableOpacity>
-
-                            }
 
                         </> : <>
                             <TouchableOpacity
@@ -73,4 +70,4 @@ const HeaderUI = () => {
     )
 }
 
-export default HeaderUI
+export default HeaderAuth
