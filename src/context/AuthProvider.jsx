@@ -10,7 +10,7 @@ const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState({});
 
     const [firebaseError, setFirebaseError] = useState();
-
+    const [screenState, setScreenState] = useState("");
 
 
     auth().onAuthStateChanged((newUser) => {
@@ -43,10 +43,10 @@ const AuthProvider = ({ children }) => {
         } catch (error) {
             switch (error.code) {
                 case 'auth/no-current-user':
-                    console.log('No user is currently signed in.');
+                    setFirebaseError('No user is currently signed in.');
                     break;
                 case 'auth/network-request-failed':
-                    console.log('Network error. Check your internet connection.');
+                    setFirebaseError('Network error. Check your internet connection.');
                     break;
                 default:
                     console.error(error);
@@ -147,26 +147,25 @@ const AuthProvider = ({ children }) => {
             .catch((error) => {
                 switch (error.code) {
                     case 'auth/invalid-email':
-                        console.log('Invalid email address');
                         setFirebaseError('Invalid password or email address');
                         break;
                     case 'auth/user-disabled':
-                        console.log('User account has been disabled');
+                        setFirebaseError('User account has been disabled');
                         break;
                     case 'auth/user-not-found':
-                        console.log('No user found with this email address');
+                        setFirebaseError('No user found with this email address');
                         break;
                     case 'auth/wrong-password':
                         setFirebaseError('Invalid password or email address');
                         break;
                     case 'auth/too-many-requests':
-                        console.log('Too many unsuccessful sign-in attempts. Try again later.');
+                        setFirebaseError('Too many unsuccessful sign-in attempts. Try again later.');
                         break;
                     case 'auth/network-request-failed':
-                        console.log('Network error. Check your internet connection.');
+                        setFirebaseError('Network error. Check your internet connection.');
                         break;
                     case 'auth/operation-not-allowed':
-                        console.log('Sign-in with email and password is not enabled.');
+                        setFirebaseError('Sign-in with email and password is not enabled.');
                         break;
                     case 'auth/invalid-credential':
                         setFirebaseError('Invalid password or email address');
@@ -185,8 +184,10 @@ const AuthProvider = ({ children }) => {
             signInWithEmailAndPassword,
             handleSignUp,
             firebaseError,
+            screenState,
+            setScreenState
         };
-    }, [user, userData, firebaseError]);
+    }, [user, userData, firebaseError, screenState]);
 
 
     return (

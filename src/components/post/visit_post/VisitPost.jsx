@@ -6,6 +6,7 @@ import YourPost from './your_post/YourPost';
 import CommentList from '../../comment/comment_section/CommentList';
 import AddComment from '../../comment/add_comment/AddComment';
 import { useFocusEffect } from '@react-navigation/native';
+import { useAuthContext } from '../../../context/AuthProvider';
 
 const VisitPost = ({ route }) => {
     const {
@@ -18,6 +19,8 @@ const VisitPost = ({ route }) => {
 
     const [isYourPost, setIsYourPost] = useState(false);
     const [comments, setComments] = useState([]);
+
+    const { setScreenState } = useAuthContext();
 
     const checkIfThisIsYourPost = () => {
 
@@ -70,6 +73,8 @@ const VisitPost = ({ route }) => {
 
     useFocusEffect(
         React.useCallback(() => {
+            setScreenState("Hide");
+
             const unsubscribeComments = subscribeToComments();
             checkIfThisIsYourPost();
 

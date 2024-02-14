@@ -1,15 +1,15 @@
 import { StyleSheet } from "react-native";
+import { blackTheme } from "../../../../assets/color/color";
 
 export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
         display: "flex",
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "black",
+        backgroundColor: blackTheme,
     },
     header: {
         width: "100%",
-        backgroundColor: "black",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
@@ -44,7 +44,6 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
         justifyContent: "space-evenly",
     },
     send_message_section_not_focus: {
-        backgroundColor: "black",
         width: "100%",
         height: 80,
         display: "flex",

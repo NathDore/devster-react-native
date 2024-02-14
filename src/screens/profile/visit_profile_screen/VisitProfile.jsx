@@ -14,12 +14,11 @@ import ProfileScreen from '../profile_screen/ProfileScreen';
 const VisitProfile = ({ route, navigation }) => {
     const { userDoc } = route.params;
     const { name, profile_picture } = userDoc;
-    const { user } = useAuthContext();
+    const { user, setScreenState } = useAuthContext();
 
     const [posts, setPosts] = useState();
     const [lastVisible, setLastVisible] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [isPageLoading, setIsPageLoading] = useState(true);
 
     const handleGoBackNavigation = () => {
         navigation.goBack();
@@ -82,7 +81,7 @@ const VisitProfile = ({ route, navigation }) => {
 
     useFocusEffect(
         React.useCallback(() => {
-            //if (userDoc.id == user.uid) navigation.navigate("Profile");
+            setScreenState("Hide");
 
             const unsubscribre = loadInitialData();
 

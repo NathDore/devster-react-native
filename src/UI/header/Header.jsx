@@ -1,23 +1,16 @@
-import { View, Text } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import React from 'react'
-import { blackTheme, blackThemeSecondary } from '../../../assets/color/color'
+import { HEADER_STYLESHEET } from './style'
+import { Avatar } from 'react-native-elements'
 
-const Header = ({ screenTitle }) => {
+const Header = ({ screenTitle, user, userData }) => {
     return (
-        <View style={{
-            flexDirection: "row",
-            width: "100%",
-            padding: "5%",
-            alignItems: "center",
-            paddingStart: "5%",
-            backgroundColor: blackThemeSecondary,
-        }}>
-            <Text style={{
-                fontSize: 25,
-                color: "lightgrey",
-                fontWeight: "500",
-                letterSpacing: 0.5
-            }}>{screenTitle}</Text>
+        <View style={HEADER_STYLESHEET.container}>
+            <Text style={HEADER_STYLESHEET.title}>{screenTitle}</Text>
+
+            <Pressable>
+                <Avatar rounded size={35} source={userData?.profile_picture ? { uri: userData.profile_picture } : require("../../../assets/anonyme_profile.jpg")} />
+            </Pressable>
         </View>
     )
 }

@@ -9,7 +9,7 @@ import PostCard from "../../../components/post/post_card/PostCard";
 import CreatePost from '../../../components/post/create_post/CreatePost';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useFocusEffect } from '@react-navigation/native';
-import Header from "../../../UI/header/Header";
+import { useAuthContext } from '../../../context/AuthProvider';
 
 const FeedScreen = ({ navigation }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +20,10 @@ const FeedScreen = ({ navigation }) => {
     const [newPostsCount, setNewPostsCount] = useState(0);
     const [lastTimestamp, setLastTimestamp] = useState(null);
 
+    const { setScreenState } = useAuthContext();
+
     useFocusEffect(useCallback(() => {
+        setScreenState("Publications");
         loadInitialData();
     }, [navigation]))
 
@@ -148,8 +151,6 @@ const FeedScreen = ({ navigation }) => {
 
     return (
         <View style={FEED_SCREEN_STYLESHEET.container}>
-            <Header screenTitle="Publications" />
-
             {/* Feed */}
             <FlatList
                 data={posts}

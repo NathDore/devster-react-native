@@ -10,10 +10,9 @@ import { useFocusEffect } from '@react-navigation/core'
 const ChatListScreen = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
 
-    const { user } = useAuthContext();
+    const { user, setScreenState } = useAuthContext();
 
     const [conversations, setConversations] = useState([]);
-    const [lastVisible, setLastVisible] = useState();
 
     const loadInitialData = async () => {
         try {
@@ -28,7 +27,6 @@ const ChatListScreen = ({ navigation }) => {
                 .get()
 
             fetchConversations.docs.forEach(conv => allConversations.push(conv.data()))
-            setLastVisible(fetchConversations.docs[fetchConversations.docs.length - 1])
 
             return allConversations;
         } catch (error) {
@@ -40,6 +38,7 @@ const ChatListScreen = ({ navigation }) => {
 
     useFocusEffect(
         useCallback(() => {
+            setScreenState("conversations");
 
             const unsubscribe = async () => {
                 try {
@@ -68,10 +67,6 @@ const ChatListScreen = ({ navigation }) => {
 
     return (
         <View style={CHAT_LIST_SCREEN.container}>
-            <View style={CHAT_LIST_SCREEN.header}>
-                <Text style={{ fontSize: 25, color: "lightgrey", fontWeight: "500", letterSpacing: 0.5 }}>Conversations</Text>
-            </View>
-
             {
                 conversations?.length != 0 ?
                     <FlatList

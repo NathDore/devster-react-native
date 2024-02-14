@@ -1,9 +1,10 @@
-import { View, FlatList, ActivityIndicator, Pressable } from 'react-native'
-import { useState, useEffect } from 'react';
+import { View, FlatList, ActivityIndicator } from 'react-native'
+import { useState } from 'react';
 import CommentCard from '../comment_card/CommentCard';
 
-const CommentList = ({ postId, postUid, comments }) => {
+const CommentList = ({ comments }) => {
     const [loading, setLoading] = useState(false);
+
 
     const renderItem = ({ item }) => (
         <CommentCard

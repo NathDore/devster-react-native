@@ -3,12 +3,13 @@ import React, { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../context/AuthProvider';
+import { ADD_COMMENT_STYLESHEET } from "./style"
 
 const AddComment = ({ postId }) => {
     const [commentText, setCommentText] = useState("");
     const [isFocus, setIsFocus] = useState(false);
 
-    const { user } = useAuthContext()
+    const { user } = useAuthContext();
 
     const handleSubmit = () => {
         firestore()
@@ -27,22 +28,16 @@ const AddComment = ({ postId }) => {
             .catch((error) => console.log("Error while sending comment."))
     };
 
+    const handleOnFocus = () => {
+        setIsFocus(true);
+    }
+
+    const handleOnBlur = () => {
+        setIsFocus(false);
+    }
+
     return (
-        <View style={isFocus ? {
-            backgroundColor: "#202124",
-            width: "100%",
-            height: "30%",
-            marginVertical: "2%",
-            borderColor: '#d1d0d059',
-            borderWidth: 0.5,
-        } : {
-            backgroundColor: "#202124",
-            width: "100%",
-            height: "10%",
-            marginVertical: "2%",
-            borderColor: '#d1d0d059',
-            borderWidth: 0.5,
-        }}>
+        <View style={isFocus ? ADD_COMMENT_STYLESHEET.focus_container : ADD_COMMENT_STYLESHEET.container}>
             <TextInput
                 style={{
                     flex: 1,
@@ -56,13 +51,13 @@ const AddComment = ({ postId }) => {
                 placeholder='Enter your comment here.'
                 placeholderTextColor={'white'}
                 multiline
-                onFocus={() => setIsFocus(true)}
-                onBlur={() => setIsFocus(false)}
+                onFocus={handleOnFocus}
+                onBlur={handleOnBlur}
                 onChangeText={(text) => setCommentText(text)}
                 value={commentText}
             />
 
-            <TouchableOpacity onPress={handleSubmit} style={{ position: 'absolute', alignSelf: "flex-end", marginRight: "5%", marginTop: "5%" }}>
+            <TouchableOpacity onPress={handleSubmit} style={ADD_COMMENT_STYLESHEET.submit_button}>
                 <FontAwesome name="paper-plane" size={24} color="lightblue" />
             </TouchableOpacity>
         </View>
