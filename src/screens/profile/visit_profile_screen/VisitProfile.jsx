@@ -119,13 +119,9 @@ const VisitProfile = ({ route, navigation }) => {
 
                         {/* Go back icon */}
                         <TouchableOpacity onPress={handleGoBackNavigation} style={VISIT_PROFILE_STYLESHEET.go_back_icon}>
-                            <FontAwesome name="arrow-left" size={18} color="lightgrey" />
+                            <FontAwesome name="angle-left" size={40} color="lightgrey" />
                         </TouchableOpacity>
 
-                        {/* More option Icon */}
-                        <TouchableOpacity style={VISIT_PROFILE_STYLESHEET.more_option_icon}>
-                            <MaterialIcons name="more-vert" size={20} color="white" />
-                        </TouchableOpacity>
                     </View>
 
                     {/* Header */}
@@ -161,7 +157,7 @@ const VisitProfile = ({ route, navigation }) => {
                 <View style={VISIT_PROFILE_STYLESHEET.banner}>
 
                     {/* Flame Icon */}
-                    <FontAwesome name="fire" size={12} color="lightgrey" />
+                    <FontAwesome name="fire" size={20} color="lightgrey" />
 
                     {/* Section Title */}
                     <View style={VISIT_PROFILE_STYLESHEET.section_title_container}>
@@ -169,7 +165,6 @@ const VisitProfile = ({ route, navigation }) => {
                     </View>
 
                     {/* Chevron Icon */}
-                    <FontAwesome name="chevron-down" size={12} color="lightgrey" />
                 </View>
 
                 {/* Popular post feed */}

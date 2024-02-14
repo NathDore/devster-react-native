@@ -22,7 +22,6 @@ export const VISIT_PROFILE_STYLESHEET = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 150,
-        backgroundColor: "black"
     },
     more_option_icon: {
         width: 30,
@@ -118,6 +117,6 @@ export const VISIT_PROFILE_STYLESHEET = StyleSheet.create({
     },
     section_title_text: {
         color: "lightgrey",
-        fontSize: 11,
+        fontSize: 20,
     }
 });

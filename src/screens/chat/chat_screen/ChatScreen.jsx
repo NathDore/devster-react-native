@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Keyboard } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Keyboard, Pressable } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import firestore from "@react-native-firebase/firestore";
 import { useFocusEffect } from '@react-navigation/core';
@@ -197,6 +197,10 @@ const ChatScreen = ({ route, navigation }) => {
         navigation.goBack();
     }
 
+    const handleNavigationToProfile = () => {
+        navigation.navigate("VisitProfile", { userDoc });
+    }
+
     return (
         /* Container */
         <View style={CHAT_SCREEN_STYLESHEET.container}>
@@ -206,12 +210,15 @@ const ChatScreen = ({ route, navigation }) => {
 
                 {/* Back Icon */}
                 <TouchableOpacity onPress={handleGoBack} style={{ padding: "3%", }}>
-                    <FontAwesome name="chevron-left" size={20} color={"white"} />
+                    <FontAwesome name="angle-left" size={40} color={"white"} />
                 </TouchableOpacity>
 
                 <View style={CHAT_SCREEN_STYLESHEET.profile_photo_name_row}>
 
-                    <Avatar size={40} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
+                    {/* Profile picture */}
+                    <Pressable onPress={handleNavigationToProfile}>
+                        <Avatar size={40} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
+                    </Pressable>
 
                     {/* Name */}
                     <Text style={CHAT_SCREEN_STYLESHEET.name}>{userDoc.name}</Text>
@@ -220,7 +227,7 @@ const ChatScreen = ({ route, navigation }) => {
 
                 {/* info Icon */}
                 <TouchableOpacity>
-                    <FontAwesome name="info" size={20} color={"white"} />
+                    {/* <FontAwesome name="info" size={20} color={"white"} /> */}
                 </TouchableOpacity>
             </View>
 

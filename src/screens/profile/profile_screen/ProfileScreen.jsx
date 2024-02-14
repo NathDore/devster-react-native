@@ -133,7 +133,7 @@ const ProfileScreen = () => {
                 {/* Publications sections */}
                 <View style={PROFILE_SCREEN_STYLESHEET.bottom_header}>
                     <View style={PROFILE_SCREEN_STYLESHEET.publication_title_header_underline}>
-                        <Text style={PROFILE_SCREEN_STYLESHEET.publication_title_header_text}>Publications</Text>
+                        <Text style={PROFILE_SCREEN_STYLESHEET.publication_title_header_text}>My Publications</Text>
                     </View>
                 </View>
 

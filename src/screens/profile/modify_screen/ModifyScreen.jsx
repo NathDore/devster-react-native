@@ -6,7 +6,6 @@ import * as ImagePicker from 'expo-image-picker';
 import storage from '@react-native-firebase/storage';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../context/AuthProvider';
-import { useFocusEffect } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 
 const ModifyScreen = ({ navigation }) => {
@@ -115,7 +114,7 @@ const ModifyScreen = ({ navigation }) => {
             >
                 {/* Go back icon */}
                 <TouchableOpacity onPress={handleGoBack} style={MODIFY_SCREEN_STYLESHEET.go_back_icon}>
-                    <FontAwesome name="chevron-left" size={25} color="lightgrey" />
+                    <FontAwesome name="angle-left" size={40} color="lightgrey" />
                 </TouchableOpacity>
 
                 <View style={MODIFY_SCREEN_STYLESHEET.profile_picture}>
