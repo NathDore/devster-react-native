@@ -4,12 +4,12 @@
     "slug": "devster-react",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splashscreen.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#202124"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -20,13 +20,18 @@
       "@react-native-firebase/crashlytics",
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "splash": {
+        "image": "./assets/splashscreen.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#202124"
+      }
     },
     "android": {
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/icon/adaptive-icon.png",
+        "backgroundColor": "#202124"
       },
       "package": "com.nathdore.devsterreact"
     },
