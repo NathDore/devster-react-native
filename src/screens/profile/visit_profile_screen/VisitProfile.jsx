@@ -14,7 +14,7 @@ import ProfileScreen from '../profile_screen/ProfileScreen';
 const VisitProfile = ({ route, navigation }) => {
     const { userDoc } = route.params;
     const { name, profile_picture } = userDoc;
-    const { user, setScreenState } = useAuthContext();
+    const { user } = useAuthContext();
 
     const [posts, setPosts] = useState();
     const [lastVisible, setLastVisible] = useState(null);
@@ -81,8 +81,6 @@ const VisitProfile = ({ route, navigation }) => {
 
     useFocusEffect(
         React.useCallback(() => {
-            setScreenState("Hide");
-
             const unsubscribre = loadInitialData();
 
             return () => {

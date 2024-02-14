@@ -20,8 +20,6 @@ const VisitPost = ({ route }) => {
     const [isYourPost, setIsYourPost] = useState(false);
     const [comments, setComments] = useState([]);
 
-    const { setScreenState } = useAuthContext();
-
     const checkIfThisIsYourPost = () => {
 
         firestore()
@@ -73,7 +71,6 @@ const VisitPost = ({ route }) => {
 
     useFocusEffect(
         React.useCallback(() => {
-            setScreenState("Hide");
 
             const unsubscribeComments = subscribeToComments();
             checkIfThisIsYourPost();

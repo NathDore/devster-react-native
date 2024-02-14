@@ -1,2 +1,4 @@
--Ajouter State "etat" de l'application qui permet d'afficher le titre de mon header de facon conditionnel.
--trouver un moyen d'enlever modalProvider pour n'avoir qu'un seul provider.
+1- Visit profile (optimiser le rendement des publications populair de la personnes !).
+2- optimiser l'application avec le caching.
+3- faire un frontend consistant.
+4- finir le contact screen.

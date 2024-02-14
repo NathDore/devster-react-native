@@ -10,8 +10,6 @@ const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState({});
 
     const [firebaseError, setFirebaseError] = useState();
-    const [screenState, setScreenState] = useState("");
-
 
     auth().onAuthStateChanged((newUser) => {
         setUser(newUser);
@@ -184,10 +182,8 @@ const AuthProvider = ({ children }) => {
             signInWithEmailAndPassword,
             handleSignUp,
             firebaseError,
-            screenState,
-            setScreenState
         };
-    }, [user, userData, firebaseError, screenState]);
+    }, [user, userData, firebaseError]);
 
 
     return (

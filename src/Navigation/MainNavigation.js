@@ -8,21 +8,14 @@ import RegisterScreen from '../screens/home/register_screen/RegisterScreen';
 import ChatScreen from '../screens/chat/chat_screen/ChatScreen';
 import ProfileScreen from '../screens/profile/profile_screen/ProfileScreen';
 import ModifyScreen from '../screens/profile/modify_screen/ModifyScreen';
-import Header from '../UI/header/Header';
 
 const Stack = createNativeStackNavigator();
 
 export default function MainStack() {
-    const { user, userData, screenState } = useAuthContext();
+    const { user } = useAuthContext();
 
     return (
         <NavigationContainer initialRouteName="Home">
-
-            {/* Header */}
-            {
-                screenState != "Hide" && user && <Header screenTitle={screenState} user={user} userData={userData} />
-            }
-
             <Stack.Navigator screenOptions={{ headerShown: false }}>
 
                 {/* Landing */}

@@ -6,11 +6,12 @@ import { CHAT_LIST_SCREEN } from './style';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../context/AuthProvider'
 import { useFocusEffect } from '@react-navigation/core'
+import Header from '../../../UI/header/Header';
 
 const ChatListScreen = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
 
-    const { user, setScreenState } = useAuthContext();
+    const { user, userData } = useAuthContext();
 
     const [conversations, setConversations] = useState([]);
 
@@ -38,8 +39,6 @@ const ChatListScreen = ({ navigation }) => {
 
     useFocusEffect(
         useCallback(() => {
-            setScreenState("conversations");
-
             const unsubscribe = async () => {
                 try {
                     const getConversations = await loadInitialData();
@@ -67,6 +66,7 @@ const ChatListScreen = ({ navigation }) => {
 
     return (
         <View style={CHAT_LIST_SCREEN.container}>
+            <Header screenTitle="Conversations" />
             {
                 conversations?.length != 0 ?
                     <FlatList

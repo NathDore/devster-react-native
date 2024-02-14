@@ -3,7 +3,7 @@ import React from 'react'
 import { Avatar } from 'react-native-elements'
 import { BUBBLE_CHAT_STYLESHEET } from './style'
 
-const BubbleChat = ({ item, userDoc, userData }) => {
+const BubbleChat = ({ item, userDoc }) => {
     return (
         item.receiverId == userDoc.id ?
             /* Receiver Container */

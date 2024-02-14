@@ -10,7 +10,7 @@ import { CHAT_SCREEN_STYLESHEET } from './style';
 
 const ChatScreen = ({ route, navigation }) => {
     const { userDoc } = route.params;
-    const { user, userData, setScreenState } = useAuthContext();
+    const { user, userData } = useAuthContext();
 
     const [conversationId, setConversationId] = useState("");
     const [messages, setMessages] = useState([]);
@@ -101,8 +101,6 @@ const ChatScreen = ({ route, navigation }) => {
 
     useFocusEffect(
         React.useCallback(() => {
-            setScreenState("Hide");
-
             const unsubscribe = async () => {
                 try {
                     const conversationIdFromFireStore = await getUserConversationId();
