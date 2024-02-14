@@ -81,7 +81,6 @@ const AuthProvider = ({ children }) => {
                 .then(() => {
                     console.log('User doc created.');
                     setFirebaseError("");
-                    openRegisterForm();
                     resolve(null);
                 })
                 .catch((error) => {
