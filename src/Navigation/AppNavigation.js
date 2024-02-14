@@ -3,7 +3,6 @@ import ChatListScreen from "../screens/chat/chat_list_screen/ChatListScreen.jsx"
 import FeedScreen from "../screens/feed/feed_screen/FeedScreen.jsx";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import ModalProvider from "../context/ModalProvider.jsx";
 import VisitPost from "../components/post/visit_post/VisitPost.jsx";
 import VisitProfile from "../screens/profile/visit_profile_screen/VisitProfile.jsx";
 import ContactScreen from "../screens/contact/contact_screen/ContactScreen.jsx";
@@ -33,9 +32,8 @@ export default function AppStack() {
                     }}
                 >
                     {() => (
-                        <ModalProvider>
-                            <FeedScreen />
-                        </ModalProvider>
+
+                        <FeedScreen />
                     )}
                 </Tab.Screen>
 

@@ -1,7 +1,6 @@
 import { View, FlatList, ActivityIndicator, Pressable, RefreshControl, TouchableOpacity } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react';
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
-import { useModalContext } from '../../../context/ModalProvider';
 import Modal from 'react-native-modal';
 import { FEED_SCREEN_STYLESHEET } from './style';
 import { convertTimestampToRelativeTime } from '../../../util/util-function';
@@ -9,13 +8,11 @@ import firestore from "@react-native-firebase/firestore";
 import PostCard from "../../../components/post/post_card/PostCard";
 import CreatePost from '../../../components/post/create_post/CreatePost';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { useAuthContext } from '../../../context/AuthProvider';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from "../../../UI/header/Header";
 
 const FeedScreen = ({ navigation }) => {
-    const { setIsCreateModalOpen, isCreateModalOpen } = useModalContext();
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const [posts, setPosts] = useState([]);
@@ -130,6 +127,10 @@ const FeedScreen = ({ navigation }) => {
         setLastTimestamp(Date.now())
     };
 
+    const handleModalOpen = () => {
+        setIsModalOpen(true);
+    };
+
 
     const renderItem = ({ item }) => (
         <PostCard
@@ -167,7 +168,7 @@ const FeedScreen = ({ navigation }) => {
 
             {/* Create post icon */}
             <Pressable
-                onPress={() => setIsCreateModalOpen(true)}
+                onPress={handleModalOpen}
                 style={FEED_SCREEN_STYLESHEET.create_post_icon}>
                 <AwesomeIcon name="pencil" size={25} color={"white"} />
             </Pressable>
@@ -182,9 +183,9 @@ const FeedScreen = ({ navigation }) => {
 
             {/* Create Post Modal */}
             <Modal
-                isVisible={isCreateModalOpen}
+                isVisible={isModalOpen}
             >
-                <CreatePost />
+                <CreatePost setIsModalOpen={setIsModalOpen} />
             </Modal>
 
         </View>

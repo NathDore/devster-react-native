@@ -1,21 +1,23 @@
-import { View, Text, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, Pressable, Keyboard } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useModalContext } from '../../../context/ModalProvider'
 import { Icon } from 'react-native-elements';
 import { CREATE_POST_STYLESHEET } from './style';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../context/AuthProvider';
 
-const CreatePost = () => {
-    const { setIsCreateModalOpen } = useModalContext();
+const CreatePost = ({ setIsModalOpen }) => {
     const [userInput, setUserInput] = useState("");
     const [isValid, setIsValid] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const { user } = useAuthContext()
 
-    const handleCloseCreatePostModal = () => {
-        setIsCreateModalOpen(false);
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    }
+
+    const handleCloseKeyboard = () => {
+        Keyboard.dismiss();
     }
 
     const handleSubmit = () => {
@@ -35,7 +37,7 @@ const CreatePost = () => {
             })
             .then(() => {
                 console.log("publication created.")
-                handleCloseCreatePostModal();
+                handleCloseModal();
                 setIsLoading(false);
             })
     }
@@ -62,14 +64,14 @@ const CreatePost = () => {
     }
 
     return (
-        <View style={CREATE_POST_STYLESHEET.container}>
+        <Pressable onPress={handleCloseKeyboard} style={CREATE_POST_STYLESHEET.container}>
             {/* Modal */}
             <View style={CREATE_POST_STYLESHEET.flex1}>
                 {
                     isLoading ? <ActivityIndicator size={"large"} color={"lightgrey"} style={{ alignSelf: "center" }} /> :
                         <>
                             <View style={CREATE_POST_STYLESHEET.buttonSection}>
-                                <TouchableOpacity onPress={handleCloseCreatePostModal}>
+                                <TouchableOpacity onPress={handleCloseModal}>
                                     <Icon name="close" type="fontAwesome" color={"lightgrey"} size={40} />
                                 </TouchableOpacity>
                                 {
@@ -94,7 +96,7 @@ const CreatePost = () => {
 
                 }
             </View>
-        </View>
+        </Pressable>
     )
 }
 
