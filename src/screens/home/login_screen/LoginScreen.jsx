@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useForm, Controller } from 'react-hook-form';
 import { LOGIN_STYLESHEET } from './style';
 import { useAuthContext } from '../../../context/AuthProvider';
+import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 
 const LoginScreen = ({ navigation }) => {
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
@@ -12,7 +13,7 @@ const LoginScreen = ({ navigation }) => {
 
     const onSubmit = (data) => {
         signInWithEmailAndPassword(data.email, data.password);
-        navigation.navigate("Home");
+        navigation.navigate("WelcomeBack");
     };
 
     const handleGoBack = () => {
@@ -46,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
                 {/* header */}
                 <View style={LOGIN_STYLESHEET.header}>
                     <TouchableOpacity style={{ padding: "2%" }} onPress={handleGoBack}>
-                        <Icon name="chevron-left" size={20} color="white" />
+                        <AwesomeIcon name="angle-left" size={40} color="white" />
                     </TouchableOpacity>
                     <View />
                 </View>

@@ -37,8 +37,10 @@ export const REGISTER_STYLESHEET = StyleSheet.create({
         borderColor: "lightgrey",
         height: 50,
         alignSelf: "center",
+        alignItems: "center",
         borderRadius: 18,
         marginVertical: "5%",
+        flexDirection: "row",
     },
     textInput: {
         color: "lightgrey",

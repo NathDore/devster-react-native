@@ -36,7 +36,8 @@ export const LANDING_STYLESHEET = StyleSheet.create({
     },
     contact_button: {
         marginHorizontal: "2%",
-        padding: "3%",
+        width: 50,
+        height: 50,
         backgroundColor: blackThemeSecondary,
         borderRadius: 150,
         justifyContent: "center",

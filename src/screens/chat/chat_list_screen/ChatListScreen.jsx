@@ -10,16 +10,15 @@ import Header from '../../../UI/header/Header';
 import NotFound from '../../../UI/not_found/NotFound';
 
 const ChatListScreen = ({ navigation }) => {
-    const [loading, setLoading] = useState(false);
-
-    const { user, userData } = useAuthContext();
+    const [isFlatListLoading, setIsFlatListLoading] = useState(false);
+    const [isScreenLoading, setIsScreenLoading] = useState(true);
 
     const [conversations, setConversations] = useState([]);
 
+    const { user } = useAuthContext();
+
     const loadInitialData = async () => {
         try {
-            setLoading(true)
-
             const allConversations = [];
             const fetchConversations = await firestore()
                 .collection("conversations")
@@ -34,7 +33,7 @@ const ChatListScreen = ({ navigation }) => {
         } catch (error) {
             console.error('Error while loading initial conversation.', error);
         } finally {
-            setLoading(false);
+            setIsScreenLoading(false);
         }
     }
 
@@ -54,7 +53,7 @@ const ChatListScreen = ({ navigation }) => {
     );
 
     const renderFooter = () => {
-        return loading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
+        return isFlatListLoading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
     };
 
     const renderItem = ({ item }) => (
@@ -68,21 +67,35 @@ const ChatListScreen = ({ navigation }) => {
     return (
         <View style={CHAT_LIST_SCREEN.container}>
             <Header screenTitle="Conversations" />
+
             {
-                conversations?.length != 0 ?
-                    <>
-                        <FlatList
-                            data={conversations}
-                            renderItem={renderItem}
-                            keyExtractor={(item) => item.id}
-                            ListFooterComponent={renderFooter}
-                        />
-                    </>
+                isScreenLoading ?
+
+                    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                        <ActivityIndicator size={80} color={"lightgrey"} />
+                    </View>
+
                     :
+
                     <>
-                        <NotFound subject="conversation" />
+                        {
+                            conversations?.length != 0 ?
+                                <>
+                                    <FlatList
+                                        data={conversations}
+                                        renderItem={renderItem}
+                                        keyExtractor={(item) => item.id}
+                                        ListFooterComponent={renderFooter}
+                                    />
+                                </>
+                                :
+                                <>
+                                    <NotFound subject="conversation" />
+                                </>
+                        }
                     </>
             }
+
         </View>
     )
 }

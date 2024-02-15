@@ -8,6 +8,9 @@ import RegisterScreen from '../screens/home/register_screen/RegisterScreen';
 import ChatScreen from '../screens/chat/chat_screen/ChatScreen';
 import ProfileScreen from '../screens/profile/profile_screen/ProfileScreen';
 import ModifyScreen from '../screens/profile/modify_screen/ModifyScreen';
+import GoodbyeScreen from '../screens/home/Goodbye_screen/GoodByeScreen';
+import WelcomeBackScreen from '../screens/home/Welcome_back/WelcomeBackScreen';
+import WelcomeScreen from '../screens/home/Welcome_screen/WelcomeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,9 +20,21 @@ export default function MainStack() {
     return (
         <NavigationContainer initialRouteName="Home">
             <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Group>
+                    {/* Landing */}
+                    <Stack.Screen name="Home" component={user ? AppStack : LandingScreen} />
 
-                {/* Landing */}
-                <Stack.Screen name="Home" component={user ? AppStack : LandingScreen} />
+                    {/* GoodBye Screen */}
+                    <Stack.Screen name="Goodbye" component={GoodbyeScreen} />
+
+                    {/* Welcome Back Screen */}
+                    <Stack.Screen name="WelcomeBack" component={WelcomeBackScreen} />
+
+                    {/* Welcome Back Screen */}
+                    <Stack.Screen name="Welcome" component={WelcomeScreen} />
+                </Stack.Group>
+
+
 
                 {/* Authentification */}
                 <Stack.Group>

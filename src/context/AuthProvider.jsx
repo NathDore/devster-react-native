@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import auth from '@react-native-firebase/auth';
 import firestore from "@react-native-firebase/firestore";
+import { useNavigation } from '@react-navigation/native';
 
 
 const AuthContext = createContext();
@@ -39,16 +40,7 @@ const AuthProvider = ({ children }) => {
             await auth().signOut();
             console.log('User signed out!');
         } catch (error) {
-            switch (error.code) {
-                case 'auth/no-current-user':
-                    setFirebaseError('No user is currently signed in.');
-                    break;
-                case 'auth/network-request-failed':
-                    setFirebaseError('Network error. Check your internet connection.');
-                    break;
-                default:
-                    console.error(error);
-            }
+            console.error(error);
         }
     }
 
@@ -138,7 +130,6 @@ const AuthProvider = ({ children }) => {
         auth()
             .signInWithEmailAndPassword(email, password)
             .then(() => {
-                openLoginForm();
                 setFirebaseError("");
             })
             .catch((error) => {

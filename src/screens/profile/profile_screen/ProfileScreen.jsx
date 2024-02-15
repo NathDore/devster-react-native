@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ImageBackground, ActivityIndicator, FlatList } from 'react-native'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { Avatar } from 'react-native-elements';
 import { convertTimestampToRelativeTime } from '../../../util/util-function';
@@ -12,14 +12,15 @@ import NotFound from '../../../UI/not_found/NotFound';
 
 const ProfileScreen = () => {
     const [userPosts, setUserPosts] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [lastVisible, setLastVisible] = useState(null);
 
-    const { userData, user } = useAuthContext();
+    const [isFlatListLoading, setIsFlatListLoading] = useState(false);
+    const [isMyPublicationLoading, setIsMyPublicationLoading] = useState(true);
+
+    const { userData, user, signOut } = useAuthContext();
     const navigation = useNavigation();
 
     const loadInitialData = () => {
-        setLoading(true);
 
         firestore()
             .collection('posts')
@@ -37,13 +38,13 @@ const ProfileScreen = () => {
                 setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
             })
             .catch((error) => console.error('Error loading initial data:', error))
-            .finally(() => setLoading(false));
+            .finally(() => setIsMyPublicationLoading(false));
     }
 
     const loadMoreData = () => {
-        if (loading || !lastVisible) return;
+        if (isFlatListLoading || !lastVisible) return;
 
-        setLoading(true);
+        setIsFlatListLoading(true);
 
         firestore()
             .collection('posts')
@@ -62,7 +63,7 @@ const ProfileScreen = () => {
                 setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1])
             })
             .catch((error) => console.error('Error loading data:', error))
-            .finally(() => setLoading(false));
+            .finally(() => setIsFlatListLoading(false));
     }
 
     useFocusEffect(useCallback(() => {
@@ -85,7 +86,7 @@ const ProfileScreen = () => {
         />
     );
     const renderFooter = () => {
-        return loading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
+        return isFlatListLoading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
     };
 
     const handleNavigationBack = () => {
@@ -94,6 +95,11 @@ const ProfileScreen = () => {
 
     const handleNavigationModifyScreen = () => {
         navigation.navigate("Modify");
+    }
+
+    const handleSignOut = () => {
+        signOut();
+        navigation.navigate("Goodbye");
     }
 
     return (
@@ -131,7 +137,7 @@ const ProfileScreen = () => {
             </ImageBackground>
 
             <View style={PROFILE_SCREEN_STYLESHEET.bottom_section}>
-                {/* Publications sections */}
+                {/* Publications Header */}
                 <View style={PROFILE_SCREEN_STYLESHEET.bottom_header}>
                     <View style={PROFILE_SCREEN_STYLESHEET.publication_title_header_underline}>
                         <Text style={PROFILE_SCREEN_STYLESHEET.publication_title_header_text}>My Publications</Text>
@@ -140,24 +146,42 @@ const ProfileScreen = () => {
 
                 {/* Publications feed */}
                 <View style={{ paddingBottom: "10%", flex: 1 }}>
+
                     {
-                        userPosts.length == 0 ?
-                            <>
-                                <NotFound subject="publication" />
-                            </>
+                        isMyPublicationLoading ?
+
+                            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                                <ActivityIndicator size={80} color={"lightgrey"} />
+                            </View>
+
                             :
+
                             <>
-                                <FlatList
-                                    data={userPosts}
-                                    renderItem={renderItem}
-                                    keyExtractor={(item) => item.id}
-                                    onEndReached={loadMoreData}
-                                    onEndReachedThreshold={0.1}
-                                    ListFooterComponent={renderFooter}
-                                />
+                                {
+                                    userPosts.length == 0 ?
+                                        <>
+                                            <NotFound subject="publication" />
+                                        </>
+                                        :
+                                        <>
+                                            <FlatList
+                                                data={userPosts}
+                                                renderItem={renderItem}
+                                                keyExtractor={(item) => item.id}
+                                                onEndReached={loadMoreData}
+                                                onEndReachedThreshold={0.1}
+                                                ListFooterComponent={renderFooter}
+                                            />
+                                        </>
+                                }
                             </>
                     }
+                </View>
 
+                <View style={{ width: "100%", justifyContent: "center", alignItems: "center", padding: "3%" }}>
+                    <TouchableOpacity onPress={handleSignOut} style={{ padding: "3%", backgroundColor: "red", borderRadius: 15, justifyContent: "center", alignItems: "center" }}>
+                        <Text style={{ color: "white", fontSize: 18 }}>Logout</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 

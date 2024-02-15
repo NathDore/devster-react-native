@@ -9,12 +9,15 @@ import { useAuthContext } from '../../../context/AuthProvider';
 import { FontAwesome } from '@expo/vector-icons';
 
 const ModifyScreen = ({ navigation }) => {
-    const [usernameInput, setUsernameInput] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
     const {
         user,
         userData,
     } = useAuthContext();
+
+    const [usernameInput, setUsernameInput] = useState("");
+
+    const [isPhotoLoading, setIsPhotoLoading] = useState(false);
+    const [isNameLoading, setIsNameLoading] = useState(false);
 
     const pickImageAsync = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -35,7 +38,7 @@ const ModifyScreen = ({ navigation }) => {
 
         task.on('state_changed', snapshot => {
             console.log(`${snapshot.bytesTransferred} transferred out of ${snapshot.totalBytes}`);
-            setIsLoading(true);
+            setIsPhotoLoading(true);
         });
 
         task.then(async () => {
@@ -62,7 +65,7 @@ const ModifyScreen = ({ navigation }) => {
             })
             .then(() => {
                 console.log("image upload to firestore");
-                setIsLoading(false);
+                setIsPhotoLoading(false);
             })
     }
 
@@ -78,12 +81,16 @@ const ModifyScreen = ({ navigation }) => {
                 console.log("Name updated.");
                 setUsernameInput("");
             })
-            .catch((error) => {
+            .catch(() => {
                 console.log("error while updating the name.")
+            })
+            .finally(() => {
+                setIsNameLoading(false);
             })
     }
 
     const handleUpdateName = () => {
+        setIsNameLoading(true);
         updateNameFirestore(user?.uid, userData, usernameInput);
         setUsernameInput("");
     }
@@ -121,7 +128,7 @@ const ModifyScreen = ({ navigation }) => {
 
                     {/* Profile picture */}
                     <TouchableOpacity onPress={pickImageAsync} style={MODIFY_SCREEN_STYLESHEET.profile_picture_container}>
-                        {isLoading ? <ActivityIndicator size={30} color={"lightgrey"} /> : <Avatar
+                        {isPhotoLoading ? <ActivityIndicator size={30} color={"lightgrey"} /> : <Avatar
                             size={100}
                             rounded
                             source={userData?.profile_picture ? { uri: userData?.profile_picture } : require('../../../../assets/anonyme_profile.jpg')}
@@ -135,10 +142,17 @@ const ModifyScreen = ({ navigation }) => {
 
             <View style={MODIFY_SCREEN_STYLESHEET.bottom_section}>
 
+                {/* Username */}
                 <View style={MODIFY_SCREEN_STYLESHEET.label_name}>
                     <Text style={MODIFY_SCREEN_STYLESHEET.text_label}>Username</Text>
                     <Text style={MODIFY_SCREEN_STYLESHEET.text_label}> : </Text>
-                    <TextInput value={usernameInput} onChangeText={handleUserNameInput} multiline={false} style={MODIFY_SCREEN_STYLESHEET.text_input} placeholderTextColor={"lightgrey"} placeholder={userData.name} />
+                    {
+                        isNameLoading ?
+                            <View style={{ alignItems: "center", paddingLeft: "10%" }}><ActivityIndicator size={30} color={"lightgrey"} /></View>
+                            :
+                            <TextInput value={usernameInput} onChangeText={handleUserNameInput} multiline={false} style={MODIFY_SCREEN_STYLESHEET.text_input} placeholderTextColor={"lightgrey"} placeholder={userData.name} />
+                    }
+
                 </View>
             </View>
         </Pressable>

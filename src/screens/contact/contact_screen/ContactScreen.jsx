@@ -9,6 +9,7 @@ import NotFound from '../../../UI/not_found/NotFound';
 const ContactScreen = ({ navigation }) => {
 
     const [contacts, setContacts] = useState([]);
+    const [isScreenLoading, setIsScreenLoading] = useState(false);
 
     return (
         <View style={{ flex: 1, backgroundColor: blackThemeSecondary }}>

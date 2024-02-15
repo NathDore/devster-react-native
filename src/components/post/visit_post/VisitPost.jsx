@@ -1,4 +1,4 @@
-import { Pressable, View } from 'react-native'
+import { Pressable, View, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import firestore from "@react-native-firebase/firestore";
 import MyPost from './my_post/MyPost';
@@ -17,6 +17,8 @@ const VisitPost = ({ route }) => {
         content,
         uid,
     } = route.params;
+
+    const [isScreenLoading, setIsScreenLoading] = useState(true);
 
     const [isYourPost, setIsYourPost] = useState(false);
     const [comments, setComments] = useState([]);
@@ -38,7 +40,10 @@ const VisitPost = ({ route }) => {
             })
             .catch((error) => {
                 console.error("Error getting document: ", error);
-            });
+            })
+            .finally(() => {
+                setIsScreenLoading(false);
+            })
 
     };
 
@@ -103,28 +108,39 @@ const VisitPost = ({ route }) => {
             </View>
 
             {
-                isYourPost ?
-                    <MyPost
-                        postId={postId}
-                        postUid={postUid}
-                        timestamps={timestamps}
-                        content={content}
-                    />
+                isScreenLoading ?
+                    <>
+                        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                            <ActivityIndicator size={80} color={"lightgrey"} />
+                        </View>
+                    </>
                     :
-                    <YourPost
-                        postId={postId}
-                        postUid={postUid}
-                        timestamps={timestamps}
-                        content={content}
-                    />
-            }
-            <CommentList
-                postId={postId}
-                postUid={postUid}
-                comments={comments}
-            />
+                    <>
+                        {
+                            isYourPost ?
+                                <MyPost
+                                    postId={postId}
+                                    postUid={postUid}
+                                    timestamps={timestamps}
+                                    content={content}
+                                />
+                                :
+                                <YourPost
+                                    postId={postId}
+                                    postUid={postUid}
+                                    timestamps={timestamps}
+                                    content={content}
+                                />
+                        }
+                        <CommentList
+                            postId={postId}
+                            postUid={postUid}
+                            comments={comments}
+                        />
 
-            <AddComment postId={postId} />
+                        <AddComment postId={postId} />
+                    </>
+            }
         </View >
     )
 }

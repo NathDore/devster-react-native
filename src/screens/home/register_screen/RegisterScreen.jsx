@@ -1,17 +1,20 @@
-import { View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Pressable } from 'react-native'
+import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useForm, Controller } from 'react-hook-form';
 import { REGISTER_STYLESHEET } from './style';
 import { useAuthContext } from '../../../context/AuthProvider';
+import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 
 const RegisterScreen = ({ navigation }) => {
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
     const { handleSignUp } = useAuthContext();
 
+    const [showPassword, setShowPassword] = useState(false);
+
     const onSubmit = (data) => {
         handleSignUp(data.email, data.password, data.username);
-        navigation.navigate("Home");
+        navigation.navigate("Welcome");
     };
 
     const handleGoBack = () => {
@@ -34,13 +37,18 @@ const RegisterScreen = ({ navigation }) => {
             </View>)
     }
 
+
+    const handleShowPassword = () => {
+        setShowPassword(prev => !prev);
+    }
+
     return (
         <KeyboardAvoidingView style={REGISTER_STYLESHEET.keyboardAvoidingView}>
             <ScrollView>
                 {/* header */}
                 <View style={REGISTER_STYLESHEET.header}>
                     <TouchableOpacity style={{ padding: "2%" }} onPress={handleGoBack}>
-                        <Icon name="chevron-left" size={20} color="white" />
+                        <AwesomeIcon name="angle-left" size={40} color="white" />
                     </TouchableOpacity>
                     {/* header title */}
                     <Text style={REGISTER_STYLESHEET.header_title}>Sign up</Text>
@@ -111,11 +119,14 @@ const RegisterScreen = ({ navigation }) => {
                                     onChangeText={field.onChange}
                                     onBlur={field.onBlur}
                                     value={field.value}
-                                    secureTextEntry
+                                    secureTextEntry={!showPassword}
                                     style={REGISTER_STYLESHEET.textInput}
                                     placeholderTextColor="lightgrey"
                                     placeholder='Password' />
 
+                                <Pressable onPress={handleShowPassword}>
+                                    <Icon name={showPassword ? 'eye' : 'eye-slash'} style={{ marginEnd: 10 }} size={20} color="lightgrey" />
+                                </Pressable>
                             </View>
                             {fieldState.error && <Text style={REGISTER_STYLESHEET.error}>{fieldState.error.message}</Text>}
                         </>

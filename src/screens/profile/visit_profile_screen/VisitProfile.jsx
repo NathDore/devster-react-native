@@ -2,7 +2,6 @@ import { View, Text, FlatList, TouchableOpacity, ImageBackground, ActivityIndica
 import React, { useEffect, useState } from 'react'
 import { Avatar } from 'react-native-elements';
 import { FontAwesome } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
 import { VISIT_PROFILE_STYLESHEET } from './style';
 import { useAuthContext } from '../../../context/AuthProvider';
 import { useFocusEffect } from '@react-navigation/native';
