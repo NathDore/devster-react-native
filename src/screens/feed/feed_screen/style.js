@@ -25,15 +25,15 @@ export const FEED_SCREEN_STYLESHEET = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 150,
-        alignSelf: "center",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
         padding: "3%",
-        position: "absolute",
         backgroundColor: blackThemeSecondary,
         borderWidth: 0.5,
         borderColor: "lightgrey",
-        marginTop: "2%",
+        position: "absolute",
+        alignSelf: "center",
+        top: "12%"
     },
 })

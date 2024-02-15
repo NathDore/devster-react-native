@@ -8,6 +8,7 @@ import { PROFILE_SCREEN_STYLESHEET } from './style';
 import { useAuthContext } from '../../../context/AuthProvider';
 import firestore from "@react-native-firebase/firestore";
 import { useFocusEffect, useNavigation } from '@react-navigation/core';
+import NotFound from '../../../UI/not_found/NotFound';
 
 const ProfileScreen = () => {
     const [userPosts, setUserPosts] = useState([]);
@@ -138,15 +139,25 @@ const ProfileScreen = () => {
                 </View>
 
                 {/* Publications feed */}
-                <View style={{ paddingBottom: "10%" }}>
-                    <FlatList
-                        data={userPosts}
-                        renderItem={renderItem}
-                        keyExtractor={(item) => item.id}
-                        onEndReached={loadMoreData}
-                        onEndReachedThreshold={0.1}
-                        ListFooterComponent={renderFooter}
-                    />
+                <View style={{ paddingBottom: "10%", flex: 1 }}>
+                    {
+                        userPosts.length == 0 ?
+                            <>
+                                <NotFound subject="publication" />
+                            </>
+                            :
+                            <>
+                                <FlatList
+                                    data={userPosts}
+                                    renderItem={renderItem}
+                                    keyExtractor={(item) => item.id}
+                                    onEndReached={loadMoreData}
+                                    onEndReachedThreshold={0.1}
+                                    ListFooterComponent={renderFooter}
+                                />
+                            </>
+                    }
+
                 </View>
             </View>
 

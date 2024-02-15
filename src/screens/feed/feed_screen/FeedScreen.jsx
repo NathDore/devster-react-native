@@ -11,6 +11,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useFocusEffect } from '@react-navigation/native';
 import { useAuthContext } from '../../../context/AuthProvider';
 import Header from '../../../UI/header/Header';
+import NotFound from '../../../UI/not_found/NotFound';
 
 const FeedScreen = ({ navigation }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -153,21 +154,42 @@ const FeedScreen = ({ navigation }) => {
         <View style={FEED_SCREEN_STYLESHEET.container}>
             <Header screenTitle="Publications" />
 
-            {/* Feed */}
-            <FlatList
-                data={posts}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-                onEndReached={posts > 8 && loadMoreData}
-                onEndReachedThreshold={0.1}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
+            {posts.length == 0 ?
+
+                <>
+                    <NotFound subject={"publication"} />
+                </>
+
+                :
+
+                <>
+                    {/* Feed */}
+                    <FlatList
+                        data={posts}
+                        renderItem={renderItem}
+                        keyExtractor={(item) => item.id}
+                        onEndReached={posts > 8 && loadMoreData}
+                        onEndReachedThreshold={0.1}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={onRefresh}
+                            />
+                        }
+                        ListFooterComponent={renderFooter}
                     />
-                }
-                ListFooterComponent={renderFooter}
-            />
+
+
+
+                    {
+                        /* Icon notification */
+                        newPostsCount != 0 &&
+                        <TouchableOpacity style={FEED_SCREEN_STYLESHEET.notification_bell} onPress={handleNotification}>
+                            <FontAwesomeIcon name="bell" size={24} color="white" />
+                        </TouchableOpacity>
+                    }
+                </>
+            }
 
             {/* Create post icon */}
             <Pressable
@@ -175,14 +197,6 @@ const FeedScreen = ({ navigation }) => {
                 style={FEED_SCREEN_STYLESHEET.create_post_icon}>
                 <AwesomeIcon name="pencil" size={25} color={"white"} />
             </Pressable>
-
-            {
-                /* Icon notification */
-                newPostsCount != 0 && <TouchableOpacity style={FEED_SCREEN_STYLESHEET.notification_bell} onPress={handleNotification}>
-                    <FontAwesomeIcon name="bell" size={24} color="white" />
-                </TouchableOpacity>
-
-            }
 
             {/* Create Post Modal */}
             <Modal

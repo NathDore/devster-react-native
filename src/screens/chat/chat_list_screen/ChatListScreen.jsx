@@ -7,6 +7,7 @@ import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../context/AuthProvider'
 import { useFocusEffect } from '@react-navigation/core'
 import Header from '../../../UI/header/Header';
+import NotFound from '../../../UI/not_found/NotFound';
 
 const ChatListScreen = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
@@ -69,14 +70,18 @@ const ChatListScreen = ({ navigation }) => {
             <Header screenTitle="Conversations" />
             {
                 conversations?.length != 0 ?
-                    <FlatList
-                        data={conversations}
-                        renderItem={renderItem}
-                        keyExtractor={(item) => item.id}
-                        ListFooterComponent={renderFooter}
-                    /> : <View>
-                        <Text>No conversation yet :(.</Text>
-                    </View>
+                    <>
+                        <FlatList
+                            data={conversations}
+                            renderItem={renderItem}
+                            keyExtractor={(item) => item.id}
+                            ListFooterComponent={renderFooter}
+                        />
+                    </>
+                    :
+                    <>
+                        <NotFound subject="conversation" />
+                    </>
             }
         </View>
     )
