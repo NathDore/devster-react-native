@@ -1,4 +1,4 @@
-import { View, FlatList, ActivityIndicator, Text } from 'react-native'
+import { View, FlatList, ActivityIndicator, Text, RefreshControl } from 'react-native'
 import React, { useState, useCallback } from 'react'
 import ChatCard from '../../../components/chat/chat_card/ChatCard'
 import { convertTimestampToRelativeTime } from '../../../util/util-function'
@@ -12,6 +12,7 @@ import NotFound from '../../../UI/not_found/NotFound';
 const ChatListScreen = ({ navigation }) => {
     const [isFlatListLoading, setIsFlatListLoading] = useState(false);
     const [isScreenLoading, setIsScreenLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
 
     const [conversations, setConversations] = useState([]);
 
@@ -49,8 +50,21 @@ const ChatListScreen = ({ navigation }) => {
             }
             unsubscribe();
 
-        }, [user, navigation])
+        }, [navigation])
     );
+
+    const onRefresh = async () => {
+        try {
+            setRefreshing(true);
+
+            const getConversations = await loadInitialData();
+            setConversations(getConversations);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setRefreshing(false)
+        }
+    }
 
     const renderFooter = () => {
         return isFlatListLoading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
@@ -86,6 +100,12 @@ const ChatListScreen = ({ navigation }) => {
                                         renderItem={renderItem}
                                         keyExtractor={(item) => item.id}
                                         ListFooterComponent={renderFooter}
+                                        refreshControl={
+                                            <RefreshControl
+                                                refreshing={refreshing}
+                                                onRefresh={onRefresh}
+                                            />
+                                        }
                                     />
                                 </>
                                 :

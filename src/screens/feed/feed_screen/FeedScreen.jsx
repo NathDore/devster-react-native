@@ -45,12 +45,11 @@ const FeedScreen = ({ navigation }) => {
 
             const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
             setLastVisible(lastDoc);
-
-            return postData;
         } catch (error) {
             console.error("Error listening to posts:", error);
         } finally {
             setIsScreenLoading(false);
+            setNewPostsCount(0);
         }
     };
 
@@ -84,24 +83,10 @@ const FeedScreen = ({ navigation }) => {
     };
 
     const onRefresh = async () => {
-        setRefreshing(true);
-
         try {
-            const querySnapshot = await firestore()
-                .collection('posts')
-                .orderBy('timestamp', 'desc')
-                .limit(8)
-                .get();
-
-            const refreshedPosts = querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-
-            setPosts(refreshedPosts);
-
-            const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
-            setLastVisible(lastDoc);
+            setRefreshing(true);
+            setNewPostsCount(0);
+            loadInitialData();
         } catch (error) {
             console.error("Error refreshing posts:", error);
         } finally {

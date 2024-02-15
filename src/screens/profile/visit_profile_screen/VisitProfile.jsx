@@ -18,6 +18,7 @@ const VisitProfile = ({ route, navigation }) => {
 
     const [posts, setPosts] = useState([]);
     const [lastVisible, setLastVisible] = useState(null);
+    const [isScreenLoading, setIsScreenLoading] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleGoBackNavigation = () => {
@@ -35,8 +36,6 @@ const VisitProfile = ({ route, navigation }) => {
     }
 
     const loadInitialData = () => {
-        setIsLoading(true);
-
         firestore()
             .collection("posts")
             .where('userId', '==', userDoc.id)
@@ -53,11 +52,11 @@ const VisitProfile = ({ route, navigation }) => {
                 setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
             })
             .catch((error) => console.error("Error while loading initial data", error))
-            .finally(() => setIsLoading(false));
+            .finally(() => setIsScreenLoading(false));
     }
 
     const loadMoreData = () => {
-        if (isLoading || !lastVisible) return;
+        if (isScreenLoading || isLoading || !lastVisible) return;
         setIsLoading(true);
 
         firestore()
@@ -110,79 +109,91 @@ const VisitProfile = ({ route, navigation }) => {
         userDoc.id == user.uid ? <ProfileScreen /> :
             <View style={VISIT_PROFILE_STYLESHEET.container}>
 
-                <ImageBackground
-                    source={profile_picture ? { uri: profile_picture } : require('../../../../assets/anonyme_profile.jpg')}
-                    blurRadius={30}
-                >
-                    {/* Navigation Banner */}
-                    <View style={VISIT_PROFILE_STYLESHEET.navigation_banner}>
 
-                        {/* Go back icon */}
-                        <TouchableOpacity onPress={handleGoBackNavigation} style={VISIT_PROFILE_STYLESHEET.go_back_icon}>
-                            <FontAwesome name="angle-left" size={40} color="lightgrey" />
-                        </TouchableOpacity>
-
-                    </View>
-
-                    {/* Header */}
-                    <View style={VISIT_PROFILE_STYLESHEET.header}>
-
-                        {/* Info */}
-                        <View style={VISIT_PROFILE_STYLESHEET.info_banner}>
-                            <View style={VISIT_PROFILE_STYLESHEET.profile_picture}>
-                                <Avatar size={70} rounded source={profile_picture ? { uri: profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
-                            </View>
-                            <Text numberOfLines={1} ellipsizeMode="tail" style={VISIT_PROFILE_STYLESHEET.name}>{name}</Text>
+                {
+                    isScreenLoading ?
+                        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                            <ActivityIndicator size={80} color="lightgrey" />
                         </View>
-                    </View>
+                        :
+                        <>
+                            <ImageBackground
+                                source={profile_picture ? { uri: profile_picture } : require('../../../../assets/anonyme_profile.jpg')}
+                                blurRadius={30}
+                            >
+                                {/* Navigation Banner */}
+                                <View style={VISIT_PROFILE_STYLESHEET.navigation_banner}>
 
-                    {/* Button container */}
-                    <View style={VISIT_PROFILE_STYLESHEET.button_container}>
-                        {/* Add contact button */}
-                        <TouchableOpacity style={VISIT_PROFILE_STYLESHEET.add_contact_button}>
-                            <Text style={VISIT_PROFILE_STYLESHEET.add_contact_button_text}>Add contact</Text>
-                        </TouchableOpacity>
+                                    {/* Go back icon */}
+                                    <TouchableOpacity onPress={handleGoBackNavigation} style={VISIT_PROFILE_STYLESHEET.go_back_icon}>
+                                        <FontAwesome name="angle-left" size={40} color="lightgrey" />
+                                    </TouchableOpacity>
 
-                        {/* Send message button */}
-                        <TouchableOpacity onPress={sendMessage} style={VISIT_PROFILE_STYLESHEET.send_message_button}>
-                            <Text style={VISIT_PROFILE_STYLESHEET.send_message_button_text}>Send Message</Text>
-                        </TouchableOpacity>
-                    </View>
+                                </View>
 
-                </ImageBackground>
+                                {/* Header */}
+                                <View style={VISIT_PROFILE_STYLESHEET.header}>
+
+                                    {/* Info */}
+                                    <View style={VISIT_PROFILE_STYLESHEET.info_banner}>
+                                        <View style={VISIT_PROFILE_STYLESHEET.profile_picture}>
+                                            <Avatar size={70} rounded source={profile_picture ? { uri: profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
+                                        </View>
+                                        <Text numberOfLines={1} ellipsizeMode="tail" style={VISIT_PROFILE_STYLESHEET.name}>{name}</Text>
+                                    </View>
+                                </View>
+
+                                {/* Button container */}
+                                <View style={VISIT_PROFILE_STYLESHEET.button_container}>
+                                    {/* Add contact button */}
+                                    <TouchableOpacity style={VISIT_PROFILE_STYLESHEET.add_contact_button}>
+                                        <Text style={VISIT_PROFILE_STYLESHEET.add_contact_button_text}>Add contact</Text>
+                                    </TouchableOpacity>
+
+                                    {/* Send message button */}
+                                    <TouchableOpacity onPress={sendMessage} style={VISIT_PROFILE_STYLESHEET.send_message_button}>
+                                        <Text style={VISIT_PROFILE_STYLESHEET.send_message_button_text}>Send Message</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                            </ImageBackground>
 
 
 
-                {/* Banner */}
-                <View style={VISIT_PROFILE_STYLESHEET.banner}>
+                            {/* Banner */}
+                            <View style={VISIT_PROFILE_STYLESHEET.banner}>
 
-                    {/* Flame Icon */}
-                    <FontAwesome name="fire" size={20} color="lightgrey" />
+                                {/* Flame Icon */}
+                                <FontAwesome name="fire" size={20} color="lightgrey" />
 
-                    {/* Section Title */}
-                    <View style={VISIT_PROFILE_STYLESHEET.section_title_container}>
-                        <Text style={VISIT_PROFILE_STYLESHEET.section_title_text}>POPULAR POST</Text>
-                    </View>
+                                {/* Section Title */}
+                                <View style={VISIT_PROFILE_STYLESHEET.section_title_container}>
+                                    <Text style={VISIT_PROFILE_STYLESHEET.section_title_text}>POPULAR POST</Text>
+                                </View>
 
-                    {/* Chevron Icon */}
-                </View>
+                                {/* Chevron Icon */}
+                            </View>
 
-                {/* Popular post feed */}
-                <View style={{
-                    flex: 1,
-                }}>
-                    {
-                        posts.length == 0 ? <NotFound subject={"publication"} /> : <FlatList
-                            data={posts}
-                            renderItem={renderItem}
-                            keyExtractor={(item) => item.id}
-                            onEndReached={loadMoreData}
-                            onEndReachedThreshold={0.1}
-                            ListFooterComponent={renderFooter}
-                        />
-                    }
+                            {/* Popular post feed */}
+                            <View style={{
+                                flex: 1,
+                            }}>
+                                {
+                                    posts.length == 0 ? <NotFound subject={"publication"} /> : <FlatList
+                                        data={posts}
+                                        renderItem={renderItem}
+                                        keyExtractor={(item) => item.id}
+                                        onEndReached={loadMoreData}
+                                        onEndReachedThreshold={0.1}
+                                        ListFooterComponent={renderFooter}
+                                    />
+                                }
 
-                </View>
+                            </View>
+                        </>
+                }
+
+
 
             </View>
     )

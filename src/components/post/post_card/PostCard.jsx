@@ -7,12 +7,14 @@ import { POST_STYLESHEET } from './style';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../context/AuthProvider';
 import { useNavigation } from '@react-navigation/core';
+import { ActivityIndicator } from 'react-native';
 
 const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable }) => {
     const [isLike, setIsLike] = useState(false);
     const [likes, setLikes] = useState([]);
     const [comments, setComments] = useState([]);
     const [userDoc, setUserDoc] = useState({});
+    const [isCompoenentLoading, setIsComponentLoading] = useState(true);
 
     const { user } = useAuthContext();
     const navigation = useNavigation();
@@ -98,6 +100,8 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
                 id: snapshot.id,
                 ...snapshot.data(),
             });
+
+            setIsComponentLoading(false);
         } else {
             console.error("Document does not exist");
         }
@@ -108,7 +112,7 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
         const unsubscribe = firestore()
             .collection('users')
             .doc(postUid)
-            .onSnapshot(onUserWhoDidThePostSnapshot);
+            .onSnapshot(onUserWhoDidThePostSnapshot)
 
         return unsubscribe;
     }
@@ -164,49 +168,55 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
     const TouchableView = isTouchable ? TouchableOpacity : View;
 
     return (
-        <TouchableView
-            style={POST_STYLESHEET.card_container}
-            onPress={handleNavigationVisitPost}
-        >
-            {/* Info Container */}
-            <View style={POST_STYLESHEET.info_container}>
-                {/* Profile picture */}
-                <TouchableOpacity onPress={handleNavigationVisitProfile}>
-                    <Avatar size={30} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
-                </TouchableOpacity>
+        isCompoenentLoading ?
 
-
-                {/* UserName */}
-                <Text style={POST_STYLESHEET.username}>{userDoc.name}</Text>
-
-                {/* Timestamp */}
-                <Text style={POST_STYLESHEET.timestamp}>{timestamps}</Text>
+            <View style={POST_STYLESHEET.card_container}>
+                <ActivityIndicator size={30} color="lightgrey" />
             </View>
+            :
+            <TouchableView
+                style={POST_STYLESHEET.card_container}
+                onPress={handleNavigationVisitPost}
+            >
+                {/* Info Container */}
+                <View style={POST_STYLESHEET.info_container}>
+                    {/* Profile picture */}
+                    <TouchableOpacity onPress={handleNavigationVisitProfile}>
+                        <Avatar size={30} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
+                    </TouchableOpacity>
 
-            {/* Post Container */}
-            <View style={POST_STYLESHEET.post_container}>
-                {/* Post text */}
-                <Text style={POST_STYLESHEET.post_text}>{content}</Text>
-            </View>
 
-            {/* Reaction Section */}
-            <View style={POST_STYLESHEET.reaction_container}>
-                {/* Like button */}
-                <View style={POST_STYLESHEET.like_button_container}>
-                    <Text style={POST_STYLESHEET.like_button_text}>{likes.length}</Text>
-                    {renderLikeButton()}
+                    {/* UserName */}
+                    <Text style={POST_STYLESHEET.username}>{userDoc.name}</Text>
+
+                    {/* Timestamp */}
+                    <Text style={POST_STYLESHEET.timestamp}>{timestamps}</Text>
                 </View>
 
-                {/* Comment button */}
-                <View style={POST_STYLESHEET.comment_button_container}>
-                    <Text style={POST_STYLESHEET.comment_button_text}>{comments.length}</Text>
-                    <View>
-                        <AwesomeIcon5 name="comment" color={'lightgrey'} size={18} solid={false} />
+                {/* Post Container */}
+                <View style={POST_STYLESHEET.post_container}>
+                    {/* Post text */}
+                    <Text style={POST_STYLESHEET.post_text}>{content}</Text>
+                </View>
+
+                {/* Reaction Section */}
+                <View style={POST_STYLESHEET.reaction_container}>
+                    {/* Like button */}
+                    <View style={POST_STYLESHEET.like_button_container}>
+                        <Text style={POST_STYLESHEET.like_button_text}>{likes.length}</Text>
+                        {renderLikeButton()}
                     </View>
-                </View>
 
-            </View>
-        </TouchableView>
+                    {/* Comment button */}
+                    <View style={POST_STYLESHEET.comment_button_container}>
+                        <Text style={POST_STYLESHEET.comment_button_text}>{comments.length}</Text>
+                        <View>
+                            <AwesomeIcon5 name="comment" color={'lightgrey'} size={18} solid={false} />
+                        </View>
+                    </View>
+
+                </View>
+            </TouchableView>
     );
 });
 
