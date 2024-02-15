@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { blackThemeSecondary } from "../../../../assets/color/color";
 
 export const COMMENT_STYLESHEET = StyleSheet.create({
     container: {
@@ -7,7 +8,7 @@ export const COMMENT_STYLESHEET = StyleSheet.create({
         width: '100%',
         paddingHorizontal: '2%',
         paddingVertical: '1%',
-        backgroundColor: "#202124",
+        backgroundColor: blackThemeSecondary,
         display: "flex",
         flexDirection: "column",
     },

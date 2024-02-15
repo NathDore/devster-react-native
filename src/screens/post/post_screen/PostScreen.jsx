@@ -8,6 +8,7 @@ import AddComment from '../../../components/comment/add_comment/AddComment';
 import { useFocusEffect } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { blackTheme, blackThemeSecondary } from '../../../../assets/color/color';
 
 const PostScreen = ({ route }) => {
     const {
@@ -95,7 +96,7 @@ const PostScreen = ({ route }) => {
 
     return (
         <View style={{
-            backgroundColor: "black",
+            backgroundColor: blackThemeSecondary,
             flex: 1,
         }}>
 

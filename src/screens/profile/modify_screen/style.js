@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { blackThemeSecondary } from "../../../../assets/color/color";
 
 export const MODIFY_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#202124",
+        backgroundColor: blackThemeSecondary,
         position: "relative"
     },
     image_background: {
