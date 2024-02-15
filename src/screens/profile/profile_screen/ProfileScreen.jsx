@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ImageBackground, ActivityIndicator, FlatList } from 'react-native'
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { Avatar } from 'react-native-elements';
 import { convertTimestampToRelativeTime } from '../../../util/util-function';
@@ -15,7 +15,7 @@ const ProfileScreen = () => {
     const [lastVisible, setLastVisible] = useState(null);
 
     const [isFlatListLoading, setIsFlatListLoading] = useState(false);
-    const [isMyPublicationLoading, setIsMyPublicationLoading] = useState(true);
+    const [isScreenLoading, setIsScreenLoading] = useState(true);
 
     const { userData, user, signOut } = useAuthContext();
     const navigation = useNavigation();
@@ -38,11 +38,11 @@ const ProfileScreen = () => {
                 setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
             })
             .catch((error) => console.error('Error loading initial data:', error))
-            .finally(() => setIsMyPublicationLoading(false));
+            .finally(() => setIsScreenLoading(false));
     }
 
     const loadMoreData = () => {
-        if (isFlatListLoading || !lastVisible) return;
+        if (isFlatListLoading || !lastVisible || isScreenLoading) return;
 
         setIsFlatListLoading(true);
 
@@ -104,59 +104,54 @@ const ProfileScreen = () => {
 
     return (
         <View style={PROFILE_SCREEN_STYLESHEET.container}>
-            <ImageBackground
-                source={userData.profile_picture ? { uri: userData.profile_picture } : require('../../../../assets/anonyme_profile.jpg')}
-                blurRadius={15}
-            >
-                {/* Icon */}
-                <TouchableOpacity onPress={handleNavigationBack}>
-                    <AwesomeIcon name="angle-left" size={40} color="white" style={PROFILE_SCREEN_STYLESHEET.backIcon} />
-                </TouchableOpacity>
+            {
+                isScreenLoading ?
+                    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                        <ActivityIndicator size={80} color="lightgrey" />
+                    </View> :
+                    <>
+                        <ImageBackground
+                            source={userData.profile_picture ? { uri: userData.profile_picture } : require('../../../../assets/anonyme_profile.jpg')}
+                            blurRadius={15}
+                        >
+                            {/* Icon */}
+                            <TouchableOpacity onPress={handleNavigationBack}>
+                                <AwesomeIcon name="angle-left" size={40} color="white" style={PROFILE_SCREEN_STYLESHEET.backIcon} />
+                            </TouchableOpacity>
 
-                <View style={{ alignItems: "center" }}>
-                    <View style={PROFILE_SCREEN_STYLESHEET.topSection}>
-                        {/* Profile picture */}
-                        <View style={PROFILE_SCREEN_STYLESHEET.profile_picture}>
-                            <Avatar
-                                size={100}
-                                rounded
-                                source={userData.profile_picture ? { uri: userData.profile_picture } : require('../../../../assets/anonyme_profile.jpg')}
-                            />
-                        </View>
+                            <View style={{ alignItems: "center" }}>
+                                <View style={PROFILE_SCREEN_STYLESHEET.topSection}>
+                                    {/* Profile picture */}
+                                    <View style={PROFILE_SCREEN_STYLESHEET.profile_picture}>
+                                        <Avatar
+                                            size={100}
+                                            rounded
+                                            source={userData.profile_picture ? { uri: userData.profile_picture } : require('../../../../assets/anonyme_profile.jpg')}
+                                        />
+                                    </View>
 
-                        {/* Username */}
-                        <Text style={PROFILE_SCREEN_STYLESHEET.username}>{userData.name}</Text>
+                                    {/* Username */}
+                                    <Text style={PROFILE_SCREEN_STYLESHEET.username}>{userData.name}</Text>
 
-                        {/* Modify button */}
-                        <TouchableOpacity onPress={handleNavigationModifyScreen} style={PROFILE_SCREEN_STYLESHEET.modify_button}>
-                            <Text style={PROFILE_SCREEN_STYLESHEET.button_text}>Modifiy</Text>
-                        </TouchableOpacity>
+                                    {/* Modify button */}
+                                    <TouchableOpacity onPress={handleNavigationModifyScreen} style={PROFILE_SCREEN_STYLESHEET.modify_button}>
+                                        <Text style={PROFILE_SCREEN_STYLESHEET.button_text}>Modifiy</Text>
+                                    </TouchableOpacity>
 
-                    </View>
-                </View>
-            </ImageBackground>
+                                </View>
+                            </View>
+                        </ImageBackground>
 
-            <View style={PROFILE_SCREEN_STYLESHEET.bottom_section}>
-                {/* Publications Header */}
-                <View style={PROFILE_SCREEN_STYLESHEET.bottom_header}>
-                    <View style={PROFILE_SCREEN_STYLESHEET.publication_title_header_underline}>
-                        <Text style={PROFILE_SCREEN_STYLESHEET.publication_title_header_text}>My Publications</Text>
-                    </View>
-                </View>
-
-                {/* Publications feed */}
-                <View style={{ paddingBottom: "10%", flex: 1 }}>
-
-                    {
-                        isMyPublicationLoading ?
-
-                            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                                <ActivityIndicator size={80} color={"lightgrey"} />
+                        <View style={PROFILE_SCREEN_STYLESHEET.bottom_section}>
+                            {/* Publications Header */}
+                            <View style={PROFILE_SCREEN_STYLESHEET.bottom_header}>
+                                <View style={PROFILE_SCREEN_STYLESHEET.publication_title_header_underline}>
+                                    <Text style={PROFILE_SCREEN_STYLESHEET.publication_title_header_text}>My Publications</Text>
+                                </View>
                             </View>
 
-                            :
-
-                            <>
+                            {/* Publications feed */}
+                            <View style={{ paddingBottom: "10%", flex: 1 }}>
                                 {
                                     userPosts.length == 0 ?
                                         <>
@@ -174,17 +169,17 @@ const ProfileScreen = () => {
                                             />
                                         </>
                                 }
-                            </>
-                    }
-                </View>
+                            </View>
 
-                <View style={{ width: "100%", justifyContent: "center", alignItems: "center", padding: "3%" }}>
-                    <TouchableOpacity onPress={handleSignOut} style={{ padding: "3%", backgroundColor: "red", borderRadius: 15, justifyContent: "center", alignItems: "center" }}>
-                        <Text style={{ color: "white", fontSize: 18 }}>Logout</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                            <View style={{ width: "100%", justifyContent: "center", alignItems: "center", padding: "3%" }}>
+                                <TouchableOpacity onPress={handleSignOut} style={{ padding: "3%", backgroundColor: "red", borderRadius: 15, justifyContent: "center", alignItems: "center" }}>
+                                    <Text style={{ color: "white", fontSize: 18 }}>Logout</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
 
+                    </>
+            }
         </View>
     )
 }

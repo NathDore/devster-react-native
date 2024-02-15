@@ -36,6 +36,8 @@ const VisitProfile = ({ route, navigation }) => {
     }
 
     const loadInitialData = () => {
+        if (!posts) return;
+
         firestore()
             .collection("posts")
             .where('userId', '==', userDoc.id)
@@ -80,6 +82,8 @@ const VisitProfile = ({ route, navigation }) => {
 
     useFocusEffect(
         React.useCallback(() => {
+            setPosts([]);
+
             const unsubscribre = loadInitialData();
 
             return () => {
@@ -88,7 +92,7 @@ const VisitProfile = ({ route, navigation }) => {
                 };
             }
 
-        }, [userDoc.id, user.uid, navigation])
+        }, [navigation, userDoc.id])
     )
 
     const renderItem = ({ item }) => (
