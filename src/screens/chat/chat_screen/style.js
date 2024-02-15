@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { blackTheme } from "../../../../assets/color/color";
+import { blackTheme, blackThemeSecondary } from "../../../../assets/color/color";
 
 export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
@@ -18,6 +18,7 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
         paddingBottom: "3%",
         paddingTop: "1%",
         marginBottom: "3%",
+        backgroundColor: blackTheme,
     },
     profile_photo_name_row: {
         flexDirection: "row",
@@ -34,9 +35,10 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
         display: "flex",
     },
     send_message_section_focus: {
-        backgroundColor: "black",
+        backgroundColor: blackTheme,
         width: "100%",
-        height: 60,
+        height: 70,
+        paddingTop: "2%",
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
@@ -44,6 +46,7 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
         justifyContent: "space-evenly",
     },
     send_message_section_not_focus: {
+        backgroundColor: blackTheme,
         width: "100%",
         height: 80,
         display: "flex",
@@ -52,6 +55,8 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
         paddingHorizontal: "3%",
         paddingVertical: "3%",
         justifyContent: "space-evenly",
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
     },
     textInput_container: {
         height: "75%",

@@ -10,7 +10,6 @@ export const CHAT_CARD_STYLESHEET = StyleSheet.create({
         alignItems: "center",
         borderBottomWidth: 0.2,
         borderColor: "lightgrey",
-        backgroundColor: blackTheme,
         padding: "1%",
         paddingVertical: "2%",
     },

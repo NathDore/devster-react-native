@@ -8,7 +8,6 @@ export const POST_STYLESHEET = StyleSheet.create({
         width: '100%',
         paddingHorizontal: '3%',
         paddingVertical: '3%',
-        backgroundColor: "#202124",
     },
     info_container: {
         display: "flex",

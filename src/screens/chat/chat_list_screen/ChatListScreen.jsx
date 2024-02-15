@@ -94,7 +94,11 @@ const ChatListScreen = ({ navigation }) => {
                     <>
                         {
                             conversations?.length != 0 ?
-                                <>
+                                <View style={{
+                                    flex: 1,
+                                    borderTopWidth: 0.2,
+                                    borderColor: "lightgrey",
+                                }}>
                                     <FlatList
                                         data={conversations}
                                         renderItem={renderItem}
@@ -107,7 +111,7 @@ const ChatListScreen = ({ navigation }) => {
                                             />
                                         }
                                     />
-                                </>
+                                </View>
                                 :
                                 <>
                                     <NotFound subject="conversation" />

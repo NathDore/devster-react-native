@@ -14,7 +14,7 @@ export const FEED_SCREEN_STYLESHEET = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 150,
-        backgroundColor: blackTheme,
+        backgroundColor: "black",
         justifyContent: "center",
         alignItems: "center",
         elevation: 1,
