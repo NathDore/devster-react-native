@@ -1,47 +1,45 @@
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import React, { useState, useEffect } from 'react';
 import { COMMENT_STYLESHEET } from './style';
 import firestore from "@react-native-firebase/firestore";
 import { convertTimestampToRelativeTime } from '../../../util/util-function';
+import { useNavigation } from '@react-navigation/native';
 
 const CommentCard = ({ content, userId, timestamp }) => {
-    const [userData, setUserData] = useState({});
+    const [userDoc, setuserDoc] = useState({});
 
-    const fetchUserData = () => {
+    const navigation = useNavigation();
+
+    const fetchuserDoc = () => {
         firestore()
             .collection('users')
             .doc(userId)
             .get()
             .then((doc) => {
-                if (doc.exists) setUserData({ ...doc.data() });;
+                if (doc.exists) setuserDoc({ ...doc.data() });;
             })
     }
 
     useEffect(() => {
-        fetchUserData();
+        fetchuserDoc();
     }, [])
 
+    const handleNavigation = () => {
+        navigation.navigate("VisitProfile", { userDoc, });
+    }
+
     return (
-        <View style={{
-            borderTopWidth: 0.5,
-            borderBottomWidth: 0.5,
-            borderColor: 'lightblue',
-            width: '100%',
-            paddingHorizontal: '2%',
-            paddingVertical: '1%',
-            backgroundColor: "#202124",
-            display: "flex",
-            flexDirection: "column",
-            marginBottom: "3%",
-        }}>
+        <View style={COMMENT_STYLESHEET.container}>
             {/* Info Container */}
             <View style={COMMENT_STYLESHEET.info_container}>
                 {/* Profile picture */}
-                <Avatar size={20} rounded source={userData?.profile_picture ? { uri: userData?.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
+                <Pressable style={{ padding: "1.5%" }} onPress={handleNavigation}>
+                    <Avatar size={20} rounded source={userDoc?.profile_picture ? { uri: userDoc?.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
+                </Pressable>
 
                 {/* UserName */}
-                <Text style={COMMENT_STYLESHEET.username}>{userData.name}</Text>
+                <Text style={COMMENT_STYLESHEET.username}>{userDoc.name}</Text>
 
                 {/* Timestamp */}
                 <Text style={COMMENT_STYLESHEET.timestamp}>{convertTimestampToRelativeTime(timestamp)}</Text>

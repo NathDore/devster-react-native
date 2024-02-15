@@ -18,6 +18,7 @@ const ChatScreen = ({ route, navigation }) => {
     const [screenLoading, setScreenLoading] = useState(false);
     const [chatFocus, setChatFocus] = useState(false);
     const [userInput, setUserInput] = useState("");
+    const [isConversationYet, setIsConversationYet] = useState(false);
 
     const flatListRef = useRef();
 
@@ -30,13 +31,18 @@ const ChatScreen = ({ route, navigation }) => {
             setScreenLoading(true);
             const doc1 = await firestore().collection("conversations").doc(conversationPossibility1).get();
             if (doc1.exists) {
+
+                setIsConversationYet(true);
                 return conversationPossibility1;
             } else {
                 const doc2 = await firestore().collection("conversations").doc(conversationPossibility2).get();
                 if (doc2.exists) {
+
+                    setIsConversationYet(true);
                     return conversationPossibility2;
                 } else {
-                    createConversation();
+                    console.log("Wait for someone to text first.")
+                    setIsConversationYet(false);
                 }
             }
         } catch (error) {
@@ -111,8 +117,6 @@ const ChatScreen = ({ route, navigation }) => {
                 }
             }
 
-
-
             unsubscribe();
         }, [user, userDoc, navigation])
     )
@@ -159,14 +163,24 @@ const ChatScreen = ({ route, navigation }) => {
 
     const handleSendMessage = async () => {
         try {
+
+            let currentConversationId = conversationId;
+
+            if (!isConversationYet) {
+                await createConversation();
+                setIsConversationYet(true);
+
+                currentConversationId = await getUserConversationId();
+            };
+
             const messageId = firestore().collection("messages").doc().id;
 
-            if (!conversationId) {
+            if (!currentConversationId) {
                 console.log("conversationId is null");
                 return;
             }
 
-            const addingMessage = await firestore().collection("conversations").doc(conversationId).update({
+            const addingMessage = await firestore().collection("conversations").doc(currentConversationId).update({
                 lastMessage: {
                     content: userInput,
                     senderId: user.uid,

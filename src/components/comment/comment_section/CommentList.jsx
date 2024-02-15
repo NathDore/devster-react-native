@@ -23,7 +23,7 @@ const CommentList = ({ comments }) => {
 
 
     return (
-        <View style={{ marginTop: "3%", flex: 1 }}>
+        <View style={{ marginTop: "0%", flex: 1, borderTopWidth: 0.2, borderColor: "lightgrey" }}>
             <FlatList
                 data={comments}
                 renderItem={renderItem}

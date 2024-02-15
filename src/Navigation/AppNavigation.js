@@ -3,9 +3,9 @@ import ChatListScreen from "../screens/chat/chat_list_screen/ChatListScreen.jsx"
 import FeedScreen from "../screens/feed/feed_screen/FeedScreen.jsx";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import VisitPost from "../components/post/visit_post/VisitPost.jsx";
 import VisitProfile from "../screens/profile/visit_profile_screen/VisitProfile.jsx";
 import ContactScreen from "../screens/contact/contact_screen/ContactScreen.jsx";
+import PostScreen from "../screens/post/post_screen/PostScreen.jsx";
 
 const Tab = createBottomTabNavigator();
 
@@ -73,7 +73,7 @@ export default function AppStack() {
             <Tab.Group>
                 <Tab.Screen
                     name="VisitPost"
-                    component={VisitPost}
+                    component={PostScreen}
                     options={{ tabBarButton: () => null }}
                 />
             </Tab.Group>

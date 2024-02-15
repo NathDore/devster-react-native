@@ -58,7 +58,7 @@ const AddComment = ({ postId }) => {
             />
 
             <TouchableOpacity onPress={handleSubmit} style={ADD_COMMENT_STYLESHEET.submit_button}>
-                <FontAwesome name="paper-plane" size={24} color="lightblue" />
+                <FontAwesome name="paper-plane" size={24} color="lightgrey" />
             </TouchableOpacity>
         </View>
     )

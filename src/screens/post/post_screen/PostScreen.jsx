@@ -1,15 +1,15 @@
 import { Pressable, View, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import firestore from "@react-native-firebase/firestore";
-import MyPost from './my_post/MyPost';
-import YourPost from './your_post/YourPost';
-import CommentList from '../../comment/comment_section/CommentList';
-import AddComment from '../../comment/add_comment/AddComment';
+import MyPost from '../../../components/post/visit_post/my_post/MyPost';
+import YourPost from '../../../components/post/visit_post/your_post/YourPost';
+import CommentList from '../../../components/comment/comment_section/CommentList';
+import AddComment from '../../../components/comment/add_comment/AddComment';
 import { useFocusEffect } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const VisitPost = ({ route }) => {
+const PostScreen = ({ route }) => {
     const {
         postId,
         postUid,
@@ -145,4 +145,4 @@ const VisitPost = ({ route }) => {
     )
 }
 
-export default VisitPost
+export default PostScreen

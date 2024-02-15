@@ -1,6 +1,16 @@
 import { StyleSheet } from "react-native";
 
 export const COMMENT_STYLESHEET = StyleSheet.create({
+    container: {
+        borderBottomWidth: 0.5,
+        borderColor: 'lightgrey',
+        width: '100%',
+        paddingHorizontal: '2%',
+        paddingVertical: '1%',
+        backgroundColor: "#202124",
+        display: "flex",
+        flexDirection: "column",
+    },
     info_container: {
         display: "flex",
         flexDirection: "row",

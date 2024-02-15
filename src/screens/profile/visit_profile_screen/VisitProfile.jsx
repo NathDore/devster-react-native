@@ -9,13 +9,14 @@ import firestore from "@react-native-firebase/firestore";
 import PostCard from '../../../components/post/post_card/PostCard';
 import { convertTimestampToRelativeTime } from '../../../util/util-function';
 import ProfileScreen from '../profile_screen/ProfileScreen';
+import NotFound from '../../../UI/not_found/NotFound';
 
 const VisitProfile = ({ route, navigation }) => {
     const { userDoc } = route.params;
     const { name, profile_picture } = userDoc;
     const { user } = useAuthContext();
 
-    const [posts, setPosts] = useState();
+    const [posts, setPosts] = useState([]);
     const [lastVisible, setLastVisible] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -170,14 +171,17 @@ const VisitProfile = ({ route, navigation }) => {
                 <View style={{
                     flex: 1,
                 }}>
-                    <FlatList
-                        data={posts}
-                        renderItem={renderItem}
-                        keyExtractor={(item) => item.id}
-                        onEndReached={loadMoreData}
-                        onEndReachedThreshold={0.1}
-                        ListFooterComponent={renderFooter}
-                    />
+                    {
+                        posts.length == 0 ? <NotFound subject={"publication"} /> : <FlatList
+                            data={posts}
+                            renderItem={renderItem}
+                            keyExtractor={(item) => item.id}
+                            onEndReached={loadMoreData}
+                            onEndReachedThreshold={0.1}
+                            ListFooterComponent={renderFooter}
+                        />
+                    }
+
                 </View>
 
             </View>
