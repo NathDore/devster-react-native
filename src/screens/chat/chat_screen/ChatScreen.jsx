@@ -184,6 +184,7 @@ const ChatScreen = ({ route, navigation }) => {
                 lastMessage: {
                     content: userInput,
                     senderId: user.uid,
+                    timestamp: new Date().getTime(),
                 },
                 messages: firestore.FieldValue.arrayUnion({
                     id: messageId,

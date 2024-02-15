@@ -74,7 +74,7 @@ const ChatListScreen = ({ navigation }) => {
         <ChatCard
             participants={item.participants}
             lastMessage={item.lastMessage}
-            timestamp={convertTimestampToRelativeTime(item.timestamp)}
+            timestamp={convertTimestampToRelativeTime(item.lastMessage.timestamp)}
         />
     );
 
