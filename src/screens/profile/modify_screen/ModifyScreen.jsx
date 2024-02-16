@@ -102,7 +102,6 @@ const ModifyScreen = ({ navigation }) => {
     const handleCloseKeyboard = () => {
         Keyboard.dismiss();
 
-        console.log(usernameInput);
         if (!usernameInput) return;
         handleUpdateName();
     }

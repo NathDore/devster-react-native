@@ -22,7 +22,6 @@ const ChatScreen = ({ route, navigation }) => {
 
     const flatListRef = useRef();
 
-
     const getUserConversationId = async () => {
         const conversationPossibility1 = `${user.uid}_${userDoc.id}`;
         const conversationPossibility2 = `${userDoc.id}_${user.uid}`;
@@ -41,7 +40,6 @@ const ChatScreen = ({ route, navigation }) => {
                     setIsConversationYet(true);
                     return conversationPossibility2;
                 } else {
-                    console.log("Wait for someone to text first.")
                     setIsConversationYet(false);
                 }
             }
@@ -69,7 +67,7 @@ const ChatScreen = ({ route, navigation }) => {
                 id: generatedConversationId
             });
 
-            console.log("conversation created.");
+            console.log(`Conversation with the users ${user.uid}_${userDoc.id} created.`);
             setConversationId(`${user.uid}_${userDoc.id}`);
 
             return;
@@ -80,78 +78,30 @@ const ChatScreen = ({ route, navigation }) => {
         }
     }
 
-    const subscribeToMessages = async () => {
-
-        try {
-            setScreenLoading(true);
-
-            return firestore().collection("conversations").doc(conversationId)
-                .onSnapshot(snapshot => {
-                    if (snapshot.exists) {
-                        const messagesData = snapshot.data().messages || [];
-                        setMessages(messagesData);
-                    }
-                });
-        } catch (error) {
-            console.error('Error while subscribing to messages.', error);
-        } finally {
-            setScreenLoading(false);
-        }
-    }
-
     useEffect(() => {
-        if (flatListRef.current && messages && messages.length > 0) {
-            flatListRef.current.scrollToEnd({ animated: true });
-        }
-    }, [messages])
-
-    useFocusEffect(
-        React.useCallback(() => {
-            const unsubscribe = async () => {
-                try {
-                    const conversationIdFromFireStore = await getUserConversationId();
-                    setConversationId(conversationIdFromFireStore);
-
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-
-            unsubscribe();
-        }, [user, userDoc, navigation])
-    )
-
-    useEffect(() => {
-        const unsubscribe = async () => {
+        const fetchUserConversation = async () => {
             try {
-                const unsubscribeMessages = await subscribeToMessages();
+                const conversationIdFromFireStore = await getUserConversationId();
+                setConversationId(conversationIdFromFireStore);
 
-                return () => {
-                    unsubscribeMessages();
-                };
+                const unsubscribteToMessages = firestore().collection("conversations").doc(conversationId)
+                    .onSnapshot(snapshot => {
+                        if (snapshot.exists) {
+                            const messagesData = snapshot.data().messages || [];
+                            setMessages(messagesData);
+                        }
+                    });
+
+                return () => unsubscribteToMessages();
             } catch (error) {
                 console.error(error);
+            } finally {
+                setScreenLoading(false);
             }
         }
 
-        unsubscribe();
-    }, [conversationId, user, userDoc, navigation])
-
-    const renderItem = ({ item }) => (
-        <BubbleChat item={item} userData={userData} userDoc={userDoc} />
-    );
-
-    const renderFooter = () => {
-        return loading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
-    };
-
-    const renderIcon = () => {
-        return userInput ? <TouchableOpacity style={{ padding: "2%" }} onPress={handleSendMessage}>
-            <FontAwesome name="paper-plane" size={24} color="lightblue" />
-        </TouchableOpacity> : <TouchableOpacity>
-            <FontAwesome name="thumbs-up" size={24} color="lightblue" />
-        </TouchableOpacity>
-    }
+        fetchUserConversation();
+    }, [conversationId])
 
     const handleFocus = () => {
         setChatFocus(prev => !prev);
@@ -214,6 +164,22 @@ const ChatScreen = ({ route, navigation }) => {
 
     const handleNavigationToProfile = () => {
         navigation.navigate("VisitProfile", { userDoc });
+    }
+
+    const renderItem = ({ item }) => (
+        <BubbleChat item={item} userData={userData} userDoc={userDoc} />
+    );
+
+    const renderFooter = () => {
+        return loading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
+    };
+
+    const renderIcon = () => {
+        return userInput ? <TouchableOpacity style={{ padding: "2%" }} onPress={handleSendMessage}>
+            <FontAwesome name="paper-plane" size={24} color="lightblue" />
+        </TouchableOpacity> : <TouchableOpacity>
+            <FontAwesome name="thumbs-up" size={24} color="lightblue" />
+        </TouchableOpacity>
     }
 
     return (

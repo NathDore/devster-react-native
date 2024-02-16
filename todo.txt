@@ -1,4 +1,5 @@
-1- Visit profile (optimiser le rendement des publications populair de la personnes !).
-2- optimiser l'application avec le caching.
-3- faire un frontend consistant.
-4- finir le contact screen.
+1- Gérer les exeptions firebase de l'authentification
+2- Transformer tous mes functions firebase en async/await (Changer le schema de l'auth. Signup -> Create Account et no check up needed.)
+3- Créer la partie contact de mon app.
+4- Optimiser et tester l'application avec le caching ! (En mode production)
+5- Rediriger l'utilisateur veurs mon github et mon gmail.

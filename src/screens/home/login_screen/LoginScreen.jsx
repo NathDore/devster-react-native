@@ -9,10 +9,10 @@ import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 const LoginScreen = ({ navigation }) => {
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
     const [showPassword, setShowPassword] = useState(false);
-    const { signInWithEmailAndPassword } = useAuthContext();
+    const { handleSignInWithEmailAndPassword } = useAuthContext();
 
     const onSubmit = (data) => {
-        signInWithEmailAndPassword(data.email, data.password);
+        handleSignInWithEmailAndPassword(data.email, data.password);
         navigation.navigate("WelcomeBack");
     };
 

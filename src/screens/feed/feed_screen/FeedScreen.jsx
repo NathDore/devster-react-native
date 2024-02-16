@@ -28,6 +28,33 @@ const FeedScreen = ({ navigation }) => {
         loadInitialData();
     }, [navigation]))
 
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const unsubscribreToPosts = firestore()
+                    .collection('posts')
+                    .orderBy('timestamp', 'desc')
+                    .where('timestamp', '>', lastTimestamp || Date.now())
+                    .onSnapshot(snapshot => {
+
+                        const newPosts = snapshot.docs.map(doc => ({
+                            id: doc.id,
+                            ...doc.data()
+                        }));
+
+                        setNewPostsCount(newPosts.length);
+                    });
+
+                return () => unsubscribreToPosts();
+
+            } catch (error) {
+                console.error("Error while fetching the posts.", error);
+            }
+        }
+
+        fetchPosts();
+    }, [])
+
     const loadInitialData = async () => {
         try {
             const querySnapshot = await firestore()
@@ -93,24 +120,6 @@ const FeedScreen = ({ navigation }) => {
             setRefreshing(false);
         }
     }
-
-    useEffect(() => {
-        const unsubscribe = firestore()
-            .collection('posts')
-            .orderBy('timestamp', 'desc')
-            .where('timestamp', '>', lastTimestamp || Date.now())
-            .onSnapshot(snapshot => {
-
-                const newPosts = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-
-                setNewPostsCount(newPosts.length);
-            });
-
-        return unsubscribe;
-    }, []);
 
     const handleNotification = () => {
         onRefresh();

@@ -10,7 +10,6 @@ const WelcomeBackScreen = ({ navigation }) => {
         const interval = setInterval(() => {
             clearInterval(interval);
             navigation.navigate("Home");
-            console.log("Clear interval");
         }, 1000);
 
     }, [[navigation]]))

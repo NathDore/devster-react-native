@@ -131,7 +131,9 @@ const ProfileScreen = () => {
                                     </View>
 
                                     {/* Username */}
-                                    <Text style={PROFILE_SCREEN_STYLESHEET.username}>{userData.name}</Text>
+                                    <View style={{ alignItems: "center", maxWidth: "90%" }}>
+                                        <Text style={PROFILE_SCREEN_STYLESHEET.username}>{userData.name}</Text>
+                                    </View>
 
                                     {/* Modify button */}
                                     <TouchableOpacity onPress={handleNavigationModifyScreen} style={PROFILE_SCREEN_STYLESHEET.modify_button}>

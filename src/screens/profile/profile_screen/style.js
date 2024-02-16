@@ -13,7 +13,7 @@ export const PROFILE_SCREEN_STYLESHEET = StyleSheet.create({
     },
     topSection: {
         justifyContent: "flex-start",
-        width: "30%",
+        width: "100%",
         alignItems: "center",
     },
     profile_picture: {
@@ -24,20 +24,19 @@ export const PROFILE_SCREEN_STYLESHEET = StyleSheet.create({
         borderWidth: 1,
         elevation: 1,
         backgroundColor: "black",
-        width: 90,
+        width: 150,
         borderColor: "white",
         borderRadius: 20,
         justifyContent: "center",
         alignItems: "center",
-        padding: "5%",
-        marginTop: "5%",
-        marginBottom: "10%",
+        padding: "2%",
+        marginTop: "3%",
+        marginBottom: "5%",
     },
     button_text: {
         color: "white",
     },
     username: {
-        marginVertical: "5%",
         fontSize: 25,
         fontWeight: "bold",
         color: "white",

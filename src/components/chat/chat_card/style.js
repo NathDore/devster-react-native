@@ -3,7 +3,7 @@ import { blackTheme } from "../../../../assets/color/color";
 
 export const CHAT_CARD_STYLESHEET = StyleSheet.create({
     container: {
-        width: "100%",
+        maxWidth: "100%",
         paddingStart: "2%",
         display: "flex",
         flexDirection: "row",
@@ -14,7 +14,7 @@ export const CHAT_CARD_STYLESHEET = StyleSheet.create({
         paddingVertical: "2%",
     },
     titleMessageContainer: {
-        width: "100%",
+        maxWidth: "70%",
         height: "100%",
         display: "flex",
         flexDirection: "column",

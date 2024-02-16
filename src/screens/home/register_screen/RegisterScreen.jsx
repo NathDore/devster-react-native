@@ -8,12 +8,12 @@ import AwesomeIcon from "react-native-vector-icons/FontAwesome";
 
 const RegisterScreen = ({ navigation }) => {
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
-    const { handleSignUp } = useAuthContext();
+    const { handleSignUpWithEmailAndPassword } = useAuthContext();
 
     const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit = (data) => {
-        handleSignUp(data.email, data.password, data.username);
+        handleSignUpWithEmailAndPassword(data.email, data.password, data.username);
         navigation.navigate("Welcome");
     };
 
@@ -41,7 +41,6 @@ const RegisterScreen = ({ navigation }) => {
     const handleShowPassword = () => {
         setShowPassword(prev => !prev);
     }
-
     return (
         <KeyboardAvoidingView style={REGISTER_STYLESHEET.keyboardAvoidingView}>
             <ScrollView>
@@ -83,7 +82,12 @@ const RegisterScreen = ({ navigation }) => {
 
                     )}
                     name="username"
-                    rules={{ required: 'Username is required' }}
+                    rules={{
+                        required: 'Username is required', maxLength: {
+                            value: 20,
+                            message: "Name must be under 21 characters long"
+                        }
+                    }}
                 />
 
                 {/* Email Field */}

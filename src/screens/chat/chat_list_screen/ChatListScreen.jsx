@@ -1,5 +1,5 @@
 import { View, FlatList, ActivityIndicator, Text, RefreshControl } from 'react-native'
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import ChatCard from '../../../components/chat/chat_card/ChatCard'
 import { convertTimestampToRelativeTime } from '../../../util/util-function'
 import { CHAT_LIST_SCREEN } from './style';
@@ -18,6 +18,56 @@ const ChatListScreen = ({ navigation }) => {
 
     const { user } = useAuthContext();
 
+    useEffect(() => {
+        const fetchConversations = async () => {
+            try {
+                const unsubscribeToConversations = firestore()
+                    .collection("conversations")
+                    .orderBy("timestamp", "desc")
+                    .where("participants", "array-contains", user.uid)
+                    .onSnapshot((querySnapshot) => {
+                        const allConversations = [];
+
+                        querySnapshot.docs.forEach(conv => allConversations.push(conv.data()));
+
+                        setConversations(allConversations);
+                    })
+
+                return () => unsubscribeToConversations();
+            } catch (error) {
+                console.error("Error while subscribing to conversations.", error);
+            } finally {
+                setIsScreenLoading(false);
+            }
+        }
+
+        fetchConversations();
+    }, [])
+
+    useFocusEffect(useCallback(() => {
+        const refreshingConversations = async () => {
+            try {
+                const getConversations = await loadInitialData();
+            } catch (error) {
+                console.error("Error while refreshing the conversations.", error);
+            }
+        }
+        refreshingConversations();
+    }, [navigation])
+    )
+
+    const onRefresh = async () => {
+        try {
+            setRefreshing(true);
+            const getConversations = await loadInitialData();
+
+        } catch (error) {
+            console.error("Error while refreshing the conversations.", error);
+        } finally {
+            setRefreshing(false)
+        }
+    }
+
     const loadInitialData = async () => {
         try {
             const allConversations = [];
@@ -30,39 +80,11 @@ const ChatListScreen = ({ navigation }) => {
 
             fetchConversations.docs.forEach(conv => allConversations.push(conv.data()))
 
-            return allConversations;
+            setConversations(allConversations);
         } catch (error) {
             console.error('Error while loading initial conversation.', error);
         } finally {
             setIsScreenLoading(false);
-        }
-    }
-
-    useFocusEffect(
-        useCallback(() => {
-            const unsubscribe = async () => {
-                try {
-                    const getConversations = await loadInitialData();
-                    setConversations(getConversations);
-                } catch (error) {
-
-                }
-            }
-            unsubscribe();
-
-        }, [navigation])
-    );
-
-    const onRefresh = async () => {
-        try {
-            setRefreshing(true);
-
-            const getConversations = await loadInitialData();
-            setConversations(getConversations);
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setRefreshing(false)
         }
     }
 
