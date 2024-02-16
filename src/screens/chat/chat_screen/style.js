@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
-import { blackTheme, blackThemeSecondary } from "../../../../assets/color/color";
+import { blackTheme } from "../../../../assets/color/color";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
@@ -14,10 +15,10 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: "3%",
-        paddingBottom: "3%",
-        paddingTop: "1%",
-        marginBottom: "3%",
+        paddingHorizontal: hp("3%"),
+        paddingBottom: hp("3%"),
+        paddingTop: hp("1%"),
+        marginBottom: hp("1%"),
         backgroundColor: blackTheme,
     },
     profile_photo_name_row: {
@@ -26,7 +27,7 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
     },
     name: {
         color: "white",
-        fontSize: 25,
+        fontSize: hp(3),
         fontWeight: "bold",
         marginHorizontal: "5%",
     },
@@ -34,21 +35,10 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
         flex: 1,
         display: "flex",
     },
-    send_message_section_focus: {
-        backgroundColor: blackTheme,
-        width: "100%",
-        height: 70,
-        paddingTop: "2%",
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        paddingHorizontal: "3%",
-        justifyContent: "space-evenly",
-    },
     send_message_section_not_focus: {
         backgroundColor: blackTheme,
         width: "100%",
-        height: 80,
+        height: hp(12),
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
@@ -59,14 +49,15 @@ export const CHAT_SCREEN_STYLESHEET = StyleSheet.create({
         borderTopRightRadius: 10,
     },
     textInput_container: {
-        height: "75%",
-        width: "80%",
+        height: hp("6.5%"),
+        width: wp("80%"),
         backgroundColor: "lightgrey",
         borderRadius: 20,
     },
     textInput: {
         flex: 1,
-        paddingLeft: 20,
-        fontSize: 20,
+        paddingLeft: wp(3),
+        fontSize: hp(2),
+        padding: wp(2)
     }
 });

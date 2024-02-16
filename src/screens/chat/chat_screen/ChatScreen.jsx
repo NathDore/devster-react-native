@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Keyboard, Pressable } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Keyboard, Pressable, KeyboardAvoidingView } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import firestore from "@react-native-firebase/firestore";
 import { useFocusEffect } from '@react-navigation/core';
@@ -7,6 +7,7 @@ import { Avatar } from 'react-native-elements';
 import { FontAwesome } from '@expo/vector-icons';
 import BubbleChat from '../../../components/chat/bubble_chat/BubbleChat';
 import { CHAT_SCREEN_STYLESHEET } from './style';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ChatScreen = ({ route, navigation }) => {
     const { userDoc } = route.params;
@@ -16,7 +17,6 @@ const ChatScreen = ({ route, navigation }) => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState();
     const [screenLoading, setScreenLoading] = useState(false);
-    const [chatFocus, setChatFocus] = useState(false);
     const [userInput, setUserInput] = useState("");
     const [isConversationYet, setIsConversationYet] = useState(false);
 
@@ -184,21 +184,21 @@ const ChatScreen = ({ route, navigation }) => {
 
     return (
         /* Container */
-        <View style={CHAT_SCREEN_STYLESHEET.container}>
+        <KeyboardAvoidingView style={CHAT_SCREEN_STYLESHEET.container}>
 
             {/* Header */}
             <View style={CHAT_SCREEN_STYLESHEET.header}>
 
                 {/* Back Icon */}
                 <TouchableOpacity onPress={handleGoBack} style={{ padding: "3%", }}>
-                    <FontAwesome name="angle-left" size={40} color={"white"} />
+                    <FontAwesome name="angle-left" size={hp(4)} color={"white"} />
                 </TouchableOpacity>
 
                 <View style={CHAT_SCREEN_STYLESHEET.profile_photo_name_row}>
 
                     {/* Profile picture */}
                     <Pressable onPress={handleNavigationToProfile}>
-                        <Avatar size={40} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
+                        <Avatar size={hp(4)} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
                     </Pressable>
 
                     {/* Name */}
@@ -217,7 +217,7 @@ const ChatScreen = ({ route, navigation }) => {
                 {
                     screenLoading ? <ActivityIndicator style={{
                         alignSelf: "center",
-                    }} size={50} color={"lightblue"} /> :
+                    }} size={hp(4)} color={"lightblue"} /> :
 
                         <FlatList
                             ref={flatListRef}
@@ -230,12 +230,10 @@ const ChatScreen = ({ route, navigation }) => {
             </View>
 
             {/* Send message Section */}
-            <View style={chatFocus ? CHAT_SCREEN_STYLESHEET.send_message_section_focus : CHAT_SCREEN_STYLESHEET.send_message_section_not_focus}>
+            <View style={CHAT_SCREEN_STYLESHEET.send_message_section_not_focus}>
                 <View style={CHAT_SCREEN_STYLESHEET.textInput_container}>
                     <TextInput
                         style={CHAT_SCREEN_STYLESHEET.textInput}
-                        onFocus={handleFocus}
-                        onBlur={handleFocus}
                         multiline
                         placeholder='Enter your message.'
                         onChangeText={handleUserInput}
@@ -247,7 +245,7 @@ const ChatScreen = ({ route, navigation }) => {
                     renderIcon()
                 }
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 

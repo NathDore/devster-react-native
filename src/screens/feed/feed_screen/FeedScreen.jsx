@@ -11,6 +11,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useFocusEffect } from '@react-navigation/native';
 import Header from '../../../UI/header/Header';
 import NotFound from '../../../UI/not_found/NotFound';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const FeedScreen = ({ navigation }) => {
     const [isScreenLoading, setIsScreenLoading] = useState(true);
@@ -153,7 +154,7 @@ const FeedScreen = ({ navigation }) => {
             {isScreenLoading ?
 
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                    <ActivityIndicator size={80} color={"lightgrey"} />
+                    <ActivityIndicator size={hp(5)} color={"lightgrey"} />
                 </View>
 
                 : (<>{posts.length == 0 ?
@@ -186,7 +187,7 @@ const FeedScreen = ({ navigation }) => {
                             /* Icon notification */
                             newPostsCount != 0 &&
                             <TouchableOpacity style={FEED_SCREEN_STYLESHEET.notification_bell} onPress={handleNotification}>
-                                <FontAwesomeIcon name="bell" size={24} color="white" />
+                                <FontAwesomeIcon name="bell" size={wp(5)} color="white" />
                             </TouchableOpacity>
                         }
 
@@ -194,7 +195,7 @@ const FeedScreen = ({ navigation }) => {
                         <Pressable
                             onPress={handleModalOpen}
                             style={FEED_SCREEN_STYLESHEET.create_post_icon}>
-                            <AwesomeIcon name="pencil" size={25} color={"white"} />
+                            <AwesomeIcon name="pencil" size={wp(5)} color={"white"} />
                         </Pressable>
 
                         {/* Create Post Modal */}

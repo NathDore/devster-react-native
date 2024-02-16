@@ -8,6 +8,7 @@ import { useAuthContext } from '../../../context/AuthProvider'
 import { useFocusEffect } from '@react-navigation/core'
 import Header from '../../../UI/header/Header';
 import NotFound from '../../../UI/not_found/NotFound';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ChatListScreen = ({ navigation }) => {
     const [isFlatListLoading, setIsFlatListLoading] = useState(false);
@@ -108,7 +109,7 @@ const ChatListScreen = ({ navigation }) => {
                 isScreenLoading ?
 
                     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                        <ActivityIndicator size={80} color={"lightgrey"} />
+                        <ActivityIndicator size={hp(5)} color={"lightgrey"} />
                     </View>
 
                     :

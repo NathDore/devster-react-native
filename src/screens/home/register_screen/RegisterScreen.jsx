@@ -5,6 +5,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { REGISTER_STYLESHEET } from './style';
 import { useAuthContext } from '../../../context/AuthProvider';
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const RegisterScreen = ({ navigation }) => {
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
@@ -46,8 +47,8 @@ const RegisterScreen = ({ navigation }) => {
             <ScrollView>
                 {/* header */}
                 <View style={REGISTER_STYLESHEET.header}>
-                    <TouchableOpacity style={{ padding: "2%" }} onPress={handleGoBack}>
-                        <AwesomeIcon name="angle-left" size={40} color="white" />
+                    <TouchableOpacity style={{ padding: wp("2%") }} onPress={handleGoBack}>
+                        <AwesomeIcon name="angle-left" size={hp(5)} color="white" />
                     </TouchableOpacity>
                     {/* header title */}
                     <Text style={REGISTER_STYLESHEET.header_title}>Sign up</Text>
@@ -129,7 +130,7 @@ const RegisterScreen = ({ navigation }) => {
                                     placeholder='Password' />
 
                                 <Pressable onPress={handleShowPassword}>
-                                    <Icon name={showPassword ? 'eye' : 'eye-slash'} style={{ marginEnd: 10 }} size={20} color="lightgrey" />
+                                    <Icon name={showPassword ? 'eye' : 'eye-slash'} style={{ marginEnd: wp(4) }} size={hp(3)} color="lightgrey" />
                                 </Pressable>
                             </View>
                             {fieldState.error && <Text style={REGISTER_STYLESHEET.error}>{fieldState.error.message}</Text>}
@@ -151,7 +152,7 @@ const RegisterScreen = ({ navigation }) => {
                     }}
                 />
 
-                <View style={{ height: 50 }} />
+                <View style={{ height: hp(3) }} />
 
                 {/* Submit button */}
                 {

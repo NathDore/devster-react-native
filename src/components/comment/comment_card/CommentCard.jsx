@@ -5,6 +5,7 @@ import { COMMENT_STYLESHEET } from './style';
 import firestore from "@react-native-firebase/firestore";
 import { convertTimestampToRelativeTime } from '../../../util/util-function';
 import { useNavigation } from '@react-navigation/native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const CommentCard = ({ content, userId, timestamp }) => {
     const [userDoc, setuserDoc] = useState({});
@@ -35,7 +36,7 @@ const CommentCard = ({ content, userId, timestamp }) => {
             <View style={COMMENT_STYLESHEET.info_container}>
                 {/* Profile picture */}
                 <Pressable style={{ padding: "1.5%" }} onPress={handleNavigation}>
-                    <Avatar size={20} rounded source={userDoc?.profile_picture ? { uri: userDoc?.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
+                    <Avatar size={hp(3)} rounded source={userDoc?.profile_picture ? { uri: userDoc?.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
                 </Pressable>
 
                 {/* UserName */}

@@ -1,11 +1,12 @@
 import { StyleSheet } from "react-native";
 import { blackThemeSecondary, blackTheme } from "../../../../assets/color/color";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const CREATE_POST_STYLESHEET = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: blackTheme,
-        padding: "5%",
+        padding: wp("5%"),
         justifyContent: "space-between",
         borderRadius: 20,
         borderWidth: 0.5,
@@ -23,8 +24,8 @@ export const CREATE_POST_STYLESHEET = StyleSheet.create({
     },
     validPublishButton: {
         backgroundColor: "blue",
-        width: 100,
-        height: 30,
+        width: wp(25),
+        height: hp(5),
         borderRadius: 40,
         borderWidth: 0.5,
         borderColor: "lightgrey",
@@ -38,8 +39,8 @@ export const CREATE_POST_STYLESHEET = StyleSheet.create({
     },
     invalidPublishButton: {
         backgroundColor: "grey",
-        width: 100,
-        height: 30,
+        width: wp(25),
+        height: hp(5),
         borderRadius: 40,
         justifyContent: "center",
         alignItems: "center",
@@ -48,10 +49,10 @@ export const CREATE_POST_STYLESHEET = StyleSheet.create({
     textInput: {
         color: "lightgrey",
         justifyContent: "flex-start",
-        fontSize: 20,
+        fontSize: hp(3),
         fontWeight: "bold",
-        marginVertical: "5%",
-        marginHorizontal: "2%",
+        marginVertical: hp("5%"),
+        marginHorizontal: wp("2%"),
         flex: 1,
         textAlignVertical: "top",
     }

@@ -1,13 +1,14 @@
 import { StyleSheet } from "react-native";
 import { blackThemeSecondary } from "../../../../assets/color/color";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const COMMENT_STYLESHEET = StyleSheet.create({
     container: {
         borderBottomWidth: 0.5,
         borderColor: 'lightgrey',
         width: '100%',
-        paddingHorizontal: '2%',
-        paddingVertical: '1%',
+        paddingHorizontal: wp('2%'),
+        paddingVertical: hp('1%'),
         backgroundColor: blackThemeSecondary,
         display: "flex",
         flexDirection: "column",
@@ -19,32 +20,23 @@ export const COMMENT_STYLESHEET = StyleSheet.create({
         alignItems: "center",
     },
     username: {
-        marginLeft: "1%",
-        fontSize: 15,
+        marginLeft: wp("1%"),
+        fontSize: hp(2),
         fontWeight: "400",
         color: "white",
     },
     timestamp: {
-        marginLeft: "2%",
-        fontSize: 12,
+        marginLeft: wp("1%"),
+        fontSize: hp(1.5),
         color: "lightgrey"
     },
     post_container: {
         width: "100%",
-        marginVertical: "2%",
-        paddingHorizontal: "1%",
+        marginVertical: hp("1%"),
+        paddingHorizontal: wp("3%"),
     },
     post_text: {
         fontWeight: "300",
         color: "white",
     },
-    reaction_container: {
-        width: "100%",
-        padding: "2%",
-        display: "flex",
-        flexDirection: "row",
-    },
-    like_icon: {
-        marginHorizontal: "5%"
-    }
 });

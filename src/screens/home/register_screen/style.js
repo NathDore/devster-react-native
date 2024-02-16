@@ -1,85 +1,89 @@
 import { StyleSheet } from "react-native";
 import { blackThemeSecondary } from "../../../../assets/color/color";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const REGISTER_STYLESHEET = StyleSheet.create({
     keyboardAvoidingView: {
         flex: 1,
         backgroundColor: blackThemeSecondary,
+        paddingBottom: hp("3%"),
     },
     header: {
         flexDirection: "row",
-        width: "100%",
-        padding: "5%",
+        width: wp("100%"),
+        padding: wp("5%"),
         justifyContent: "space-between",
         alignItems: "center",
     },
     header_title: {
         color: "white",
-        fontSize: 20,
+        fontSize: wp(5),
     },
     title_container: {
         width: "100%",
-        padding: "10%",
+        padding: wp("10%"),
     },
     title: {
         color: "white",
-        fontSize: 25,
+        fontSize: hp(4),
         letterSpacing: 0.2,
     },
     subtitle: {
         color: "lightgrey",
-        fontSize: 20,
+        fontSize: hp(3),
         letterSpacing: 0.5,
     },
     field: {
-        width: "90%",
+        width: wp("90%"),
         borderWidth: 0.5,
         borderColor: "lightgrey",
-        height: 50,
+        height: hp(8),
         alignSelf: "center",
         alignItems: "center",
-        borderRadius: 18,
-        marginVertical: "5%",
+        borderRadius: wp(3),
+        marginVertical: hp("2%"),
         flexDirection: "row",
     },
     textInput: {
         color: "lightgrey",
-        fontSize: 20, flex: 1,
-        paddingStart: 15,
+        fontSize: hp(2),
+        flex: 1,
+        paddingStart: wp(5),
     },
     error: {
         color: 'red',
         alignSelf: "center",
-        textAlign: "center"
+        textAlign: "center",
+        fontSize: hp(2),
     },
     submit_button_valid: {
-        width: "90%",
+        width: wp("70%"),
         backgroundColor: "lightgrey",
         alignSelf: "center",
         justifyContent: "center",
         alignItems: "center",
-        marginVertical: "5%",
-        padding: "5%",
-        borderRadius: 18,
+        marginVertical: hp("1%"),
+        padding: hp("1%"),
+        borderRadius: hp(2),
     },
     submit_button_valid_text: {
         color: blackThemeSecondary,
-        fontSize: 20,
+        fontSize: hp(3.5),
     },
     submit_button_invalid: {
-        width: "90%",
+        width: wp("70%"),
         borderWidth: 0.5,
         borderColor: "lightgrey",
         backgroundColor: blackThemeSecondary,
         alignSelf: "center",
         justifyContent: "center",
         alignItems: "center",
-        marginVertical: "5%",
-        padding: "5%",
+        marginVertical: hp("1%"),
+        padding: wp("2.5%"),
         borderRadius: 18,
     },
     submit_button_invalid_text: {
         color: "white",
-        fontSize: 20,
+        fontSize: hp(3.5),
     }
 })

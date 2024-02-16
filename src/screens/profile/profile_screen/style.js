@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const PROFILE_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
@@ -8,8 +9,8 @@ export const PROFILE_SCREEN_STYLESHEET = StyleSheet.create({
         flexDirection: "column",
     },
     backIcon: {
-        marginVertical: "2%",
-        marginHorizontal: "5%"
+        marginVertical: hp("2%"),
+        marginHorizontal: wp("5%"),
     },
     topSection: {
         justifyContent: "flex-start",
@@ -17,27 +18,27 @@ export const PROFILE_SCREEN_STYLESHEET = StyleSheet.create({
         alignItems: "center",
     },
     profile_picture: {
-        marginTop: "5%",
-        marginBottom: "2%",
+        marginTop: hp("1%"),
+        marginBottom: hp("1%"),
     },
     modify_button: {
         borderWidth: 1,
         elevation: 1,
         backgroundColor: "black",
-        width: 150,
+        width: wp(30),
         borderColor: "white",
         borderRadius: 20,
         justifyContent: "center",
         alignItems: "center",
-        padding: "2%",
-        marginTop: "3%",
-        marginBottom: "5%",
+        padding: hp("1%"),
+        marginTop: hp("1%"),
+        marginBottom: hp("2%"),
     },
     button_text: {
         color: "white",
     },
     username: {
-        fontSize: 25,
+        fontSize: hp(3),
         fontWeight: "bold",
         color: "white",
     },
@@ -52,13 +53,13 @@ export const PROFILE_SCREEN_STYLESHEET = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        height: 40,
+        height: hp(5),
         backgroundColor: "rgba(8, 8, 8, 0.91)",
-        paddingStart: "5%",
+        paddingStart: hp("2%"),
     },
     publication_title_header_text: {
         color: "white",
-        fontSize: 20,
+        fontSize: hp(2),
         fontWeight: "400",
     },
     publication_title_header_underline: {

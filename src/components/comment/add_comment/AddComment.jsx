@@ -1,9 +1,10 @@
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../context/AuthProvider';
 import { ADD_COMMENT_STYLESHEET } from "./style"
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const AddComment = ({ postId }) => {
     const [commentText, setCommentText] = useState("");
@@ -41,11 +42,11 @@ const AddComment = ({ postId }) => {
             <TextInput
                 style={{
                     flex: 1,
-                    width: "80%",
-                    paddingTop: isFocus ? 15 : 5,
-                    paddingStart: 10.5,
+                    width: wp("80%"),
+                    paddingTop: isFocus ? hp(2) : hp(0),
+                    paddingStart: wp(4),
                     color: 'white',
-                    fontSize: 18,
+                    fontSize: hp(2.5),
                     textAlignVertical: isFocus ? 'top' : 'center'
                 }}
                 placeholder='Enter your comment here.'
@@ -58,7 +59,7 @@ const AddComment = ({ postId }) => {
             />
 
             <TouchableOpacity onPress={handleSubmit} style={ADD_COMMENT_STYLESHEET.submit_button}>
-                <FontAwesome name="paper-plane" size={24} color="lightgrey" />
+                <FontAwesome name="paper-plane" size={hp(3)} color="lightgrey" />
             </TouchableOpacity>
         </View>
     )

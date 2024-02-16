@@ -4,6 +4,7 @@ import { Icon } from 'react-native-elements';
 import { CREATE_POST_STYLESHEET } from './style';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../context/AuthProvider';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const CreatePost = ({ setIsModalOpen }) => {
     const [userInput, setUserInput] = useState("");
@@ -72,13 +73,12 @@ const CreatePost = ({ setIsModalOpen }) => {
                         <>
                             <View style={CREATE_POST_STYLESHEET.buttonSection}>
                                 <TouchableOpacity onPress={handleCloseModal}>
-                                    <Icon name="close" type="fontAwesome" color={"lightgrey"} size={40} />
+                                    <Icon name="close" type="fontAwesome" color={"lightgrey"} size={hp(5)} />
                                 </TouchableOpacity>
                                 {
                                     renderValidButton()
                                 }
                             </View>
-
 
                             <View style={CREATE_POST_STYLESHEET.flex1}>
                                 <TextInput
@@ -92,8 +92,6 @@ const CreatePost = ({ setIsModalOpen }) => {
                             </View>
 
                         </>
-
-
                 }
             </View>
         </Pressable>

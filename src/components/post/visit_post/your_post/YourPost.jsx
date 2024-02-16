@@ -1,7 +1,5 @@
-import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import PostCard from '../../post_card/PostCard'
-import { Ionicons } from '@expo/vector-icons';
 
 const YourPost = ({
     postId,

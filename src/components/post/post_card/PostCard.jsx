@@ -8,6 +8,7 @@ import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../context/AuthProvider';
 import { useNavigation } from '@react-navigation/core';
 import { ActivityIndicator } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable }) => {
     const [isLike, setIsLike] = useState(false);
@@ -134,13 +135,13 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
         if (isLike) {
             return (
                 <Pressable onPress={handleLike}>
-                    <AwesomeIcon name="heart" color={'red'} size={18} style={POST_STYLESHEET.like_icon} />
+                    <AwesomeIcon name="heart" color={'red'} size={hp(2)} style={POST_STYLESHEET.like_icon} />
                 </Pressable>
             );
         } else {
             return (
                 <Pressable onPress={handleLike}>
-                    <AwesomeIcon5 name="heart" color={'lightgrey'} size={18} solid={false} style={POST_STYLESHEET.like_icon} />
+                    <AwesomeIcon5 name="heart" color={'lightgrey'} size={hp(2)} solid={false} style={POST_STYLESHEET.like_icon} />
                 </Pressable>
             );
         }
@@ -171,7 +172,7 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
         isCompoenentLoading ?
 
             <View style={POST_STYLESHEET.card_container}>
-                <ActivityIndicator size={30} color="lightgrey" />
+                <ActivityIndicator size={hp(3)} color="lightgrey" />
             </View>
             :
             <TouchableView
@@ -182,7 +183,7 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
                 <View style={POST_STYLESHEET.info_container}>
                     {/* Profile picture */}
                     <TouchableOpacity onPress={handleNavigationVisitProfile}>
-                        <Avatar size={30} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
+                        <Avatar size={hp(4)} rounded source={userDoc.profile_picture ? { uri: userDoc.profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
                     </TouchableOpacity>
 
 
@@ -211,7 +212,7 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
                     <View style={POST_STYLESHEET.comment_button_container}>
                         <Text style={POST_STYLESHEET.comment_button_text}>{comments.length}</Text>
                         <View>
-                            <AwesomeIcon5 name="comment" color={'lightgrey'} size={18} solid={false} />
+                            <AwesomeIcon5 name="comment" color={'lightgrey'} size={hp(2)} solid={false} />
                         </View>
                     </View>
 

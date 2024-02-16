@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { blackThemeSecondary } from "../../../../assets/color/color";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const MODIFY_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
@@ -15,15 +16,15 @@ export const MODIFY_SCREEN_STYLESHEET = StyleSheet.create({
     go_back_icon: {
         position: "absolute",
         alignSelf: "flex-start",
-        left: "2%",
-        top: "15%",
-        padding: "2%",
+        left: wp("2%"),
+        top: hp("0.5%"),
+        padding: hp("2%"),
         justifyContent: "center",
         alignItems: "center",
     },
     profile_picture: {
-        top: "50%",
-        right: "25%",
+        top: hp("5%"),
+        right: wp("27%"),
     },
     profile_picture_container: {
         justifyContent: "center",
@@ -33,8 +34,8 @@ export const MODIFY_SCREEN_STYLESHEET = StyleSheet.create({
         borderRadius: 150,
     },
     bottom_section: {
-        height: "85%",
-        paddingTop: "25%",
+        height: hp("85%"),
+        paddingTop: hp("5%"),
         alignItems: "center",
     },
     label_name: {
@@ -43,15 +44,16 @@ export const MODIFY_SCREEN_STYLESHEET = StyleSheet.create({
         borderTopWidth: 0.5,
         borderBottomWidth: 0.5,
         borderColor: "lightgrey",
-        padding: "5%",
+        padding: hp("2%"),
+        alignItems: "center",
     },
     text_label: {
-        fontSize: 25,
+        fontSize: hp(2),
         fontWeight: "bold",
         color: "lightgrey",
     },
     text_input: {
-        fontSize: 25,
+        fontSize: hp(2.5),
         fontWeight: "300",
         color: "lightgrey",
         paddingStart: 25,

@@ -1,33 +1,33 @@
 import { StyleSheet } from "react-native";
-import { blackTheme } from "../../../../assets/color/color";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const CHAT_CARD_STYLESHEET = StyleSheet.create({
     container: {
         maxWidth: "100%",
-        paddingStart: "2%",
+        paddingStart: wp("2%"),
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        borderBottomWidth: 0.2,
+        borderBottomWidth: hp(0.07),
         borderColor: "lightgrey",
-        padding: "1%",
-        paddingVertical: "2%",
+        padding: hp("4%"),
+        paddingVertical: hp(1),
     },
     titleMessageContainer: {
-        maxWidth: "70%",
+        maxWidth: wp("70%"),
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        marginHorizontal: "5%",
-        paddingVertical: "2%",
+        marginHorizontal: wp("3.5%"),
+        paddingVertical: hp("1%"),
     },
     userName: {
         color: "white",
         fontWeight: "bold",
-        fontSize: 20,
+        fontSize: hp(2),
     },
     messageContainer: {
-        width: "80%",
+        width: wp("80%"),
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
@@ -35,18 +35,18 @@ export const CHAT_CARD_STYLESHEET = StyleSheet.create({
     messageText: {
         marginRight: "3%",
         color: "white",
-        fontSize: 18,
+        fontSize: hp(2),
         fontWeight: "300"
     },
     timestamp: {
         fontWeight: "bold",
         color: "white",
-        fontSize: 15,
+        fontSize: hp(2),
         marginLeft: "5%",
     },
     last_message_you: {
         color: "grey",
         marginEnd: "1%",
-        fontSize: 18,
+        fontSize: hp(2.2),
     },
 })

@@ -5,6 +5,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { LOGIN_STYLESHEET } from './style';
 import { useAuthContext } from '../../../context/AuthProvider';
 import AwesomeIcon from "react-native-vector-icons/FontAwesome";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const LoginScreen = ({ navigation }) => {
     const { control, handleSubmit, formState: { isValid } } = useForm({ mode: "onChange" });
@@ -46,8 +47,8 @@ const LoginScreen = ({ navigation }) => {
             <ScrollView>
                 {/* header */}
                 <View style={LOGIN_STYLESHEET.header}>
-                    <TouchableOpacity style={{ padding: "2%" }} onPress={handleGoBack}>
-                        <AwesomeIcon name="angle-left" size={40} color="white" />
+                    <TouchableOpacity style={{ padding: wp("2%") }} onPress={handleGoBack}>
+                        <AwesomeIcon name="angle-left" size={hp(5)} color="white" />
                     </TouchableOpacity>
                     <View />
                 </View>
@@ -98,7 +99,7 @@ const LoginScreen = ({ navigation }) => {
                                     placeholder='Password' />
 
                                 <Pressable onPress={handleShowPassword}>
-                                    <Icon name={showPassword ? 'eye' : 'eye-slash'} style={{ marginEnd: 10 }} size={20} color="lightgrey" />
+                                    <Icon name={showPassword ? 'eye' : 'eye-slash'} style={{ marginEnd: wp(4) }} size={hp(3)} color="lightgrey" />
                                 </Pressable>
                             </View>
                             {fieldState.error && <Text style={LOGIN_STYLESHEET.error}>{fieldState.error.message}</Text>}

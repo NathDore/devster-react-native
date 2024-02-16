@@ -4,8 +4,7 @@ import BackgroundVideo from "../../../UI/background_video/BackgroundVideo";
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { LANDING_STYLESHEET } from './style';
-import { useAuthContext } from '../../../context/AuthProvider';
-import { blackThemeSecondary } from '../../../../assets/color/color';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const LandingScreen = ({ navigation }) => {
 
@@ -43,12 +42,12 @@ const LandingScreen = ({ navigation }) => {
                     <View style={LANDING_STYLESHEET.contact_button_container}>
                         {/* Github button */}
                         <TouchableOpacity style={LANDING_STYLESHEET.contact_button}>
-                            <FontAwesomeIcon name="github" size={35} color="white" />
+                            <FontAwesomeIcon name="github" size={wp(8)} color="white" />
                         </TouchableOpacity>
 
                         {/* Gmail button */}
                         <TouchableOpacity style={LANDING_STYLESHEET.contact_button}>
-                            <MaterialIcon name="email" size={35} color="white" />
+                            <MaterialIcon name="email" size={wp(8)} color="white" />
                         </TouchableOpacity>
 
                     </View>

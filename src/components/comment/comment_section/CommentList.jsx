@@ -1,6 +1,7 @@
 import { View, FlatList, ActivityIndicator } from 'react-native'
 import { useState } from 'react';
 import CommentCard from '../comment_card/CommentCard';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const CommentList = ({ comments }) => {
     const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ const CommentList = ({ comments }) => {
     );
 
     const renderFooter = () => {
-        return loading ? <ActivityIndicator style={{ marginVertical: 10 }} size="large" color="lightgrey" /> : null;
+        return loading ? <ActivityIndicator style={{ marginVertical: hp(4) }} size="large" color="lightgrey" /> : null;
     };
 
 

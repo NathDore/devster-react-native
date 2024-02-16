@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 import { blackTheme } from "../../../../assets/color/color";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 
 export const VISIT_PROFILE_STYLESHEET = StyleSheet.create({
     container: {
@@ -12,7 +14,7 @@ export const VISIT_PROFILE_STYLESHEET = StyleSheet.create({
         width: "100%",
         display: "flex",
         flexDirection: "row",
-        padding: "2%",
+        padding: hp("1%"),
         alignItems: "center",
         justifyContent: "space-between",
     },
@@ -57,7 +59,7 @@ export const VISIT_PROFILE_STYLESHEET = StyleSheet.create({
     name: {
         marginHorizontal: "5%",
         color: "white",
-        fontSize: 25,
+        fontSize: hp(3.5),
         fontWeight: "bold",
         maxWidth: '80%',
     },
@@ -65,10 +67,10 @@ export const VISIT_PROFILE_STYLESHEET = StyleSheet.create({
         direction: "flex",
         flexDirection: "row",
         justifyContent: "flex-end",
-        marginVertical: "3%",
+        marginVertical: hp("2%"),
     },
     add_contact_button: {
-        width: 90,
+        width: wp(30),
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 0.5,
@@ -79,7 +81,8 @@ export const VISIT_PROFILE_STYLESHEET = StyleSheet.create({
         elevation: 1,
     },
     add_contact_button_text: {
-        color: "white"
+        color: "white",
+        fontSize: hp(1.8)
     },
     send_message_button: {
         justifyContent: "center",
@@ -90,12 +93,12 @@ export const VISIT_PROFILE_STYLESHEET = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: "black",
         elevation: 1,
-        width: 90,
+        width: wp(30),
         marginHorizontal: "1%",
     },
     send_message_button_text: {
         color: "white",
-        fontSize: 11
+        fontSize: hp(1.8)
     },
     banner: {
         width: "100%",
@@ -117,6 +120,6 @@ export const VISIT_PROFILE_STYLESHEET = StyleSheet.create({
     },
     section_title_text: {
         color: "lightgrey",
-        fontSize: 20,
+        fontSize: hp(2),
     }
 });

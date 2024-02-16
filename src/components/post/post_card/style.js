@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const POST_STYLESHEET = StyleSheet.create({
     card_container: {
@@ -6,8 +7,8 @@ export const POST_STYLESHEET = StyleSheet.create({
         borderBottomWidth: 0.5,
         borderColor: '#d1d0d059',
         width: '100%',
-        paddingHorizontal: '3%',
-        paddingVertical: '3%',
+        paddingHorizontal: wp('3%'),
+        paddingVertical: hp('1%'),
     },
     info_container: {
         display: "flex",
@@ -16,29 +17,29 @@ export const POST_STYLESHEET = StyleSheet.create({
         alignItems: "center",
     },
     username: {
-        marginLeft: "3%",
-        fontSize: 18,
+        marginLeft: wp("3%"),
+        fontSize: hp(2),
         fontWeight: "400",
         color: "white",
     },
     timestamp: {
         marginLeft: "2%",
-        fontSize: 15,
+        fontSize: hp(2),
         color: "lightgrey"
     },
     post_container: {
         width: "100%",
-        marginVertical: "2%",
-        paddingHorizontal: "1%",
+        marginVertical: hp("1%"),
+        paddingHorizontal: wp("1%"),
     },
     post_text: {
         fontWeight: "300",
         color: "white",
-        fontSize: 20,
+        fontSize: hp(2.5),
     },
     reaction_container: {
         width: "100%",
-        padding: "2%",
+        padding: hp("1%"),
         display: "flex",
         flexDirection: "row",
     },
@@ -49,11 +50,11 @@ export const POST_STYLESHEET = StyleSheet.create({
     },
     like_button_text: {
         color: "white",
-        marginHorizontal: "5%",
-        fontSize: 15,
+        marginHorizontal: wp("1%"),
+        fontSize: hp(2),
     },
     like_icon: {
-        marginHorizontal: "5%",
+        marginRight: wp("2%"),
     },
     comment_button_container: {
         display: "flex",
@@ -62,7 +63,7 @@ export const POST_STYLESHEET = StyleSheet.create({
     },
     comment_button_text: {
         color: "white",
-        marginHorizontal: "5%",
-        fontSize: 15,
+        marginHorizontal: wp("1%"),
+        fontSize: hp(2),
     },
 });

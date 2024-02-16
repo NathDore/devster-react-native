@@ -8,7 +8,8 @@ import AddComment from '../../../components/comment/add_comment/AddComment';
 import { useFocusEffect } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { blackTheme, blackThemeSecondary } from '../../../../assets/color/color';
+import { blackThemeSecondary } from '../../../../assets/color/color';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const PostScreen = ({ route }) => {
     const {
@@ -101,8 +102,8 @@ const PostScreen = ({ route }) => {
         }}>
 
             <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between" }} >
-                <Pressable onPress={handleGoBack} style={{ padding: "3%" }}>
-                    <FontAwesome name="angle-left" size={40} color="lightgrey" />
+                <Pressable onPress={handleGoBack} style={{ padding: hp("2%") }}>
+                    <FontAwesome name="angle-left" size={hp(4)} color="lightgrey" />
                 </Pressable>
 
                 <View />
@@ -112,7 +113,7 @@ const PostScreen = ({ route }) => {
                 isScreenLoading ?
                     <>
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                            <ActivityIndicator size={80} color={"lightgrey"} />
+                            <ActivityIndicator size={hp(4)} color={"lightgrey"} />
                         </View>
                     </>
                     :

@@ -6,6 +6,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import VisitProfile from "../screens/profile/visit_profile_screen/VisitProfile.jsx";
 import ContactScreen from "../screens/contact/contact_screen/ContactScreen.jsx";
 import PostScreen from "../screens/post/post_screen/PostScreen.jsx";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,9 +15,9 @@ export default function AppStack() {
         <Tab.Navigator screenOptions={{
             headerShown: false,
             tabBarStyle: {
-                height: 50,
+                height: hp(8.5),
                 backgroundColor: "black",
-                borderTopWidth: 0.2,
+                borderTopWidth: hp(0.07),
                 borderTopColor: "lightgrey",
             },
             tabBarActiveTintColor: "lightblue"
@@ -27,7 +28,7 @@ export default function AppStack() {
                     name="Feed"
                     options={{
                         tabBarIcon: () => (
-                            <FontAwesome5Icon name="poll-h" color={"lightgrey"} size={25} />
+                            <FontAwesome5Icon name="poll-h" color={"lightgrey"} size={hp(4)} />
                         ),
                     }}
                 >
@@ -42,7 +43,7 @@ export default function AppStack() {
                     component={ContactScreen}
                     options={{
                         tabBarIcon: () => (
-                            <FontAwesome5Icon name="user-friends" size={25} color={"lightgrey"} />
+                            <FontAwesome5Icon name="user-friends" size={hp(4)} color={"lightgrey"} />
                         ),
                     }}
                 />
@@ -53,7 +54,7 @@ export default function AppStack() {
                     options={
                         {
                             tabBarIcon: () => (
-                                <AwesomeIcon name="comment" color={"lightgrey"} size={25} />
+                                <AwesomeIcon name="comment" color={"lightgrey"} size={hp(4)} />
                             ),
                         }
                     }

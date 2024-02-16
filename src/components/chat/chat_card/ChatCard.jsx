@@ -5,6 +5,7 @@ import { CHAT_CARD_STYLESHEET } from './style';
 import { useAuthContext } from '../../../context/AuthProvider';
 import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from '@react-navigation/core';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ChatCard = ({ participants, lastMessage, timestamp }) => {
     const { user } = useAuthContext();
@@ -47,7 +48,7 @@ const ChatCard = ({ participants, lastMessage, timestamp }) => {
 
             {/* Profile picture */}
             <Avatar
-                size={55}
+                size={hp(5)}
                 rounded
                 source={userDoc?.profile_picture ? { uri: userDoc?.profile_picture } : require("../../../../assets/anonyme_profile.jpg")}
             />

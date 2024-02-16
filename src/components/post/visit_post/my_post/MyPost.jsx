@@ -1,7 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
 import PostCard from '../../post_card/PostCard'
-import { FontAwesome } from '@expo/vector-icons';
 
 const MyPost = ({
     postId,

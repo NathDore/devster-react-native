@@ -9,6 +9,7 @@ import { useAuthContext } from '../../../context/AuthProvider';
 import firestore from "@react-native-firebase/firestore";
 import { useFocusEffect, useNavigation } from '@react-navigation/core';
 import NotFound from '../../../UI/not_found/NotFound';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ProfileScreen = () => {
     const [userPosts, setUserPosts] = useState([]);
@@ -107,7 +108,7 @@ const ProfileScreen = () => {
             {
                 isScreenLoading ?
                     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                        <ActivityIndicator size={80} color="lightgrey" />
+                        <ActivityIndicator size={hp(4)} color="lightgrey" />
                     </View> :
                     <>
                         <ImageBackground
@@ -116,7 +117,7 @@ const ProfileScreen = () => {
                         >
                             {/* Icon */}
                             <TouchableOpacity onPress={handleNavigationBack}>
-                                <AwesomeIcon name="angle-left" size={40} color="white" style={PROFILE_SCREEN_STYLESHEET.backIcon} />
+                                <AwesomeIcon name="angle-left" size={hp(4)} color="white" style={PROFILE_SCREEN_STYLESHEET.backIcon} />
                             </TouchableOpacity>
 
                             <View style={{ alignItems: "center" }}>
@@ -124,7 +125,7 @@ const ProfileScreen = () => {
                                     {/* Profile picture */}
                                     <View style={PROFILE_SCREEN_STYLESHEET.profile_picture}>
                                         <Avatar
-                                            size={100}
+                                            size={hp(10)}
                                             rounded
                                             source={userData.profile_picture ? { uri: userData.profile_picture } : require('../../../../assets/anonyme_profile.jpg')}
                                         />
@@ -175,7 +176,7 @@ const ProfileScreen = () => {
 
                             <View style={{ width: "100%", justifyContent: "center", alignItems: "center", padding: "3%" }}>
                                 <TouchableOpacity onPress={handleSignOut} style={{ padding: "3%", backgroundColor: "red", borderRadius: 15, justifyContent: "center", alignItems: "center" }}>
-                                    <Text style={{ color: "white", fontSize: 18 }}>Logout</Text>
+                                    <Text style={{ color: "white", fontSize: hp(2) }}>Logout</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

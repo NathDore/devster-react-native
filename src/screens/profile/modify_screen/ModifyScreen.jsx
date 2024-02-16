@@ -7,6 +7,7 @@ import storage from '@react-native-firebase/storage';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../context/AuthProvider';
 import { FontAwesome } from '@expo/vector-icons';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ModifyScreen = ({ navigation }) => {
     const {
@@ -120,7 +121,7 @@ const ModifyScreen = ({ navigation }) => {
             >
                 {/* Go back icon */}
                 <TouchableOpacity onPress={handleGoBack} style={MODIFY_SCREEN_STYLESHEET.go_back_icon}>
-                    <FontAwesome name="angle-left" size={40} color="lightgrey" />
+                    <FontAwesome name="angle-left" size={hp(4)} color="lightgrey" />
                 </TouchableOpacity>
 
                 <View style={MODIFY_SCREEN_STYLESHEET.profile_picture}>
@@ -128,12 +129,12 @@ const ModifyScreen = ({ navigation }) => {
                     {/* Profile picture */}
                     <TouchableOpacity onPress={pickImageAsync} style={MODIFY_SCREEN_STYLESHEET.profile_picture_container}>
                         {isPhotoLoading ? <ActivityIndicator size={30} color={"lightgrey"} /> : <Avatar
-                            size={100}
+                            size={hp(10)}
                             rounded
                             source={userData?.profile_picture ? { uri: userData?.profile_picture } : require('../../../../assets/anonyme_profile.jpg')}
                         />}
                         <View style={{ position: "absolute" }}>
-                            <FontAwesome name="image" size={30} color="lightgrey" />
+                            <FontAwesome name="image" size={hp(3)} color="lightgrey" />
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -147,7 +148,7 @@ const ModifyScreen = ({ navigation }) => {
                     <Text style={MODIFY_SCREEN_STYLESHEET.text_label}> : </Text>
                     {
                         isNameLoading ?
-                            <View style={{ alignItems: "center", paddingLeft: "10%" }}><ActivityIndicator size={30} color={"lightgrey"} /></View>
+                            <View style={{ alignItems: "center", paddingLeft: wp("5%") }}><ActivityIndicator size={30} color={"lightgrey"} /></View>
                             :
                             <TextInput value={usernameInput} onChangeText={handleUserNameInput} multiline={false} style={MODIFY_SCREEN_STYLESHEET.text_input} placeholderTextColor={"lightgrey"} placeholder={userData.name} />
                     }

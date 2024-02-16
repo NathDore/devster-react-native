@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
-import { blackThemeSecondary, blackTheme } from "../../../../assets/color/color";
+import { blackThemeSecondary } from "../../../../assets/color/color";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const FEED_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
@@ -9,11 +10,11 @@ export const FEED_SCREEN_STYLESHEET = StyleSheet.create({
     create_post_icon: {
         position: "absolute",
         alignSelf: "flex-end",
-        top: "85%",
-        right: "5%",
-        width: 60,
-        height: 60,
-        borderRadius: 150,
+        top: hp("80%"),
+        right: wp("5%"),
+        width: hp(8),
+        height: hp(8),
+        borderRadius: hp(8),
         backgroundColor: "black",
         justifyContent: "center",
         alignItems: "center",
@@ -22,18 +23,18 @@ export const FEED_SCREEN_STYLESHEET = StyleSheet.create({
         borderColor: "white",
     },
     notification_bell: {
-        width: 50,
-        height: 50,
-        borderRadius: 150,
+        width: hp(8),
+        height: hp(8),
+        borderRadius: hp(8),
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        padding: "3%",
+        padding: wp("3%"),
         backgroundColor: blackThemeSecondary,
         borderWidth: 0.5,
         borderColor: "lightgrey",
         position: "absolute",
         alignSelf: "center",
-        top: "12%"
+        top: hp("5%"),
     },
 })

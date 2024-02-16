@@ -23,7 +23,6 @@ export default function MainStack() {
                 <Stack.Group>
                     {/* Landing */}
                     <Stack.Screen name="Home" component={user ? AppStack : LandingScreen} />
-
                     {/* GoodBye Screen */}
                     <Stack.Screen name="Goodbye" component={GoodbyeScreen} />
 

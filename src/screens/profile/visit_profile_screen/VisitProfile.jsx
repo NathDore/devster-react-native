@@ -10,6 +10,8 @@ import PostCard from '../../../components/post/post_card/PostCard';
 import { convertTimestampToRelativeTime } from '../../../util/util-function';
 import ProfileScreen from '../profile_screen/ProfileScreen';
 import NotFound from '../../../UI/not_found/NotFound';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 
 const VisitProfile = ({ route, navigation }) => {
     const { userDoc } = route.params;
@@ -117,7 +119,7 @@ const VisitProfile = ({ route, navigation }) => {
                 {
                     isScreenLoading ?
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                            <ActivityIndicator size={80} color="lightgrey" />
+                            <ActivityIndicator size={hp(4)} color="lightgrey" />
                         </View>
                         :
                         <>
@@ -130,7 +132,7 @@ const VisitProfile = ({ route, navigation }) => {
 
                                     {/* Go back icon */}
                                     <TouchableOpacity onPress={handleGoBackNavigation} style={VISIT_PROFILE_STYLESHEET.go_back_icon}>
-                                        <FontAwesome name="angle-left" size={40} color="lightgrey" />
+                                        <FontAwesome name="angle-left" size={hp(4)} color="lightgrey" />
                                     </TouchableOpacity>
 
                                 </View>
@@ -141,7 +143,7 @@ const VisitProfile = ({ route, navigation }) => {
                                     {/* Info */}
                                     <View style={VISIT_PROFILE_STYLESHEET.info_banner}>
                                         <View style={VISIT_PROFILE_STYLESHEET.profile_picture}>
-                                            <Avatar size={70} rounded source={profile_picture ? { uri: profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
+                                            <Avatar size={hp(7)} rounded source={profile_picture ? { uri: profile_picture } : require("../../../../assets/anonyme_profile.jpg")} />
                                         </View>
                                         <Text numberOfLines={1} ellipsizeMode="tail" style={VISIT_PROFILE_STYLESHEET.name}>{name}</Text>
                                     </View>
@@ -168,7 +170,7 @@ const VisitProfile = ({ route, navigation }) => {
                             <View style={VISIT_PROFILE_STYLESHEET.banner}>
 
                                 {/* Flame Icon */}
-                                <FontAwesome name="fire" size={20} color="lightgrey" />
+                                <FontAwesome name="fire" size={hp(2)} color="lightgrey" />
 
                                 {/* Section Title */}
                                 <View style={VISIT_PROFILE_STYLESHEET.section_title_container}>
