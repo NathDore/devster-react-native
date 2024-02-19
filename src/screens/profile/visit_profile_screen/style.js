@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
-import { blackTheme } from "../../../../assets/color/color";
+import { blackThemeSecondary } from "../../../../assets/color/color";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 export const VISIT_PROFILE_STYLESHEET = StyleSheet.create({
     container: {
-        backgroundColor: blackTheme,
+        backgroundColor: blackThemeSecondary,
         flex: 1,
         display: "flex",
         flexDirection: "column"

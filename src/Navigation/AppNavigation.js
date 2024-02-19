@@ -69,16 +69,6 @@ export default function AppStack() {
                     options={{ tabBarButton: () => null }}
                 />
             </Tab.Group>
-
-            {/* Visit Post Screens without icon */}
-            <Tab.Group>
-                <Tab.Screen
-                    name="VisitPost"
-                    component={PostScreen}
-                    options={{ tabBarButton: () => null }}
-                />
-            </Tab.Group>
-
         </Tab.Navigator>
     );
 }

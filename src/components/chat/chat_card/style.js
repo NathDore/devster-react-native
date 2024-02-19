@@ -8,7 +8,6 @@ export const CHAT_CARD_STYLESHEET = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        borderBottomWidth: hp(0.07),
         borderColor: "lightgrey",
         padding: hp("4%"),
         paddingVertical: hp(1),
@@ -24,7 +23,7 @@ export const CHAT_CARD_STYLESHEET = StyleSheet.create({
     userName: {
         color: "white",
         fontWeight: "bold",
-        fontSize: hp(2),
+        fontSize: hp(3),
     },
     messageContainer: {
         width: wp("80%"),
@@ -42,7 +41,7 @@ export const CHAT_CARD_STYLESHEET = StyleSheet.create({
         fontWeight: "bold",
         color: "white",
         fontSize: hp(2),
-        marginLeft: "5%",
+        marginLeft: wp("5%"),
     },
     last_message_you: {
         color: "grey",

@@ -22,6 +22,7 @@ const MyPost = ({
                 content={content}
                 comments={comments}
                 isTouchable={false}
+                isVisit={true}
             />
             {/*  <TouchableOpacity onPress={handleDelete} style={{ position: 'absolute', alignSelf: "flex-end", margin: "2%" }}>
                 <FontAwesome name="times-circle" size={20} color="red" />

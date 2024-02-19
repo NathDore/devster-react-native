@@ -47,6 +47,8 @@ export const POST_STYLESHEET = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
+        padding: hp("1%"),
+        height: "100%",
     },
     like_button_text: {
         color: "white",
@@ -60,6 +62,8 @@ export const POST_STYLESHEET = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
+        padding: hp("1%"),
+        height: "100%",
     },
     comment_button_text: {
         color: "white",

@@ -6,6 +6,7 @@ export const FEED_SCREEN_STYLESHEET = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: blackThemeSecondary,
+        backgroundColor: "black",
     },
     create_post_icon: {
         position: "absolute",

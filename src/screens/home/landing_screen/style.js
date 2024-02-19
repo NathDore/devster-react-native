@@ -37,10 +37,10 @@ export const LANDING_STYLESHEET = StyleSheet.create({
     },
     contact_button: {
         marginHorizontal: wp("2%"),
-        width: wp("10%"),
-        height: wp("10%"),
+        width: wp("15%"),
+        height: wp("15%"),
         backgroundColor: blackThemeSecondary,
-        borderRadius: wp("10%"),
+        borderRadius: wp("15%"),
         justifyContent: "center",
         alignItems: "center",
     },
@@ -56,7 +56,7 @@ export const LANDING_STYLESHEET = StyleSheet.create({
         letterSpacing: 0.8,
     },
     create_account_button: {
-        width: wp("80%"),
+        width: wp("90%"),
         justifyContent: "center",
         alignItems: "center",
         alignSelf: "center",
@@ -66,6 +66,7 @@ export const LANDING_STYLESHEET = StyleSheet.create({
         borderColor: "white",
         marginVertical: hp("5%"),
         padding: wp("3%"),
+        height: hp("8%"),
     },
     create_account_button_text: {
         color: "white",
@@ -74,10 +75,10 @@ export const LANDING_STYLESHEET = StyleSheet.create({
     },
     sign_in_button: {
         alignSelf: "center",
-        padding: wp("3%"),
+        padding: wp("5%"),
     },
     sign_in_button_text: {
         color: "white",
-        fontSize: wp(5),
+        fontSize: wp(6),
     }
 })

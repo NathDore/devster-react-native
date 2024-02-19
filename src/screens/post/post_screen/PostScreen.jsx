@@ -1,4 +1,4 @@
-import { Pressable, View, ActivityIndicator } from 'react-native'
+import { Pressable, View, ActivityIndicator, KeyboardAvoidingView, ScrollView, Keyboard } from 'react-native'
 import React, { useState } from 'react'
 import firestore from "@react-native-firebase/firestore";
 import MyPost from '../../../components/post/visit_post/my_post/MyPost';
@@ -96,7 +96,7 @@ const PostScreen = ({ route }) => {
     }
 
     return (
-        <View style={{
+        <View onPress={() => Keyboard.dismiss()} style={{
             backgroundColor: blackThemeSecondary,
             flex: 1,
         }}>
@@ -118,32 +118,40 @@ const PostScreen = ({ route }) => {
                     </>
                     :
                     <>
-                        {
-                            isYourPost ?
-                                <MyPost
-                                    postId={postId}
-                                    postUid={postUid}
-                                    timestamps={timestamps}
-                                    content={content}
-                                />
-                                :
-                                <YourPost
-                                    postId={postId}
-                                    postUid={postUid}
-                                    timestamps={timestamps}
-                                    content={content}
-                                />
-                        }
-                        <CommentList
-                            postId={postId}
-                            postUid={postUid}
-                            comments={comments}
-                        />
+                        <ScrollView>
+                            {
+                                isYourPost ?
+                                    <MyPost
+                                        postId={postId}
+                                        postUid={postUid}
+                                        timestamps={timestamps}
+                                        content={content}
+                                        isVisit={true}
+                                    />
+                                    :
+                                    <YourPost
+                                        postId={postId}
+                                        postUid={postUid}
+                                        timestamps={timestamps}
+                                        content={content}
+                                    />
+                            }
+
+                            <CommentList
+                                postId={postId}
+                                postUid={postUid}
+                                comments={comments}
+                            />
+
+                        </ScrollView>
+
 
                         <AddComment postId={postId} />
                     </>
+
             }
-        </View >
+
+        </View>
     )
 }
 

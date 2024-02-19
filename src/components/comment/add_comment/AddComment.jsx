@@ -38,30 +38,33 @@ const AddComment = ({ postId }) => {
     }
 
     return (
-        <View style={isFocus ? ADD_COMMENT_STYLESHEET.focus_container : ADD_COMMENT_STYLESHEET.container}>
-            <TextInput
-                style={{
-                    flex: 1,
-                    width: wp("80%"),
-                    paddingTop: isFocus ? hp(2) : hp(0),
-                    paddingStart: wp(4),
-                    color: 'white',
-                    fontSize: hp(2.5),
-                    textAlignVertical: isFocus ? 'top' : 'center'
-                }}
-                placeholder='Enter your comment here.'
-                placeholderTextColor={'white'}
-                multiline
-                onFocus={handleOnFocus}
-                onBlur={handleOnBlur}
-                onChangeText={(text) => setCommentText(text)}
-                value={commentText}
-            />
+        <View>
+            <View style={isFocus ? ADD_COMMENT_STYLESHEET.focus_container : ADD_COMMENT_STYLESHEET.container}>
+                <TextInput
+                    style={{
+                        flex: 1,
+                        width: wp("80%"),
+                        paddingTop: isFocus ? hp(2) : hp(0),
+                        paddingStart: wp(4),
+                        color: 'white',
+                        fontSize: hp(2.5),
+                        textAlignVertical: isFocus ? 'top' : 'center'
+                    }}
+                    placeholder='Enter your comment here.'
+                    placeholderTextColor={'white'}
+                    multiline
+                    onFocus={handleOnFocus}
+                    onBlur={handleOnBlur}
+                    onChangeText={(text) => setCommentText(text)}
+                    value={commentText}
+                />
 
-            <TouchableOpacity onPress={handleSubmit} style={ADD_COMMENT_STYLESHEET.submit_button}>
-                <FontAwesome name="paper-plane" size={hp(3)} color="lightgrey" />
-            </TouchableOpacity>
+                <TouchableOpacity onPress={handleSubmit} style={ADD_COMMENT_STYLESHEET.submit_button}>
+                    <FontAwesome name="paper-plane" size={hp(3)} color="lightgrey" />
+                </TouchableOpacity>
+            </View>
         </View>
+
     )
 }
 

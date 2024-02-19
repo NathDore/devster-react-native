@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/core';
 import { ActivityIndicator } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable }) => {
+const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable, isVisit }) => {
     const [isLike, setIsLike] = useState(false);
     const [likes, setLikes] = useState([]);
     const [comments, setComments] = useState([]);
@@ -134,15 +134,11 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
     const renderLikeButton = () => {
         if (isLike) {
             return (
-                <Pressable onPress={handleLike}>
-                    <AwesomeIcon name="heart" color={'red'} size={hp(2)} style={POST_STYLESHEET.like_icon} />
-                </Pressable>
+                <AwesomeIcon name="heart" color={'red'} size={hp(3)} style={POST_STYLESHEET.like_icon} />
             );
         } else {
             return (
-                <Pressable onPress={handleLike}>
-                    <AwesomeIcon5 name="heart" color={'lightgrey'} size={hp(2)} solid={false} style={POST_STYLESHEET.like_icon} />
-                </Pressable>
+                <AwesomeIcon5 name="heart" color={'lightgrey'} size={hp(3)} solid={false} style={POST_STYLESHEET.like_icon} />
             );
         }
     };
@@ -197,22 +193,26 @@ const PostCard = React.memo(({ postId, postUid, timestamps, content, isTouchable
                 {/* Post Container */}
                 <View style={POST_STYLESHEET.post_container}>
                     {/* Post text */}
-                    <Text style={POST_STYLESHEET.post_text}>{content}</Text>
+                    {
+                        isVisit ? <Text style={POST_STYLESHEET.post_text}>{content}</Text> :
+                            <Text lineBreakMode='tail' numberOfLines={5} style={POST_STYLESHEET.post_text}>{content}</Text>
+                    }
+
                 </View>
 
                 {/* Reaction Section */}
                 <View style={POST_STYLESHEET.reaction_container}>
                     {/* Like button */}
-                    <View style={POST_STYLESHEET.like_button_container}>
+                    <Pressable onPress={handleLike} style={POST_STYLESHEET.like_button_container}>
                         <Text style={POST_STYLESHEET.like_button_text}>{likes.length}</Text>
                         {renderLikeButton()}
-                    </View>
+                    </Pressable>
 
                     {/* Comment button */}
                     <View style={POST_STYLESHEET.comment_button_container}>
                         <Text style={POST_STYLESHEET.comment_button_text}>{comments.length}</Text>
                         <View>
-                            <AwesomeIcon5 name="comment" color={'lightgrey'} size={hp(2)} solid={false} />
+                            <AwesomeIcon5 name="comment" color={'lightgrey'} size={hp(3)} solid={false} />
                         </View>
                     </View>
 

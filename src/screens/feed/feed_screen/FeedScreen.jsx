@@ -140,6 +140,7 @@ const FeedScreen = ({ navigation }) => {
             timestamps={convertTimestampToRelativeTime(item.timestamp)}
             content={item.content}
             isTouchable={true}
+            isVisit={false}
         />
     );
 

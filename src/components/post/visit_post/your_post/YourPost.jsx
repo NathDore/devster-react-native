@@ -18,6 +18,7 @@ const YourPost = ({
                 content={content}
                 comments={comments}
                 isTouchable={false}
+                isVisit={true}
             />
         </>
     )

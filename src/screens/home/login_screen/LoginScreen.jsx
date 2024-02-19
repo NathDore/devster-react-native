@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Pressable } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Pressable, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useForm, Controller } from 'react-hook-form';
@@ -43,84 +43,86 @@ const LoginScreen = ({ navigation }) => {
 
 
     return (
-        <KeyboardAvoidingView style={LOGIN_STYLESHEET.keyboardAvoidingView}>
-            <ScrollView>
-                {/* header */}
-                <View style={LOGIN_STYLESHEET.header}>
-                    <TouchableOpacity style={{ padding: wp("2%") }} onPress={handleGoBack}>
-                        <AwesomeIcon name="angle-left" size={hp(5)} color="white" />
-                    </TouchableOpacity>
-                    <View />
+        <Pressable onPress={() => Keyboard.dismiss()} style={LOGIN_STYLESHEET.container}>
+            <KeyboardAvoidingView behavior={'position'} style={{ flex: 1 }}>
+                <View style={{ top: hp("10%") }}>
+                    {/* header */}
+                    <View style={LOGIN_STYLESHEET.header}>
+                        <TouchableOpacity style={{ padding: wp("2%") }} onPress={handleGoBack}>
+                            <AwesomeIcon name="angle-left" size={hp(5)} color="white" />
+                        </TouchableOpacity>
+                        <View />
+                    </View>
+
+                    {/* title container */}
+                    <View style={LOGIN_STYLESHEET.title_container}>
+                        {/* title */}
+                        <Text style={LOGIN_STYLESHEET.title}>Let's sign you in.</Text>
+                        {/* subtitle */}
+                        <Text style={LOGIN_STYLESHEET.subtitle}>Welcome back</Text>
+                    </View>
+
+                    {/* Email Field */}
+                    <Controller
+                        control={control}
+                        render={({ field, fieldState }) => (
+                            <>
+                                <View style={LOGIN_STYLESHEET.field}>
+                                    <TextInput
+                                        onChangeText={field.onChange}
+                                        onBlur={field.onBlur}
+                                        value={field.value}
+                                        style={LOGIN_STYLESHEET.textInput}
+                                        placeholderTextColor="lightgrey"
+                                        placeholder='Email' />
+                                </View>
+                                {fieldState.error && <Text style={LOGIN_STYLESHEET.error}>{fieldState.error.message}</Text>}
+                            </>
+
+                        )}
+                        name="email"
+                        rules={{ required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } }}
+                    />
+
+                    {/* Password field */}
+                    <Controller
+                        control={control}
+                        render={({ field, fieldState }) => (
+                            <>
+                                <View style={LOGIN_STYLESHEET.field}>
+                                    <TextInput
+                                        onChangeText={field.onChange}
+                                        onBlur={field.onBlur}
+                                        value={field.value}
+                                        secureTextEntry={!showPassword}
+                                        style={LOGIN_STYLESHEET.textInput}
+                                        placeholderTextColor="lightgrey"
+                                        placeholder='Password' />
+
+                                    <Pressable style={LOGIN_STYLESHEET.show_password_container} onPress={handleShowPassword}>
+                                        <Icon name={showPassword ? 'eye' : 'eye-slash'} style={{ marginEnd: wp(4) }} size={hp(3)} color="lightgrey" />
+                                    </Pressable>
+                                </View>
+                                {fieldState.error && <Text style={LOGIN_STYLESHEET.error}>{fieldState.error.message}</Text>}
+                            </>
+
+
+                        )}
+                        name="password"
+                        rules={{
+                            required: 'Password is required',
+                        }}
+                    />
+
+                    <View style={{ height: hp(3), }} />
+
+                    {/* Submit button */}
+                    {
+                        handleRenderButton()
+                    }
                 </View>
-
-                {/* title container */}
-                <View style={LOGIN_STYLESHEET.title_container}>
-                    {/* title */}
-                    <Text style={LOGIN_STYLESHEET.title}>Let's sign you in.</Text>
-                    {/* subtitle */}
-                    <Text style={LOGIN_STYLESHEET.subtitle}>Welcome back</Text>
-                </View>
-
-                {/* Email Field */}
-                <Controller
-                    control={control}
-                    render={({ field, fieldState }) => (
-                        <>
-                            <View style={LOGIN_STYLESHEET.field}>
-                                <TextInput
-                                    onChangeText={field.onChange}
-                                    onBlur={field.onBlur}
-                                    value={field.value}
-                                    style={LOGIN_STYLESHEET.textInput}
-                                    placeholderTextColor="lightgrey"
-                                    placeholder='Email' />
-                            </View>
-                            {fieldState.error && <Text style={LOGIN_STYLESHEET.error}>{fieldState.error.message}</Text>}
-                        </>
-
-                    )}
-                    name="email"
-                    rules={{ required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } }}
-                />
-
-                {/* Password field */}
-                <Controller
-                    control={control}
-                    render={({ field, fieldState }) => (
-                        <>
-                            <View style={LOGIN_STYLESHEET.field}>
-                                <TextInput
-                                    onChangeText={field.onChange}
-                                    onBlur={field.onBlur}
-                                    value={field.value}
-                                    secureTextEntry={!showPassword}
-                                    style={LOGIN_STYLESHEET.textInput}
-                                    placeholderTextColor="lightgrey"
-                                    placeholder='Password' />
-
-                                <Pressable onPress={handleShowPassword}>
-                                    <Icon name={showPassword ? 'eye' : 'eye-slash'} style={{ marginEnd: wp(4) }} size={hp(3)} color="lightgrey" />
-                                </Pressable>
-                            </View>
-                            {fieldState.error && <Text style={LOGIN_STYLESHEET.error}>{fieldState.error.message}</Text>}
-                        </>
-
-
-                    )}
-                    name="password"
-                    rules={{
-                        required: 'Password is required',
-                    }}
-                />
-
-                <View style={{ height: 50 }} />
-
-                {/* Submit button */}
-                {
-                    handleRenderButton()
-                }
-            </ScrollView>
-        </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
+        </Pressable>
     )
 }
 

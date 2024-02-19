@@ -9,7 +9,7 @@ export const HEADER_STYLESHEET = StyleSheet.create({
         padding: hp("2%"),
         alignItems: "center",
         paddingStart: wp("4%"),
-        backgroundColor: blackThemeSecondary,
+        backgroundColor: "black",
         justifyContent: "space-between",
         borderBottomWidth: hp(0.07),
         borderColor: "lightgrey",

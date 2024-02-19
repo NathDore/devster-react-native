@@ -42,12 +42,12 @@ const LandingScreen = ({ navigation }) => {
                     <View style={LANDING_STYLESHEET.contact_button_container}>
                         {/* Github button */}
                         <TouchableOpacity style={LANDING_STYLESHEET.contact_button}>
-                            <FontAwesomeIcon name="github" size={wp(8)} color="white" />
+                            <FontAwesomeIcon name="github" size={wp(10)} color="white" />
                         </TouchableOpacity>
 
                         {/* Gmail button */}
                         <TouchableOpacity style={LANDING_STYLESHEET.contact_button}>
-                            <MaterialIcon name="email" size={wp(8)} color="white" />
+                            <MaterialIcon name="email" size={wp(10)} color="white" />
                         </TouchableOpacity>
 
                     </View>

@@ -3,7 +3,7 @@ import { blackThemeSecondary } from "../../../../assets/color/color";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const LOGIN_STYLESHEET = StyleSheet.create({
-    keyboardAvoidingView: {
+    container: {
         flex: 1,
         backgroundColor: blackThemeSecondary,
     },
@@ -45,9 +45,10 @@ export const LOGIN_STYLESHEET = StyleSheet.create({
     },
     textInput: {
         color: "lightgrey",
-        fontSize: hp(2),
+        fontSize: hp(3),
         flex: 1,
         paddingStart: wp(5),
+        height: "100%",
     },
     error: {
         color: 'red',
@@ -64,6 +65,7 @@ export const LOGIN_STYLESHEET = StyleSheet.create({
         marginVertical: hp("1%"),
         padding: hp("1%"),
         borderRadius: hp(2),
+        position: "relative",
     },
     submit_button_valid_text: {
         color: blackThemeSecondary,
@@ -84,5 +86,11 @@ export const LOGIN_STYLESHEET = StyleSheet.create({
     submit_button_invalid_text: {
         color: "white",
         fontSize: hp(3.5),
+    },
+    show_password_container: {
+        padding: "3%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
     }
 })

@@ -11,6 +11,7 @@ import ModifyScreen from '../screens/profile/modify_screen/ModifyScreen';
 import GoodbyeScreen from '../screens/home/Goodbye_screen/GoodByeScreen';
 import WelcomeBackScreen from '../screens/home/Welcome_back/WelcomeBackScreen';
 import WelcomeScreen from '../screens/home/Welcome_screen/WelcomeScreen';
+import PostScreen from '../screens/post/post_screen/PostScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,9 @@ export default function MainStack() {
                     <Stack.Screen name="Profile" component={ProfileScreen} />
                     <Stack.Screen name="Modify" component={ModifyScreen} />
                 </Stack.Group>
+
+                {/* Comment Screen */}
+                <Stack.Screen name="VisitPost" component={PostScreen} />
 
             </Stack.Navigator>
         </NavigationContainer>
