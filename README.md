@@ -12,8 +12,8 @@ This app is a school project currently under development, created as part of a l
 
 ## Screenshots
 
-![Screenshot 1](screenshots/home.png)
-![Screenshot 2](screenshots/feed.png)
+![Screenshot 1](screenshots/home.PNG)
+![Screenshot 2](screenshots/feed.PNG)
 
 ## Technologies Used
 
