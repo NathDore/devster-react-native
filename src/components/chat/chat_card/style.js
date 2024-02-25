@@ -40,7 +40,7 @@ export const CHAT_CARD_STYLESHEET = StyleSheet.create({
     timestamp: {
         fontWeight: "bold",
         color: "white",
-        fontSize: hp(2),
+        fontSize: hp(1.5),
         marginLeft: wp("5%"),
     },
     last_message_you: {
