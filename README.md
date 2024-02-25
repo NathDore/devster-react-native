@@ -12,8 +12,8 @@ This app is a school project currently under development, created as part of a l
 
 ## Screenshots
 
-![Screenshot 1](screenshots/home.PNG){:width="200px" height="100px"}
-![Screenshot 2](screenshots/feed.PNG){:width="200px" height="100px"}
+<img src="screenshots/home.PNG" width="200" height="450" />
+<img src="screenshots/feed.PNG" width="200" height="450" />
 
 ## Technologies Used
 
@@ -32,6 +32,3 @@ This app is a school project currently under development, created as part of a l
 
 Active development is ongoing. Basic features are operational, and the project is open to new ideas and enhancements.
 
-## Authors
-
-- Nathaniel Dore - nathprogtravail@gmail.com
