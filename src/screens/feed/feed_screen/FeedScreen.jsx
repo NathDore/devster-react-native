@@ -9,8 +9,8 @@ import PostCard from "../../../components/post/post_card/PostCard";
 import CreatePost from '../../../components/post/create_post/CreatePost';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useFocusEffect } from '@react-navigation/native';
-import Header from '../../../UI/header/Header';
-import NotFound from '../../../UI/not_found/NotFound';
+import Header from '../../../components/other/header/Header';
+import NotFound from '../../../components/other/not_found/NotFound';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const FeedScreen = ({ navigation }) => {

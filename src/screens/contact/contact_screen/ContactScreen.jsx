@@ -3,8 +3,8 @@ import React, { useCallback, useState } from 'react'
 import { blackThemeSecondary } from '../../../../assets/color/color';
 import { useFocusEffect } from '@react-navigation/native';
 import { useAuthContext } from '../../../context/AuthProvider';
-import Header from '../../../UI/header/Header';
-import NotFound from '../../../UI/not_found/NotFound';
+import Header from '../../../components/other/header/Header';
+import NotFound from '../../../components/other/not_found/NotFound';
 
 const ContactScreen = ({ navigation }) => {
 

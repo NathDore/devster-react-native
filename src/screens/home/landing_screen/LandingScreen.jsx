@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react';
-import BackgroundVideo from "../../../UI/background_video/BackgroundVideo";
+import BackgroundVideo from "../../../components/other/background_video/BackgroundVideo";
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { LANDING_STYLESHEET } from './style';

@@ -9,7 +9,7 @@ import firestore from "@react-native-firebase/firestore";
 import PostCard from '../../../components/post/post_card/PostCard';
 import { convertTimestampToRelativeTime } from '../../../util/util-function';
 import ProfileScreen from '../profile_screen/ProfileScreen';
-import NotFound from '../../../UI/not_found/NotFound';
+import NotFound from '../../../components/other/not_found/NotFound';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 

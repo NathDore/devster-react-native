@@ -1,7 +1,7 @@
 import React from 'react';
 import { Video } from 'expo-av';
 import { View } from 'react-native';
-import source from "../../../assets/video/video_background.mp4";
+import source from "../../../../assets/video/video_background.mp4";
 import { BACKGROUND_VIDEO_STYLESHEET } from './style';
 
 const BackgroundVideo = () => {

@@ -6,8 +6,8 @@ import { CHAT_LIST_SCREEN } from './style';
 import firestore from "@react-native-firebase/firestore";
 import { useAuthContext } from '../../../context/AuthProvider'
 import { useFocusEffect } from '@react-navigation/core'
-import Header from '../../../UI/header/Header';
-import NotFound from '../../../UI/not_found/NotFound';
+import Header from '../../../components/other/header/Header';
+import NotFound from '../../../components/other/not_found/NotFound';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ChatListScreen = ({ navigation }) => {

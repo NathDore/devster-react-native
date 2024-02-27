@@ -2,7 +2,7 @@ import { View, Text, Pressable } from 'react-native'
 import React from 'react'
 import { HEADER_STYLESHEET } from './style'
 import { Avatar } from 'react-native-elements'
-import { useAuthContext } from '../../context/AuthProvider'
+import { useAuthContext } from '../../../context/AuthProvider'
 import { useNavigation } from '@react-navigation/native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -10,6 +10,8 @@ const Header = ({ screenTitle }) => {
 
     const { userData } = useAuthContext();
     const navigation = useNavigation();
+
+    const anonymePath = "../../../../assets/anonyme_profile.jpg";
 
     const handleNavigation = () => {
         navigation.navigate("Profile");
@@ -20,7 +22,7 @@ const Header = ({ screenTitle }) => {
             <Text style={HEADER_STYLESHEET.title}>{screenTitle}</Text>
 
             <Pressable onPress={handleNavigation}>
-                <Avatar rounded size={hp(5)} source={userData?.profile_picture ? { uri: userData.profile_picture } : require("../../../assets/anonyme_profile.jpg")} />
+                <Avatar rounded size={hp(5)} source={userData?.profile_picture ? { uri: userData.profile_picture } : require(anonymePath)} />
             </Pressable>
         </View>
     )

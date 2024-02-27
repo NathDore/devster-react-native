@@ -8,7 +8,7 @@ import { PROFILE_SCREEN_STYLESHEET } from './style';
 import { useAuthContext } from '../../../context/AuthProvider';
 import firestore from "@react-native-firebase/firestore";
 import { useFocusEffect, useNavigation } from '@react-navigation/core';
-import NotFound from '../../../UI/not_found/NotFound';
+import NotFound from '../../../components/other/not_found/NotFound';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ProfileScreen = () => {
